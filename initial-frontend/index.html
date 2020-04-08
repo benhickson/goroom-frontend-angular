@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GO ROOM &nbsp;&nbsp;|&nbsp;&nbsp; BE THERE</title>
+	<link href="https://fonts.googleapis.com/css2?family=Muli:ital,wght@0,715;1,823&display=swap" rel="stylesheet">
+	<style>
+		body{
+			background-color: black;
+			margin: 0;
+			padding: 0;
+			height: 100vh;
+			color: rgb(219, 219, 219);
+			font-family: 'Muli', sans-serif;
+			font-size: 16px;
+		}
+		#navbar{
+			background-color: rgb(31, 31, 31);
+			height: 40px;
+			text-align: center;
+		}
+		#room-number{
+			display: inline-block;
+    		width: 200px;
+    		height: 40px;
+			line-height: 40px;
+			font-style: italic;
+			letter-spacing: 0.2px;
+		}
+		#room{
+			background-color: rgb(39, 39, 38);
+			height: calc(100% - 40px);
+		}
+		#center{
+			background-color: rgb(0, 71, 21);
+			height: 30vh;
+			width: 40vh;
+			text-align: center;
+			position: relative;
+    		left: 50%;
+    		top: calc((100vh - 30vh)/2 - 20px);
+			margin-left: -20vh;
+			border-radius: 1vh;
+			border-style: solid;
+			border-color: rgb(0, 79, 9);
+			border-width: 1px;
+		}
+		#center span{
+			display: inline-block;
+			line-height: 30vh;
+		}
+		#center, .node{
+			/* Animate any changes */
+			transition:All 700ms ease;
+			-webkit-transition:All 700ms ease;
+			-moz-transition:All 700ms ease;
+			-o-transition:All 700ms ease;
+		}
+		.node{
+			/* temp bgcolor for development */
+			background-color: rgb(35, 15, 61);
+
+			position: absolute;
+
+			border-radius: 1vh;
+
+			text-align: center;
+
+			overflow: hidden;
+
+			transform-origin: center;
+			transform: scale(1);
+			
+			margin-left: 0;
+		}
+
+		.node .remote-stream-container,
+		.node .remote-video{
+			height: 100%;
+		}
+
+		.node.zeroed{
+			transform: scale(0);
+		}
+
+		.node div video{
+			position: initial !important;
+		}
+
+		/* Sizing */
+		.nodecount-2, .nodecount-4{
+			height: 30%;
+			line-height: 28vh;
+			width: 28%;
+		}
+		.nodecount-6{
+			height: 27%;
+			line-height: 21vh;
+			width: 28%;
+		}
+
+		/* 2-node positioning */
+		.nodecount-2{
+    		top: calc((100vh - 30vh)/2 + 20px);
+		}
+		.nodecount-2:nth-of-type(1){
+			left: 3%;
+		}
+		.nodecount-2:nth-of-type(2){
+			left: 69%;
+		}
+
+		/* 4-node positioning */
+		.nodecount-4:nth-of-type(1),
+		.nodecount-4:nth-of-type(2){
+			top: 15%;
+		}
+		.nodecount-4:nth-of-type(1),
+		.nodecount-4:nth-of-type(4){
+			left: 3%;
+		}
+		.nodecount-4:nth-of-type(2),
+		.nodecount-4:nth-of-type(3){
+			left: 69%;
+		}
+		.nodecount-4:nth-of-type(3),
+		.nodecount-4:nth-of-type(4){
+			top: 60%;
+		}
+
+		/* 6-node positioning */
+		.nodecount-6:nth-of-type(1),
+		.nodecount-6:nth-of-type(3){
+			top: calc((100% - 40px) * 0.20);
+		}
+		.nodecount-6:nth-of-type(1),
+		.nodecount-6:nth-of-type(6){
+			left: 3%;
+		}
+		.nodecount-6:nth-of-type(3),
+		.nodecount-6:nth-of-type(4){
+			left: 69%;
+		}
+		.nodecount-6:nth-of-type(4),
+		.nodecount-6:nth-of-type(6){
+			top: 60%;
+		}
+		.nodecount-6:nth-of-type(2),
+		.nodecount-6:nth-of-type(5){
+			left: 50%;
+			margin-left: -14%;
+		}
+		.nodecount-6:nth-of-type(2){
+			top: calc((100% - 40px) * 0.08);
+		}
+		.nodecount-6:nth-of-type(5){
+			top: 69%;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<!-- <button onclick="removeNode(getLastNodeId());">-</button> -->
+		<span id="room-number"># 3851</span>
+		<!-- <button onclick="addNode(getNextNodeId());">+</button> -->
+	</div>
+	<div id="room">
+		<div id="center"><span>Center Area</span></div>
+		<div id="nodes-target"></div>
+	</div>
+	<script>
+
+		// set apikey and channel
+		const agoraAppId = '516c8452e59e4505aed64d368917ffca';
+		const channelName = 'localhost-channel-3851';
+
+		// join the channel onload
+		document.addEventListener('DOMContentLoaded', function(){
+			initClientAndJoinChannel(agoraAppId, channelName);
+		});
+
+		// set the parent container for nodes
+		const nodesTarget = document.querySelector('#nodes-target');
+
+		// add and remove participant container nodes
+		function addNode(nodeId){
+			console.log('add node with id of: ', nodeId);
+			const div = document.createElement('div');
+			div.className = 'node zeroed';
+			div.id = `user${nodeId}`;
+			div.dataset.id = nodeId;
+			// div.append('user # '+nodeId);	// need to overlay this info
+			nodesTarget.append(div);
+			window.setTimeout(()=>{
+				// adding a slight delay here so the animations can work
+				recalculateNodeCount();
+			}, 100);
+			return div.id;
+		}
+		function removeNode(nodeId){
+			console.log('remove node with id of: ', nodeId);
+			const nodeToRemove = nodesTarget.querySelector(`[data-id='${nodeId}']`);
+
+			// // DISABLED: this causes jank if you try to delete two in a row
+			// nodeToRemove.classList.add('zeroed');
+			// window.setTimeout(()=>{
+			// 	// adding a delay so the animations can work
+			// 	nodeToRemove.remove();
+			// 	recalculateNodeCount();
+			// }, 700);
+			
+			nodeToRemove.remove();
+			recalculateNodeCount();
+		}
+		
+		// helper function, this will be replaced with user Ids
+		let nextNodeId = 0;
+		function getNextNodeId(){
+			nextNodeId += 1;
+			return nextNodeId;
+		}
+		// helper function for deleting the last node in nodes-target container
+		function getLastNodeId(){
+			return nodesTarget.lastChild.dataset.id;
+		}
+
+		// update the classes on the nodes, depending on how many there are
+		function recalculateNodeCount(){
+			const nodes = document.querySelectorAll('.node');
+			if (nodes.length <= 2){
+				writeClassToAll(nodes,'node nodecount-2');
+			} else if (nodes.length <= 4){
+				writeClassToAll(nodes,'node nodecount-4');
+			} else if (nodes.length <= 6){
+				writeClassToAll(nodes,'node nodecount-6');
+			} else if (nodes.length <= 8){
+				writeClassToAll(nodes,'node nodecount-8');
+			} else if (nodes.length <= 10){
+				writeClassToAll(nodes,'node nodecount-10');
+			} else if (nodes.length <= 12){
+				writeClassToAll(nodes,'node nodecount-12');
+			} else if (nodes.length <= 14){
+				writeClassToAll(nodes,'node nodecount-14');
+			} else if (nodes.length <= 16){
+				writeClassToAll(nodes,'node nodecount-16');
+			} else if (nodes.length <= 18){
+				writeClassToAll(nodes,'node nodecount-18');
+			}
+		}
+		// helper updating class on many items
+		function writeClassToAll(array, classString){
+			array.forEach(element => {
+				element.className = classString;
+			});
+		}
+	</script>
+	<script src="https://cdn.agora.io/sdk/web/AgoraRTCSDK-2.6.0.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- <script src="lib/ui.js"></script> -->
+	<script src="lib/agora-interface3.js"></script>
+</body>
+</html>
