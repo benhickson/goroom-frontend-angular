@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: ':id', component: RoomDetailComponent },
   
-  // default route / root
+  // default route / root route
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
 ];
 

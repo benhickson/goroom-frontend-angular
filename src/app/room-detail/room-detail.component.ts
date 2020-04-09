@@ -35,4 +35,9 @@ export class RoomDetailComponent implements OnInit {
     this.location.back();
   }
 
+  save(): void {
+    this.roomService.updateRoom(this.room)
+      .subscribe(() => this.goBack())
+  }
+
 }

@@ -1,8 +1,15 @@
 <div id="roomsContainer">
 	<h2>Open Rooms</h2>
+	<div>
+		<label>Create a room:
+			<input #roomName placeholder="Room Name" />
+		</label>
+		<button (click)='add(roomName.value); roomName.value=""'>Create</button>
+	</div>
 	<ol class="rooms">
 		<li *ngFor='let room of rooms' [class.selected]="room === selectedRoom" (click)="onSelect(room)">
 			<h4>{{room.name}} Details</h4>
+			<button class="btn" title="close room" (click)='close(room)'>Close</button>
 		</li>
 	</ol>
 	<app-room-detail [room]='selectedRoom' *ngIf='selectedRoom'></app-room-detail>
