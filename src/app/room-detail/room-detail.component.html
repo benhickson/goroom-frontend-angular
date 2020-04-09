@@ -2,10 +2,11 @@
 	<h2>{{room.name | uppercase}} Details</h2>
 	<div><span>room id:</span>{{room.id}}</div>
 	<div><span>creator_id:</span>{{room.creator_id}}</div>
-	<div><span>date opened:</span>{{room.created_at | date: 'MMM d, y, h:mm a, O' }}</div>
+	<div><span>open since:</span>{{room.created_at | date: 'MMM d, y, h:mm a, O' }}</div>
 	<div>
 		<label><span>edit name:</span>
 			<input [(ngModel)]="room.name" placeholder="name" />
 		</label>
 	</div>
+	<button (click)="goBack()">go back</button>
 </div>
