@@ -1,0 +1,7 @@
+<h2>Open Rooms</h2>
+<ol class="rooms">
+	<li *ngFor='let room of rooms' (click)="onSelect(room)" [class.selected]="room === selectedRoom">
+		<h4>{{room.name}} Details</h4>
+	</li>
+</ol>
+<app-room-detail [room]='selectedRoom' *ngIf='selectedRoom'></app-room-detail>

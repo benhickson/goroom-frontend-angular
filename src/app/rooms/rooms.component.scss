@@ -1,0 +1,14 @@
+div, li, #selectedRoom{
+	width: fit-content;
+}
+.rooms li{
+	background-color: rgba(252, 255, 103, 0.075);
+	padding: 15px;
+	padding-top: 1px;
+	margin-bottom: 10px;
+	cursor: pointer;
+	
+	&.selected{
+		background-color: rgba(255, 134, 134, 0.205);
+	}
+}
