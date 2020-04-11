@@ -36,8 +36,7 @@ export class RoomDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.roomService.updateRoom(this.room)
-      .subscribe(() => this.goBack())
+    this.roomService.updateRoom(this.room).subscribe();
   }
 
 }
