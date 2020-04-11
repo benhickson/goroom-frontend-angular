@@ -11,6 +11,7 @@ import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from '../environments/environment';
+import { NgxAgoraModule } from 'ngx-agora';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { environment } from '../environments/environment';
         whitelistedDomains: [environment.apiUrl],
         blacklistedRoutes: [`${environment.apiUrl}/users/login`]
       }
-    })
+    }),
+    NgxAgoraModule.forRoot({ AppID: environment.agora.appId })
   ],
   providers: [],
   bootstrap: [AppComponent]
