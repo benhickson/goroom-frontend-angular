@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtService } from '../jwt.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-register',
@@ -16,7 +17,7 @@ export class LoginRegisterComponent implements OnInit {
     // })
   });
 
-  constructor(private jwtService: JwtService) { }
+  constructor(private jwtService: JwtService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -26,8 +27,9 @@ export class LoginRegisterComponent implements OnInit {
     this.jwtService.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
       .subscribe(
         (response) => {
-          // console.log('worked?', response);
-        } 
+          console.log('logged in');
+          this.router.navigateByUrl('dashboard');
+        }
       );
   }
 
