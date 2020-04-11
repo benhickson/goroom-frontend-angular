@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JwtService {
 
-  private loginUrl = 'http://localhost:3000/users/login';
-  private registerUrl = 'http://localhost:3000/users';
+  private loginUrl = `${environment.apiUrl}/users/login`;
+  private registerUrl = `${environment.apiUrl}/users`;
 
   public get loggedIn(): boolean{
     return localStorage.getItem('auth_token') !== null;

@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
 
-  private roomsUrl = 'http://localhost:3000/rooms';
+  private roomsUrl = `${environment.apiUrl}/rooms`;
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type':'application/json'})
@@ -32,8 +33,8 @@ export class RoomService {
   getRoom(id: number): Observable<Room> {
     const url = `${this.roomsUrl}/${id}`;
     return this.http.get<Room>(url).pipe(
-      tap(_ => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<Room>(`getHero id=${id}`))
+      tap(_ => this.log(`fetched room id=${id}`)),
+      catchError(this.handleError<Room>(`getRoom id=${id}`))
     );
   }
 
@@ -46,7 +47,7 @@ export class RoomService {
 
   updateRoom(room: Room): Observable<any> {
     return this.http.patch(`${this.roomsUrl}/${room.id}`, room, this.httpOptions).pipe(
-      tap(_ => this.log(`updated hero id=${room.id}`)),
+      tap(_ => this.log(`updated room id=${room.id}`)),
       catchError(this.handleError<any>('updateRoom'))
     );
   }
@@ -56,7 +57,7 @@ export class RoomService {
     const id = typeof room === 'number' ? room : room.id;
     const url = `${this.roomsUrl}/${id}`;
     return this.http.delete<Room>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted hero id=${id}`)),
+      tap(_ => this.log(`deleted room id=${id}`)),
       catchError(this.handleError<Room>('deleteRoom'))
     );
   }

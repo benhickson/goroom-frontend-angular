@@ -10,6 +10,7 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,8 +30,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         tokenGetter: function tokenGetter() {
           return localStorage.getItem('auth_token');
         },
-        whitelistedDomains: ['localhost:3000'],
-        blacklistedRoutes: ['http://localhost:3000/users/login']
+        whitelistedDomains: [environment.apiUrl],
+        blacklistedRoutes: [`${environment.apiUrl}/users/login`]
       }
     })
   ],
