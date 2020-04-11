@@ -19,8 +19,8 @@ export class JwtService {
 
   login(email: string, password: string) {
     return this.httpClient.post<{auth_token: string}>(this.loginUrl, {email, password}).pipe(
-      tap(res => {
-        localStorage.setItem('auth_token', res.auth_token);
+      tap(response => {
+        localStorage.setItem('auth_token', response.auth_token);
       })
     );
   }

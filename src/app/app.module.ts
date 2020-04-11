@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,7 @@ import { RoomDetailComponent } from './room-detail/room-detail.component';
 import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from '../environments/environment';
+import { LoginRegisterComponent } from './login-register/login-register.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +19,13 @@ import { environment } from '../environments/environment';
     RoomsComponent,
     RoomDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoginRegisterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     JwtModule.forRoot({
