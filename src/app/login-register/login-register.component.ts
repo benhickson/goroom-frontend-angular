@@ -11,11 +11,16 @@ import { Router } from '@angular/router';
 export class LoginRegisterComponent implements OnInit {
 
   loginForm = new FormGroup({
-    // loginFields: new FormGroup({
-      email: new FormControl(''),
-      password: new FormControl('')
-    // })
+    email: new FormControl(''),
+    password: new FormControl('')
   });
+  registerForm = new FormGroup({
+    display_name: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl('')
+  });
+
+  showRegister: boolean = false;
 
   constructor(private jwtService: JwtService, private router: Router) { }
 
@@ -28,9 +33,40 @@ export class LoginRegisterComponent implements OnInit {
       .subscribe(
         (response) => {
           console.log('logged in');
+          this.resetForms();
           this.router.navigateByUrl('dashboard');
         }
       );
+  }
+
+  onRegisterSubmit() {
+    // pass to JWT service
+    this.jwtService.register(
+      this.registerForm.get('email').value,
+      this.registerForm.get('password').value,
+      this.registerForm.get('display_name').value
+    )
+      .subscribe(
+        (response) => {
+          console.log('registered');
+          this.resetForms();
+          this.router.navigateByUrl('dashboard');
+        }
+      );
+  }
+
+  logout() {
+    this.jwtService.logout();
+    this.resetForms();
+  }
+
+  toggleForm(){
+    this.showRegister = !this.showRegister;
+  }
+
+  resetForms(){
+    this.loginForm.reset();
+    this.registerForm.reset();
   }
 
 }

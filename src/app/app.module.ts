@@ -12,6 +12,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from '../environments/environment';
 import { LoginRegisterComponent } from './login-register/login-register.component';
+import { AuthAnonComponent } from './auth-anon/auth-anon.component';
 
 @NgModule({
   declarations: [
@@ -20,21 +21,21 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
     RoomDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    LoginRegisterComponent
+    LoginRegisterComponent,
+    AuthAnonComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     AppRoutingModule,
+    HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: function tokenGetter() {
-          return localStorage.getItem('auth_token');
+        tokenGetter: () => {
+          return localStorage.getItem("auth_token");
         },
-        whitelistedDomains: [environment.apiUrl],
-        blacklistedRoutes: [`${environment.apiUrl}/users/login`]
+        whitelistedDomains: environment.whitelistedDomains
       }
     })
   ],

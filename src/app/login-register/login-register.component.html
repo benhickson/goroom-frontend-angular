@@ -1,12 +1,41 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-	<label>
-		Email:
-		<input type="text" formControlName="email">
-	</label>
-
-	<label>
-		Password:
-		<input type="password" formControlName="password">
-	</label>
-	<input type="submit" value='submit me'>
-</form>
+<div id="login-register-container">
+	<div id="login-container" [ngClass]="showRegister ? 'hidden' : ''" >
+		<h2 class="title">Login</h2>
+		<form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" id="login-form">
+			<div class="right-align-form">
+				<label>
+					Email:
+					<input type="text" formControlName="email">
+				</label>
+				<label>
+					Password:
+					<input type="password" formControlName="password">
+				</label>
+			</div>
+			<button class="btn" type="submit">Login</button>
+		</form>
+		<button class="toggle" (click)="toggleForm()">Register</button>
+	</div>
+	<div id="register-container" [ngClass]="showRegister ? '' : 'hidden'" >
+		<h2 class="title">Register</h2>
+		<form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" id="register-form">
+			<div class="right-align-form">
+				<label>
+					Display Name:
+					<input type="text" formControlName="display_name">
+				</label>
+				<label>
+					Email:
+					<input type="text" formControlName="email">
+				</label>
+				<label>
+					Password:
+					<input type="password" formControlName="password">
+				</label>
+			</div>
+			<button class="btn" type="submit">Create Account</button>
+		</form>
+		<button class="toggle" (click)="toggleForm()">Login</button>
+	</div>
+	<button class="toggle logout" (click)="logout()">Logout</button>
+</div>
