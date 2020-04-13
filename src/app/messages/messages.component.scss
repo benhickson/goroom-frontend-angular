@@ -1,6 +1,24 @@
 #messagesContainer{
-	margin: 15px;
 	padding: 15px;
-	display: inline-block;
-	border: 1px solid white;
+    display: inline-block;
+    background-color: #000;
+    color: #fff;
+    opacity: 0.7;
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    transform: scale(0.8);
+	transform-origin: bottom right;
+	text-align: right;
+
+	button {
+		padding: 10px 15px;
+		position: absolute;
+		top: 10px;
+		left: 10px;
+	}
+
+	h2 {
+		margin: 0 0 15px 0;
+	}
 }

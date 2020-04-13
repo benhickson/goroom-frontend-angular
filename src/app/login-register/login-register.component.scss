@@ -1,0 +1,61 @@
+#login-register-container{
+	background-color: #333;
+    position: fixed;
+    top: 30vh;
+    left: 50vw;
+    margin-left: -23%;
+    width: 400px;
+    height: 400px;
+    max-height: 50vh;
+	max-width: 50vh;
+
+	& > div{
+		width: 100%;
+	}
+}
+form{
+	text-align: center;
+}
+.right-align-form{
+	text-align: right;
+    width: 90%;
+    display: inline-block;
+}
+label{
+	display: block;
+	width: 100%;
+	margin-bottom: 8px;
+}
+input{
+	width: 50%;
+	height: 23px;
+    font-size: 15px;
+    padding: 5px;
+}
+.btn{
+	border-radius: 6px;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 12px 35px;
+    margin-top: 7px;
+}
+.toggle{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background-color: rgb(21, 54, 46);
+	padding: 10px 25px;
+	color: #eee;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+	min-width: 125px;
+}
+.logout{
+	right: initial;
+	left: 0;
+	background-color: rgb(54, 21, 32);
+}
+.title{
+	margin-left: 10%;
+}

@@ -1,7 +1,13 @@
-<nav>
-	<h1 class="logo">{{title}}</h1>
-	<a routerLink="/dashboard">Dashboard</a>
-	<a routerLink="/rooms">Rooms</a>
-</nav>
-<router-outlet></router-outlet>
-<app-messages></app-messages>
+<div *ngIf="authed; else notAuthed">
+	<nav>
+		<h1 class="logo">{{ title }}</h1>
+		<a routerLink="/dashboard">Dashboard</a>
+		<a routerLink="/rooms">Rooms</a>
+		<a routerLink="/login">Account: {{ display_name | titlecase }}</a>
+	</nav>
+	<router-outlet></router-outlet>
+	<app-messages></app-messages>
+</div>
+<ng-template #notAuthed>
+	<app-auth-anon></app-auth-anon>
+</ng-template>

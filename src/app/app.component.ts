@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxAgoraService, Stream, AgoraClient, ClientEvent } from 'ngx-agora';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,11 @@ import { NgxAgoraService, Stream, AgoraClient, ClientEvent } from 'ngx-agora';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'GO ROOM';
+
+  authed: boolean = !!localStorage.getItem("auth_token");
+  title: string = 'GO ROOM';
+  display_name: string;
+
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
 
@@ -15,13 +20,26 @@ export class AppComponent implements OnInit {
   private localStream: Stream;
   private uid: number;
 
-  constructor(private ngxAgoraService: NgxAgoraService) {
+  constructor(private userService: UserService, private ngxAgoraService: NgxAgoraService) { 
     this.uid = Math.floor(Math.random() * 100);
   }
 
   ngOnInit() {
+    this.setDisplayName();
+
     this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
     this.assignClientHandlers();
+  }
+
+  setDisplayName(): void {
+    this.userService.getCurrentUser()
+      .subscribe(user => {
+        if (user.display_name) {
+          this.display_name = user.display_name;
+        } else {
+          this.display_name = `Anonymous ${user.anon_display_name}`;
+        }
+      });
   }
 
   private assignClientHandlers(): void {
