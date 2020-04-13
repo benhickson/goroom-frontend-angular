@@ -1,5 +1,8 @@
 <div *ngIf="room">
-	<p>{{room.name}}</p>
-	<p>{{room.id}}</p>
-	<p>{{room.creator_id}}</p>
+	<p>Room Name: {{room.name}}</p>
+	<p>Room Id: {{room.id}}</p>
+	<p>Room Creator Id: {{room.creator_id}}</p>
+	
+	<div [id]="localCallId" class="local"></div>
+	<div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
 </div>

@@ -9,6 +9,7 @@
 	<ol class="rooms">
 		<li *ngFor='let room of rooms' [class.selected]="room === selectedRoom" (click)="onSelect(room)">
 			<h4>{{room.name}} Details</h4>
+			<button routerLink="/{{room.name}}" class="btn" title="launch">Launch</button>
 			<button class="btn" title="close room" (click)='close(room)'>Close</button>
 		</li>
 	</ol>
