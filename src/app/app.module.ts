@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { environment } from '../environments/environment';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { AuthAnonComponent } from './auth-anon/auth-anon.component';
+import { RoomComponent } from './room/room.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthAnonComponent } from './auth-anon/auth-anon.component';
     MessagesComponent,
     DashboardComponent,
     LoginRegisterComponent,
-    AuthAnonComponent
+    AuthAnonComponent,
+    RoomComponent
   ],
   imports: [
     BrowserModule,

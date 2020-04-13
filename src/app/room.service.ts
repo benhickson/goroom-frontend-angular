@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 export class RoomService {
 
   private roomsUrl = `${environment.apiUrl}/rooms`;
+  private roomsByNameUrl = `${environment.apiUrl}/rooms/show_name`;
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type':'application/json'})
@@ -35,6 +36,14 @@ export class RoomService {
     return this.httpClient.get<Room>(url).pipe(
       tap(_ => this.log(`fetched room id=${id}`)),
       catchError(this.handleError<Room>(`getRoom id=${id}`))
+    );
+  }
+
+  getRoomByName(name: string): Observable<Room> {
+    const url = `${this.roomsByNameUrl}/${name}`;
+    return this.httpClient.get<Room>(url).pipe(
+      tap(_ => this.log(`fetched room name=${name}`)),
+      catchError(this.handleError<Room>(`getRoom name=${name}`))
     );
   }
 
