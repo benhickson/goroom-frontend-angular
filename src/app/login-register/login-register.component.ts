@@ -34,7 +34,9 @@ export class LoginRegisterComponent implements OnInit {
         (response) => {
           console.log('logged in');
           this.resetForms();
-          this.router.navigateByUrl('dashboard');
+          // TODO: do this the angular way, rather than reloading the whole page
+          // this.router.navigateByUrl('dashboard');
+          location.href = '/';
         }
       );
   }
@@ -50,7 +52,9 @@ export class LoginRegisterComponent implements OnInit {
         (response) => {
           console.log('registered');
           this.resetForms();
-          this.router.navigateByUrl('dashboard');
+          // TODO: do this the angular way, rather than reloading the whole page
+          // this.router.navigateByUrl('dashboard');
+          location.href = '/';
         }
       );
   }
