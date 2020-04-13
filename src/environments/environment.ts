@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000',
-  whitelistedDomains: ['localhost:3000'],
+  apiUrl: 'http://ben-air.local:3000',
+  whitelistedDomains: ['ben-air.local:3000'],
   agora: {
     appId: '516c8452e59e4505aed64d368917ffca'
   }

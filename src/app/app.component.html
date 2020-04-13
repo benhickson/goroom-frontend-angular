@@ -1,8 +1,7 @@
 <div *ngIf="authed; else notAuthed">
 	<nav>
 		<h1 class="logo">{{ title }}</h1>
-		<a routerLink="/dashboard">Dashboard</a>
-		<a routerLink="/rooms">Rooms</a>
+		<a routerLink="/rooms">Open Rooms</a>
 		<a routerLink="/login">Account: {{ display_name | titlecase }}</a>
 	</nav>
 	<router-outlet></router-outlet>
