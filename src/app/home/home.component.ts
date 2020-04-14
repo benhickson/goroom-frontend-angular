@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from '../user.service';
 
 @Component({
@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   openJoin: boolean = false;
   closeStart: boolean = false;
   closeJoin: boolean = false;
+  @ViewChild('startRoomName') startRoomNameField: ElementRef;
+  @ViewChild('joinRoomName') joinRoomNameField: ElementRef;
 
   constructor(private userService: UserService) { }
 
@@ -44,6 +46,7 @@ export class HomeComponent implements OnInit {
     this.closeStart = false;
     this.openStart = true;
     this.closeJoin = true;
+    setTimeout(() => this.startRoomNameField.nativeElement.focus(), 100);
   }
   
   openJoinClick(): void {
@@ -52,6 +55,15 @@ export class HomeComponent implements OnInit {
     this.closeJoin = false;
     this.openJoin = true;
     this.closeStart = true;
+    setTimeout(() => this.joinRoomNameField.nativeElement.focus(), 100);
+  }
+
+  startRoom(roomName){
+    console.log('starting and joining room: ', roomName);
+  }
+
+  joinRoom(roomName){
+    console.log('joining room: ', roomName);
   }
 
 }

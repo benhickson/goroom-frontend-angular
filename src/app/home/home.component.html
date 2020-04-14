@@ -2,8 +2,8 @@
 	<div id="video-or-pic" (click)="videoOrPicClick()"></div>
 	<div class="quick-details" *ngIf="fullUser; else anonUser">
 		<p>{{ display_name }}</p>
-		<p>(Location)</p>
-		<p>(etc)</p>
+		<!-- <p>(Location)</p> -->
+		<!-- <p>(etc)</p> -->
 	</div>
 	<ng-template #anonUser>
 	<div class="quick-details">
@@ -15,15 +15,15 @@
 	<div id="start-a-room" (click)="openStartClick()" [class.open]="openStart" [class.closed]="closeStart">
 		Start a Room
 		<div class="display-when-open">
-			<div><input type="text" placeholder="Enter a Room Name" /></div>
-			<div><button>Go</button></div>
+			<div><input #startRoomName type="text" placeholder="Enter a Room Name" /></div>
+			<div><button (click)='startRoom(startRoomName.value); joinRoomName.value=""; startRoomName.value="";'>Go</button></div>
 		</div>
 	</div>
 	<div id="join-a-room" (click)="openJoinClick()" [class.open]="openJoin" [class.closed]="closeJoin">
 		Join a Room
 		<div class="display-when-open">
-			<div><input type="text" placeholder="Enter a Room Name" /></div>
-			<div><button>Go</button></div>
+			<div><input #joinRoomName type="text" placeholder="Enter a Room Name" /></div>
+			<div><button (click)='joinRoom(joinRoomName.value); joinRoomName.value=""; startRoomName.value="";'>Go</button></div>
 		</div>
 	</div>
 </div>
