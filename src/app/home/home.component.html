@@ -1,12 +1,12 @@
 <div id="video-pic-block">
-	<div id="video-or-pic" (click)="videoOrPicClick()">(Video Preview or<br /> Profile Picture)</div>
-	<div *ngIf="fullUser; else anonUser">
+	<div id="video-or-pic" (click)="videoOrPicClick()"></div>
+	<div class="quick-details" *ngIf="fullUser; else anonUser">
 		<p>{{ display_name }}</p>
 		<p>(Location)</p>
 		<p>(etc)</p>
 	</div>
 	<ng-template #anonUser>
-	<div>
+	<div class="quick-details">
 		<p>{{ display_name | titlecase }}</p>
 	</div>
 	</ng-template>
