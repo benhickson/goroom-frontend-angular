@@ -1,0 +1,55 @@
+#video-pic-block, #start-join-block{
+	display: inline-block;
+	position: absolute;
+	top: calc((100vh - (15vw + 15vw + 3vw))/2 * 0.9);
+
+	& > *{
+		border-radius: 0.45vw;
+	}
+}
+
+#video-pic-block{
+	left: 22.3vw;
+	
+	p{
+		font-size: 1.3vw;
+		line-height: 1.5vw;
+	}
+}
+#video-or-pic{
+	background-color: rgb(0, 102, 143);
+	width: 22vw;
+	height: 22vw;
+	text-align: center;
+	font-size: 1.4vw;
+	overflow: hidden;
+	padding-top: 10vw;
+	box-sizing: border-box;
+}
+
+#start-join-block{
+	right: 22.3vw;
+
+	& > *{
+		width: 30vw;
+		height: 13vw;
+		line-height: 13vw;
+		text-align: center;
+		font-size: 2.2vw;
+		cursor: pointer;
+		border-width: 1px;
+		border-style: solid;
+		border-color: transparent;
+	}
+	& > *:hover{
+		color: white;
+		border-color: white;
+	}
+}
+#start-a-room{
+	background-color: rgb(0, 74, 143);
+	margin-bottom: 3vw;
+}
+#join-a-room{
+	background-color: rgb(0, 143, 131);
+}

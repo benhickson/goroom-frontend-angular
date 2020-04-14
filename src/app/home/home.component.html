@@ -1,0 +1,17 @@
+<div id="video-pic-block">
+	<div id="video-or-pic" (click)="videoOrPicClick()">(Video Preview or<br /> Profile Picture)</div>
+	<div *ngIf="fullUser; else anonUser">
+		<p>{{ display_name }}</p>
+		<p>(Location)</p>
+		<p>(etc)</p>
+	</div>
+	<ng-template #anonUser>
+	<div>
+		<p>{{ display_name | titlecase }}</p>
+	</div>
+	</ng-template>
+</div>
+<div id="start-join-block">
+	<div id="start-a-room" (click)="startARoom()">Start a Room</div>
+	<div id="join-a-room" (click)="joinARoom()">Join a Room</div>
+</div>

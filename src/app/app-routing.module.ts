@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RoomsComponent } from './rooms/rooms.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 import { RoomComponent } from './room/room.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 
@@ -12,7 +13,7 @@ const routes: Routes = [
   { path: ':name', component: RoomComponent },
   
   // default route / root route
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
+  { path: '', component: HomeComponent }
 ];
 
 @NgModule({

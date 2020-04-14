@@ -15,6 +15,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { AuthAnonComponent } from './auth-anon/auth-anon.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthAnonComponent } from './auth-anon/auth-anon.component';
     DashboardComponent,
     LoginRegisterComponent,
     AuthAnonComponent,
-    RoomComponent
+    RoomComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
