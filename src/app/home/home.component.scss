@@ -44,11 +44,64 @@
 		border-width: 1px;
 		border-style: solid;
 		border-color: transparent;
+		transition: all ease 100ms;
+		overflow: hidden;
+
+		.display-when-open{
+			display: none;
+			line-height: initial;
+			text-align: center;
+			width: 100%;
+
+			div {
+				// display: block;
+				
+				input{
+					border: none;
+					font-size: 1.7vw;
+					padding: 0.6vw;
+					text-align: center;
+					background-color: rgba(255,255,255,0.95);
+					color: #383838;
+					width: 70%;
+				}
+				button{
+					border: none;
+					font-size: 1.5vw;
+					padding: 0.7vw 2vw;
+					margin-top: 1.2vw;
+					border-width: 2px;
+					border-radius: 0.4vw;
+					cursor: pointer;
+					text-transform: uppercase;
+					font-family: Muli, sans-serif;
+					font-style: italic;
+					color: #383838;
+				}
+				button:hover{
+					color: #222;
+				}
+			}
+			
+		}
+	}
+	& > *.open{
+		height: 22vw;
+		border-color: rgba(255, 255, 255, 0.637);
+		cursor: initial;
+		
+		.display-when-open{
+			display: initial;
+		}
+	}
+	& > *.closed{
+		height: 4vw;
+		line-height: 4vw;
 	}
 	& > *:hover{
 		color: white;
 		border-color: white;
-	}
+	}	
 }
 #start-a-room{
 	background-color: rgb(0, 74, 143);

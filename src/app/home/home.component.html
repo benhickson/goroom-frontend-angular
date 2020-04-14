@@ -12,6 +12,18 @@
 	</ng-template>
 </div>
 <div id="start-join-block">
-	<div id="start-a-room" (click)="startARoom()">Start a Room</div>
-	<div id="join-a-room" (click)="joinARoom()">Join a Room</div>
+	<div id="start-a-room" (click)="openStartClick()" [class.open]="openStart" [class.closed]="closeStart">
+		Start a Room
+		<div class="display-when-open">
+			<div><input type="text" placeholder="Enter a Room Name" /></div>
+			<div><button>Go</button></div>
+		</div>
+	</div>
+	<div id="join-a-room" (click)="openJoinClick()" [class.open]="openJoin" [class.closed]="closeJoin">
+		Join a Room
+		<div class="display-when-open">
+			<div><input type="text" placeholder="Enter a Room Name" /></div>
+			<div><button>Go</button></div>
+		</div>
+	</div>
 </div>

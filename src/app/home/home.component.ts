@@ -10,6 +10,10 @@ export class HomeComponent implements OnInit {
 
   fullUser: boolean;
   display_name: string;
+  openStart: boolean = false;
+  openJoin: boolean = false;
+  closeStart: boolean = false;
+  closeJoin: boolean = false;
 
   constructor(private userService: UserService) { }
 
@@ -34,12 +38,20 @@ export class HomeComponent implements OnInit {
     console.log('vidpic clicked');
   }
 
-  startARoom(): void {
+  openStartClick(): void {
     console.log('start a room clicked');
+    this.openJoin = false;
+    this.closeStart = false;
+    this.openStart = true;
+    this.closeJoin = true;
   }
   
-  joinARoom(): void {
+  openJoinClick(): void {
     console.log('join a room clicked');
+    this.openStart = false;
+    this.closeJoin = false;
+    this.openJoin = true;
+    this.closeStart = true;
   }
 
 }

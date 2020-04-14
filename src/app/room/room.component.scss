@@ -16,3 +16,17 @@
 	width: 20vw;
 	height: 20vw;
 }
+
+#room {
+    width: 100vw;
+	height: 100vh;
+    position: fixed;
+    top: 0;
+    background-color: #191919;
+	z-index: 1;
+	
+	& > * {
+		width: 100%;
+		height: 100%;
+	}
+}
