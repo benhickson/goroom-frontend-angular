@@ -4,8 +4,14 @@
 		<!-- <p>Room Id: {{room.id}}</p> -->
 		<!-- <p>Room Creator Id: {{room.creator_id}}</p> -->
 		
-		<div [id]="localCallId" class="camera local"></div>
-		<div *ngFor="let callId of remoteCalls" [id]="callId" class="camera remote"></div>
+		<div class="camera-container">
+			<div [id]="localCallId" class="camera local"></div>
+			<div class="info">{{ display_name }}</div>
+		</div>
+		<div *ngFor="let callId of remoteCalls" class="camera-container">
+			<div [id]="callId" class="camera remote"></div>
+			<div class="info">{{ remoteCallUsers[callId] | displayName | titlecase }}</div>
+		</div>
 	</div>
 	<div *ngIf="roomNotFound">
 		Room not found.

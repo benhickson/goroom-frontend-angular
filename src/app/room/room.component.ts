@@ -3,6 +3,8 @@ import { Room } from '../room';
 import { ActivatedRoute } from '@angular/router';
 import { RoomService } from '../room.service';
 import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from 'ngx-agora';
+import { UserService } from '../user.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-room',
@@ -13,9 +15,13 @@ export class RoomComponent implements OnInit {
 
   room: Room;
   roomNotFound: boolean = false;
+  user: User;
+  display_name: string;
+  fullUser: boolean;
 
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
+  remoteCallUsers = {};
 
   private client: AgoraClient;
   private localStream: Stream;
@@ -24,19 +30,34 @@ export class RoomComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private roomService: RoomService,
-    private ngxAgoraService: NgxAgoraService
-  ) { 
-    this.uid = Math.floor(Math.random() * 100);
-  }
+    private ngxAgoraService: NgxAgoraService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
-    this.joinRoom();
+    this.setUserAndJoinRoom();
   }
 
   ngOnDestroy(): void {
     if (this.room) { 
       this.leave();
     }
+  }
+
+  setUserAndJoinRoom(): void {
+    this.userService.getCurrentUser()
+      .subscribe(user => {
+        this.user = user;
+        if (user.display_name) {
+          this.display_name = user.display_name;
+          this.fullUser = true;
+        } else {
+          this.display_name = `Anonymous ${user.anon_display_name}`;
+          this.fullUser = false;
+        }
+        this.uid = user.id;
+        this.joinRoom();
+      });
   }
 
   joinRoom(): void {
@@ -68,6 +89,16 @@ export class RoomComponent implements OnInit {
           this.roomNotFound = true;
         }
       });
+  }
+
+  getRemoteUser(remoteCallId, stream){
+    this.userService.getUser(remoteCallId.split('-')[2])
+      .subscribe(user => {
+        console.log(user);
+        this.remoteCallUsers[remoteCallId] = user;
+        this.remoteCalls.push(remoteCallId);
+        setTimeout(() => stream.play(remoteCallId), 1000);
+      })
   }
 
   /**
@@ -145,8 +176,7 @@ export class RoomComponent implements OnInit {
       const stream = event.stream as Stream;
       const id = this.getRemoteId(stream);
       if (!this.remoteCalls.includes(id)) { 
-        this.remoteCalls.push(id);
-        setTimeout(() => stream.play(id), 1000);
+        this.getRemoteUser(id, stream);
       }
     });
 
