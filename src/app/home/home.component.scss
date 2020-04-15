@@ -41,11 +41,12 @@
 		text-align: center;
 		font-size: 2.2vw;
 		cursor: pointer;
-		border-width: 1px;
-		border-style: solid;
-		border-color: transparent;
+		// border-width: 0.2vw;
+		// border-style: solid;
+		// border-color: transparent;
 		transition: all ease 100ms;
 		overflow: hidden;
+		color: rgb(236, 236, 236);
 
 		.display-when-open{
 			display: none;
@@ -103,13 +104,13 @@
 	}
 	& > *:hover{
 		color: white;
-		border-color: white;
-	}	
+		font-size: 2.4vw;
+	}
 }
 #start-a-room{
-	background-color: rgb(0, 74, 143);
-	margin-bottom: 3vw;
+	background-color: #2184FF;
+	margin-bottom: 3vw;	
 }
 #join-a-room{
-	background-color: rgb(0, 143, 131);
+	background-color: #CC4945;
 }
