@@ -12,6 +12,7 @@ import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from '
 export class RoomComponent implements OnInit {
 
   room: Room;
+  roomNotFound: boolean = false;
 
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
@@ -30,26 +31,7 @@ export class RoomComponent implements OnInit {
 
   ngOnInit(): void {
     this.joinRoom();
-    this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
-    this.assignClientHandlers();
-
-    // initialize local A/V stream
-    this.localStream = this.ngxAgoraService.createStream({
-      streamID: `user_id-${this.uid}`,
-      audio: true,
-      video: true,
-      screen: false
-    });
-    this.assignLocalStreamHandlers();
-    this.initLocalStream(
-      () => this.join(
-        uid => this.publish(),
-        error => console.error(error)
-      )
-    );
   }
-
-  
 
   ngOnDestroy(): void {
     this.leave();
@@ -58,7 +40,32 @@ export class RoomComponent implements OnInit {
   joinRoom(): void {
     const name: string = this.route.snapshot.paramMap.get('name');
     this.roomService.getRoomByName(name)
-      .subscribe(room => this.room = room);
+      .subscribe(room => {
+        this.room = room;
+        if (this.room) {
+          console.log('joining room');
+          this.client = this.ngxAgoraService.createClient({ mode: 'rtc', codec: 'h264' });
+          this.assignClientHandlers();
+      
+          // initialize local A/V stream
+          this.localStream = this.ngxAgoraService.createStream({
+            streamID: `user_id-${this.uid}`,
+            audio: true,
+            video: true,
+            screen: false
+          });
+          this.assignLocalStreamHandlers();
+          this.initLocalStream(
+            () => this.join(
+              uid => this.publish(),
+              error => console.error(error)
+            )
+          );
+        } else {
+          console.log('room not found');
+          this.roomNotFound = true;
+        }
+      });
   }
 
   /**

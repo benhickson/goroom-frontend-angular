@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,10 @@ export class HomeComponent implements OnInit {
   @ViewChild('startRoomName') startRoomNameField: ElementRef;
   @ViewChild('joinRoomName') joinRoomNameField: ElementRef;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.setDisplayNameAndUserType();
@@ -64,6 +68,7 @@ export class HomeComponent implements OnInit {
 
   joinRoom(roomName){
     console.log('joining room: ', roomName);
+    this.router.navigate(roomName);
   }
 
 }
