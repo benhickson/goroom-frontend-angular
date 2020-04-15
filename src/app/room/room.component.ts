@@ -16,7 +16,6 @@ export class RoomComponent implements OnInit {
   room: Room;
   roomNotFound: boolean = false;
   user: User;
-  display_name: string;
   fullUser: boolean;
 
   localCallId = 'agora_local';
@@ -49,10 +48,8 @@ export class RoomComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
         if (user.display_name) {
-          this.display_name = user.display_name;
           this.fullUser = true;
         } else {
-          this.display_name = `Anonymous ${user.anon_display_name}`;
           this.fullUser = false;
         }
         this.uid = user.id;

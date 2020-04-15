@@ -6,11 +6,11 @@
 		
 		<div class="camera-container">
 			<div [id]="localCallId" class="camera local"></div>
-			<div class="info">{{ display_name }}</div>
+			<div class="info">{{ user | displayName }}</div>
 		</div>
 		<div *ngFor="let callId of remoteCalls" class="camera-container">
 			<div [id]="callId" class="camera remote"></div>
-			<div class="info">{{ remoteCallUsers[callId] | displayName | titlecase }}</div>
+			<div class="info">{{ remoteCallUsers[callId] | displayName }}</div>
 		</div>
 	</div>
 	<div *ngIf="roomNotFound">

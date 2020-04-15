@@ -2,7 +2,7 @@
 	<nav>
 		<a routerLink="/"><h1 class="logo">{{ title }}</h1></a>
 		<a routerLink="/rooms" class="link">My Rooms</a>
-		<a routerLink="/login" class="link">{{ display_name | titlecase }}</a>
+		<a routerLink="/login" class="link">{{ user | displayName }}</a>
 	</nav>
 	<router-outlet></router-outlet>
 	<app-messages></app-messages>

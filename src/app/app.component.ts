@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
+import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ export class AppComponent implements OnInit {
 
   authed: boolean = !!localStorage.getItem("auth_token");
   title: string = 'GO ROOM';
-  display_name: string;
+  user: User;
 
   constructor(private userService: UserService) { }
 
@@ -21,11 +22,7 @@ export class AppComponent implements OnInit {
   setDisplayName(): void {
     this.userService.getCurrentUser()
       .subscribe(user => {
-        if (user.display_name) {
-          this.display_name = user.display_name;
-        } else {
-          this.display_name = `Anonymous ${user.anon_display_name}`;
-        }
+        this.user = user;
       });
   }
 
