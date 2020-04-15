@@ -15,15 +15,15 @@
 	<div id="start-a-room" (click)="openStartClick()" [class.open]="openStart" [class.closed]="closeStart">
 		Start a Room
 		<div class="display-when-open">
-			<div><input #startRoomName type="text" placeholder="Enter a Room Name" (keydown)="onKeydownStart($event)" /></div>
-			<div><button (click)='startRoom(startRoomName.value); joinRoomName.value=""; startRoomName.value="";'>Go</button></div>
+			<div><input #startRoomNameInput [(ngModel)]="startRoomName" type="text" placeholder="Enter a Room Name" (keydown.enter)="startRoom()" /></div>
+			<div><button (click)='startRoom()'>Go</button></div>
 		</div>
 	</div>
 	<div id="join-a-room" (click)="openJoinClick()" [class.open]="openJoin" [class.closed]="closeJoin">
 		Join a Room
 		<div class="display-when-open">
-			<div><input #joinRoomName type="text" placeholder="Enter a Room Name" (keydown)="onKeydownJoin($event)" /></div>
-			<div><button (click)='joinRoom(joinRoomName.value); joinRoomName.value=""; startRoomName.value="";'>Go</button></div>
+			<div><input #joinRoomNameInput [(ngModel)]="joinRoomName" type="text" placeholder="Enter a Room Name" (keydown.enter)="joinRoom()" /></div>
+			<div><button (click)='joinRoom()'>Go</button></div>
 		</div>
 	</div>
 </div>

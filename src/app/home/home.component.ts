@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { Room } from '../room';
+import { RoomService } from '../room.service';
 
 @Component({
   selector: 'app-home',
@@ -15,12 +17,16 @@ export class HomeComponent implements OnInit {
   openJoin: boolean = false;
   closeStart: boolean = false;
   closeJoin: boolean = false;
-  @ViewChild('startRoomName') startRoomNameField: ElementRef;
-  @ViewChild('joinRoomName') joinRoomNameField: ElementRef;
-
+  @ViewChild('startRoomNameInput') startRoomNameField: ElementRef;
+  @ViewChild('joinRoomNameInput') joinRoomNameField: ElementRef;
+  startRoomName: string;
+  joinRoomName: string;
+  newRoom: Room;
+  
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private roomService: RoomService
   ) { }
 
   ngOnInit(): void {
@@ -62,24 +68,24 @@ export class HomeComponent implements OnInit {
     setTimeout(() => this.joinRoomNameField.nativeElement.focus(), 100);
   }
 
-  startRoom(roomName){
-    console.log('starting and joining room:', roomName);
+  startRoom(){
+    console.log('starting and joining room:', this.startRoomName);
+    
+    const name = this.startRoomName;
+    if (!name) { return; } // return early if the room name is blank
+    this.roomService.addRoom({ name } as Room)
+      .subscribe(room => {
+        if (room) {
+          this.newRoom = room;
+          console.log('new room created:', this.newRoom);
+          this.router.navigate([this.newRoom.name]);
+        }
+      })
   }
 
-  joinRoom(roomName){
-    console.log('joining room:', roomName);
-    this.router.navigate([roomName]);
-  }
-
-  onKeydownStart(event) {
-    if (event.key === "Enter") {
-      this.startRoom(event.target.value);
-    }
-  }
-  onKeydownJoin(event) {
-    if (event.key === "Enter") {
-      this.joinRoom(event.target.value);
-    }
+  joinRoom(){
+    console.log('joining room:', this.joinRoomName);
+    this.router.navigate([this.joinRoomName]);
   }
 
 }
