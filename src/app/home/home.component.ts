@@ -63,12 +63,23 @@ export class HomeComponent implements OnInit {
   }
 
   startRoom(roomName){
-    console.log('starting and joining room: ', roomName);
+    console.log('starting and joining room:', roomName);
   }
 
   joinRoom(roomName){
-    console.log('joining room: ', roomName);
-    this.router.navigate(roomName);
+    console.log('joining room:', roomName);
+    this.router.navigate([roomName]);
+  }
+
+  onKeydownStart(event) {
+    if (event.key === "Enter") {
+      this.startRoom(event.target.value);
+    }
+  }
+  onKeydownJoin(event) {
+    if (event.key === "Enter") {
+      this.joinRoom(event.target.value);
+    }
   }
 
 }

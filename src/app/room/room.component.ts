@@ -34,7 +34,9 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.leave();
+    if (this.room) { 
+      this.leave();
+    }
   }
 
   joinRoom(): void {
