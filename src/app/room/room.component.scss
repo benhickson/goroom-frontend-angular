@@ -8,22 +8,74 @@ div{
 	text-align: center;
 
 	#loaded-when-room-received {
-		width: 100%;
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-column-gap: 1vw;
+		grid-row-gap: 0;
 		height: 100%;
-		max-width: 100vh;
-		max-height: calc(100vw - 40px);
-		display: inline-flex;
-		flex-wrap: wrap;
-		justify-content: center;	
-		text-align: left;
+		text-align: initial;
+		padding: 1.1vw;
+		box-sizing: border-box;
+
+		& > * {
+			min-width: 0;
+			min-height: 0;
+		}
+	}
+	#loaded-when-room-received.cameracount-2 {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: 1fr;
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 1) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-4 {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 2) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-6 {
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 2) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-9 {
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 3) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-12 {
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+	
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 3) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-16 {
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(4, 1fr);
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 4) - (2.1vw)) - 2vw);
+		}
 	}
 }
 .camera-container {
-	flex: 0 0 31%;
-	margin: 0 1%;
+
 	display: flex;
 	align-items: center;
-	max-height: calc(100vw - 40px);
+	justify-content: center;
 
 	.vertical-centering{
 		width: 100%;
@@ -32,17 +84,22 @@ div{
 			width: 100%;
 			padding-bottom: 100%;
 			position: relative;
-			// background-color: darkslategrey;
 			border-radius: 1vw;
 			overflow: hidden;
+
+			// for designing without videos
+			background-color: darkslategrey;
+			// TODO: add somekind of TV fuzz or digital stuff, or loading spinner instead
+			// TODO: show the user's profile photo instead, to also use when they're muted
 		}
 		.camera.zeroed{
+			// options for handling animations when people join
 			// transform: scale(0);
 			padding-bottom: 20%;
 			// padding-bottom: 0;
 		}
 		.info {
-			padding: 0.7vw 1vw;
+			padding: 0.3vw 1vw 0.4vw 1vw;
 			font-size: 1.4vw;
 		}
 	}

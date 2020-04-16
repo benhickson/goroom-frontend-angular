@@ -22,6 +22,8 @@ export class RoomComponent implements OnInit {
   remoteCalls: string[] = [];
   remoteCallUsers = {};
 
+  cameraCountClassNumber: number = 2;
+
   private client: AgoraClient;
   private localStream: Stream;
   private uid: number;
@@ -94,6 +96,7 @@ export class RoomComponent implements OnInit {
         console.log(user);
         this.remoteCallUsers[remoteCallId] = user;
         this.remoteCalls.push(remoteCallId);
+        this.updateCameraCount();
         setTimeout(() => stream.play(remoteCallId), 1000);
       })
   }
@@ -181,7 +184,9 @@ export class RoomComponent implements OnInit {
       const stream = event.stream as Stream;
       if (stream) {
         stream.stop();
+        // probably not running?
         this.remoteCalls.filter(call => call !== this.getRemoteId(stream));
+        // not running?
         console.log(`Remote stream is removed ${stream.getId()}`);
       }
     });
@@ -192,6 +197,7 @@ export class RoomComponent implements OnInit {
         stream.stop();
         this.remoteCalls = this.remoteCalls.filter(call => call !== `${this.getRemoteId(stream)}`);
         console.log(`${event.uid} left from this channel`);
+        this.updateCameraCount();
       }
     });
 
@@ -199,6 +205,23 @@ export class RoomComponent implements OnInit {
 
   private getRemoteId(stream: Stream): string {
     return `agora_remote-${stream.getId()}`;
-  }  
+  }
+
+  private updateCameraCount() {
+    console.log('new remote camera count:', this.remoteCalls.length);
+    if (this.remoteCalls.length < 2){
+      this.cameraCountClassNumber = 2;
+    } else if (this.remoteCalls.length < 4){
+      this.cameraCountClassNumber = 4;
+    } else if (this.remoteCalls.length < 6){
+      this.cameraCountClassNumber = 6;
+    } else if (this.remoteCalls.length < 9){
+      this.cameraCountClassNumber = 9;
+    } else if (this.remoteCalls.length < 12){
+      this.cameraCountClassNumber = 12;
+    } else if (this.remoteCalls.length < 16){
+      this.cameraCountClassNumber = 16;
+    }
+  }
   
 }
