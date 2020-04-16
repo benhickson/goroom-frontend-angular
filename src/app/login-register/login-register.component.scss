@@ -1,13 +1,17 @@
+#flex-container{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: calc(100vh - 40px);
+}
 #login-register-container{
-	background-color: #333;
-    position: fixed;
-    top: 30vh;
-    left: 50vw;
-    margin-left: -23%;
-    width: 400px;
-    height: 400px;
-    max-height: 50vh;
-	max-width: 50vh;
+	background-color: #02172b;
+    height: 60vh;
+    width: 60vh;
+    position: relative;
+    color: #F8F8F8;
+    border-radius: 1.2vw;
+    overflow: hidden;
 
 	& > div{
 		width: 100%;
@@ -18,44 +22,57 @@ form{
 }
 .right-align-form{
 	text-align: right;
-    width: 90%;
     display: inline-block;
 }
 label{
 	display: block;
-	width: 100%;
-	margin-bottom: 8px;
+    margin-bottom: 2vh;
+    font-size: 2.9vh;
 }
 input{
-	width: 50%;
-	height: 23px;
-    font-size: 15px;
-    padding: 5px;
+	height: 4.2vh;
+    font-size: 3vh;
+    padding: 1vh;
+    width: 30vh;
+}
+.btn, .toggle{
+	cursor: pointer;
+	font-size: 3vh;
+	width: 15vh;
+	box-sizing: border-box;
 }
 .btn{
-	border-radius: 6px;
-    font-size: 14px;
-    line-height: 16px;
-    padding: 12px 35px;
-    margin-top: 7px;
+	border-radius: 1vh;
+    margin-top: 1vh;
+    background-color: #fdfefc;
+    border-width: 0;
+    color: #02182b;
+    line-height: 7vh;
+    white-space: nowrap;
+    padding: 0 3vw;
+    width: auto;
 }
 .toggle{
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	background-color: rgb(21, 54, 46);
-	padding: 10px 25px;
 	color: #eee;
 	border: none;
-	cursor: pointer;
-	font-size: 16px;
-	min-width: 125px;
+	background-color: #2184FF;
+	border-radius: 0.7vw 0;
+	line-height: 7vh;
+    width: 22vh;
 }
 .logout{
 	right: initial;
 	left: 0;
-	background-color: rgb(54, 21, 32);
+	background-color: #da3b36;
+    border-radius: 0 0.7vw;
+}
+.btn:hover, .toggle:hover, .logout:hover{
+	text-decoration: underline;
 }
 .title{
 	margin-left: 10%;
+	font-size: 4.5vh;
 }
