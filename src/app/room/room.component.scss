@@ -1,102 +1,114 @@
+div{
+	transition: all ease 200ms;
+}
 #room {
 	width: 100vw;
 	height: calc(100vh - 40px);
 	top: 0;
-	padding: 2vw 2vw 0 0;
-	
-	& > * {
-		width: 100%;
+	text-align: center;
+
+	#loaded-when-room-received {
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-column-gap: 1vw;
+		grid-row-gap: 0;
 		height: 100%;
+		text-align: initial;
+		padding: 1.1vw;
+		box-sizing: border-box;
+
+		& > * {
+			min-width: 0;
+			min-height: 0;
+		}
+	}
+	#loaded-when-room-received.cameracount-2 {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: 1fr;
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 1) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-4 {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 2) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-6 {
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(2, 1fr);
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 2) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-9 {
+		grid-template-columns: repeat(3, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 3) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-12 {
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(3, 1fr);
+	
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 3) - (2.1vw)) - 2vw);
+		}
+	}
+	#loaded-when-room-received.cameracount-16 {
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: repeat(4, 1fr);
+		
+		.vertical-centering{
+			max-width: calc((((100vh - 40px) / 4) - (2.1vw)) - 2vw);
+		}
 	}
 }
 .camera-container {
-	display: inline-block;
-	margin: 0 0 2vw 2vw;
 
-	.camera{
-		width: 20vw;
-		height: 20vw;
-		border-radius: 5px;
-		overflow: hidden;
-	}
-	.info {
-		padding: 0.7vw 1vw;
-		font-size: 1.8vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.vertical-centering{
+		width: 100%;
+
+		.camera{
+			width: 100%;
+			padding-bottom: 100%;
+			position: relative;
+			border-radius: 1vw;
+			overflow: hidden;
+
+			// for designing without videos
+			background-color: darkslategrey;
+			// TODO: add somekind of TV fuzz or digital stuff, or loading spinner instead
+			// TODO: show the user's profile photo instead, to also use when they're muted
+		}
+		.camera.zeroed{
+			// options for handling animations when people join
+			// transform: scale(0);
+			padding-bottom: 20%;
+			// padding-bottom: 0;
+		}
+		.info {
+			padding: 0.3vw 1vw 0.4vw 1vw;
+			font-size: 1.4vw;
+		}
 	}
 }
 .local {
-
+	box-shadow: none;
+	// placeholder for more styles
 }
 .remote {
-	
-}
-
-/* Sizing */
-.cameracount-2, .cameracount-4{
-	height: 30%;
-	line-height: 28vh;
-	width: 28%;
-}
-.cameracount-6{
-	height: 27%;
-	line-height: 21vh;
-	width: 28%;
-}
-
-/* 2-camera positioning */
-.cameracount-2{
-	top: calc((100vh - 30vh)/2 + 20px);
-}
-.cameracount-2:nth-of-type(1){
-	left: 3%;
-}
-.cameracount-2:nth-of-type(2){
-	left: 69%;
-}
-
-/* 4-camera positioning */
-.cameracount-4:nth-of-type(1),
-.cameracount-4:nth-of-type(2){
-	top: 15%;
-}
-.cameracount-4:nth-of-type(1),
-.cameracount-4:nth-of-type(4){
-	left: 3%;
-}
-.cameracount-4:nth-of-type(2),
-.cameracount-4:nth-of-type(3){
-	left: 69%;
-}
-.cameracount-4:nth-of-type(3),
-.cameracount-4:nth-of-type(4){
-	top: 60%;
-}
-
-/* 6-camera positioning */
-.cameracount-6:nth-of-type(1),
-.cameracount-6:nth-of-type(3){
-	top: calc((100% - 40px) * 0.20);
-}
-.cameracount-6:nth-of-type(1),
-.cameracount-6:nth-of-type(6){
-	left: 3%;
-}
-.cameracount-6:nth-of-type(3),
-.cameracount-6:nth-of-type(4){
-	left: 69%;
-}
-.cameracount-6:nth-of-type(4),
-.cameracount-6:nth-of-type(6){
-	top: 60%;
-}
-.cameracount-6:nth-of-type(2),
-.cameracount-6:nth-of-type(5){
-	left: 50%;
-	margin-left: -14%;
-}
-.cameracount-6:nth-of-type(2){
-	top: calc((100% - 40px) * 0.08);
-}
-.cameracount-6:nth-of-type(5){
-	top: 69%;
+	box-shadow: none;
+	// placeholder for more styles
 }
