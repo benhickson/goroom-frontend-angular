@@ -1,7 +1,7 @@
 <div *ngIf="authed; else notAuthed">
 	<nav>
 		<a routerLink="/"><h1 class="logo">{{ title }}</h1></a>
-		<a routerLink="/login" class="link">{{ user.email ? (user | displayName) : 'Sign in'}}</a>
+		<a routerLink="/login" class="link"><span *ngIf="user">{{ user.email ? (user | displayName) : 'Sign in'}}</span></a>
 		<a routerLink="/rooms" class="link">My Rooms</a>
 	</nav>
 	<router-outlet></router-outlet>
