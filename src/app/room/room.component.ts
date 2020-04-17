@@ -18,6 +18,7 @@ export class RoomComponent implements OnInit {
   user: User;
   fullUser: boolean;
   profiledUser: User;
+  time: number;
 
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
@@ -54,7 +55,7 @@ export class RoomComponent implements OnInit {
       .subscribe(user => {
         console.log('profile loaded:', user);
         this.profiledUser = user;
-
+        this.time = Date.now();
         if (this.sidebarOpen) {
           // clear/reset any content if necessary
         } else {
