@@ -1,11 +1,16 @@
 div{
 	transition: all ease 200ms;
 }
-#room {
-	width: 100vw;
+#room, #sidebar{
+	display: inline-block;
 	height: calc(100vh - 40px);
 	top: 0;
+	position: absolute;
+}
+#room {
+	width: 100vw;
 	text-align: center;
+	box-shadow: -17px 0px 17px 16px rgba(0,0,0,0.75);
 
 	#loaded-when-room-received {
 		display: grid;
@@ -71,6 +76,39 @@ div{
 		}
 	}
 }
+#room.sidebar-open{
+	width: 68vw;
+}
+#sidebar{
+	background-color: rgba(0,0,0,0.1);
+    right: 0;
+	z-index: -1;
+	box-sizing: border-box;
+	width: 0;
+	overflow: hidden;
+}
+#sidebar.sidebar-open{
+    width: 32vw;
+}
+#sidebar-close-button{
+	cursor: pointer;
+}
+#sidebar-close-button:hover{
+	text-decoration: underline;
+}
+#profile{
+    width: 32vw;
+    height: 100%;
+    padding: 3vw;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+
+	h1{
+		font-size: 3vw;
+		margin-top: 0;
+	}
+}
 .camera-container {
 
 	display: flex;
@@ -101,12 +139,23 @@ div{
 		.info {
 			padding: 0.3vw 1vw 0.4vw 1vw;
 			font-size: 1.4vw;
+			cursor: pointer;
+		}
+		.info:hover{
+			text-decoration: underline;
 		}
 	}
 }
 .local {
-	// position:relative;
+	box-shadow: none;
+	// placeholder for more styles
 }
+.remote {
+	box-shadow: none;
+	// placeholder for more styles
+}
+
+// For the background image that prompts users to enable webcam
 @keyframes test {
 	0% {
 	  opacity: 0;
@@ -133,8 +182,4 @@ div{
 	animation-duration: 2s;
 	animation-fill-mode: forwards;
 	animation-timing-function: ease;
-}
-.remote {
-	box-shadow: none;
-	// placeholder for more styles
 }

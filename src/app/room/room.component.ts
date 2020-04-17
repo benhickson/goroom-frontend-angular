@@ -17,12 +17,15 @@ export class RoomComponent implements OnInit {
   roomNotFound: boolean = false;
   user: User;
   fullUser: boolean;
+  profiledUser: User;
 
   localCallId = 'agora_local';
   remoteCalls: string[] = [];
   remoteCallUsers = {};
 
   cameraCountClassNumber: number = 2;
+
+  sidebarOpen: boolean = false;
 
   private client: AgoraClient;
   private localStream: Stream;
@@ -43,6 +46,29 @@ export class RoomComponent implements OnInit {
     if (this.room) { 
       this.leave();
     }
+  }
+
+  loadProfile(user_id) {
+    console.log('loading profile of user_id:', user_id, '...');
+    this.userService.getUser(user_id)
+      .subscribe(user => {
+        console.log('profile loaded:', user);
+        this.profiledUser = user;
+
+        if (this.sidebarOpen) {
+          // clear/reset any content if necessary
+        } else {
+          this.sidebarOpen = true;
+        }
+      })
+    
+  }
+
+  openSidebar(): void {
+    this.sidebarOpen = true;
+  }
+  closeSidebar(): void {
+    this.sidebarOpen = false;
   }
 
   setUserAndJoinRoom(): void {
