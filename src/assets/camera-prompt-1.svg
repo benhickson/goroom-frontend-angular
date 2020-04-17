@@ -1,0 +1,17 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+ <!-- <g>
+  <title>background</title>
+  <rect fill="#fff" id="canvas_background" height="402" width="402" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g> -->
+ <g>
+  <title>Layer 1</title>
+  <text stroke="#000" font-weight="normal" xml:space="preserve" text-anchor="start" font-family="Arvo, sans-serif" font-size="35" id="svg_1" y="237.453125" x="28.046875" stroke-width="0" fill="#000000">Click "allow" to enable</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Arvo, sans-serif" font-size="35" id="svg_2" y="279.453125" x="36.601563" stroke-width="0" stroke="#000" fill="#000000">your camera and mic</text>
+  <path id="svg_6" d="m148.5,65.453125" opacity="0.5" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000"/>
+  <path transform="rotate(-90 200.00000000000003,128.08082580566406) " id="svg_9" d="m203.499476,128.080834l-20.499476,-35.000013l13.500523,0l20.499476,35.000013l-20.499476,34.999985l-13.500523,0l20.499476,-34.999985z" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000"/>
+ </g>
+</svg>

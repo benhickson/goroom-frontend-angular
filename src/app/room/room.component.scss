@@ -88,7 +88,7 @@ div{
 			overflow: hidden;
 
 			// for designing without videos
-			background-color: darkslategrey;
+			// background-color: darkslategrey;
 			// TODO: add somekind of TV fuzz or digital stuff, or loading spinner instead
 			// TODO: show the user's profile photo instead, to also use when they're muted
 		}
@@ -105,8 +105,34 @@ div{
 	}
 }
 .local {
-	box-shadow: none;
-	// placeholder for more styles
+	// position:relative;
+}
+@keyframes test {
+	0% {
+	  opacity: 0;
+	}
+	35%{
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+}
+.local:before {
+	content: "";
+	background-image: url('../../assets/camera-prompt-1.svg');
+    background-size: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	animation-name: test;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease;
 }
 .remote {
 	box-shadow: none;
