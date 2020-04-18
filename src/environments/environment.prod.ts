@@ -4,5 +4,6 @@ export const environment = {
   whitelistedDomains: ['api.goroom.benhickson.com'],
   agora: {
     appId: '516c8452e59e4505aed64d368917ffca'
-  }
+  },
+  gaTrackingId: 'UA-163945569-2'
 };

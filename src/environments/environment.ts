@@ -15,7 +15,8 @@ export const environment = {
   
   agora: {
     appId: '516c8452e59e4505aed64d368917ffca'
-  }
+  },
+  gaTrackingId: 'UA-163945569-1'
 };
 
 /*
