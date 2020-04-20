@@ -1,15 +1,10 @@
-<div id="video-pic-block">
-	<div id="video-or-pic" (click)="videoOrPicClick()"></div>
-	<div class="quick-details" *ngIf="fullUser; else anonUser">
-		<p>{{ display_name }}</p>
+<div id="video-pic-block" *ngIf='currentUser'>
+	<div id="video-or-pic" (click)="videoOrPicClick()" [ngStyle]="{'background-image':'url(https://picsum.photos/seed/'+currentUser.id+'1/500)'}"></div>
+	<div class="quick-details">
+		<p>{{ currentUser | displayName }}</p>
 		<!-- <p>(Location)</p> -->
 		<!-- <p>(etc)</p> -->
 	</div>
-	<ng-template #anonUser>
-	<div class="quick-details">
-		<p>{{ display_name | titlecase }}</p>
-	</div>
-	</ng-template>
 </div>
 <div id="start-join-block">
 	<div id="start-a-room" (click)="openStartClick()" [class.open]="openStart" [class.closed]="closeStart">

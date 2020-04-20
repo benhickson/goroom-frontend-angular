@@ -3,6 +3,7 @@ import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { Room } from '../room';
 import { RoomService } from '../room.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +12,6 @@ import { RoomService } from '../room.service';
 })
 export class HomeComponent implements OnInit {
 
-  fullUser: boolean;
-  display_name: string;
   openStart: boolean = false;
   openJoin: boolean = false;
   closeStart: boolean = false;
@@ -22,6 +21,7 @@ export class HomeComponent implements OnInit {
   startRoomName: string;
   joinRoomName: string;
   newRoom: Room;
+  currentUser: User;
   
   constructor(
     private userService: UserService,
@@ -36,13 +36,7 @@ export class HomeComponent implements OnInit {
   setDisplayNameAndUserType(): void {
     this.userService.getCurrentUser()
       .subscribe(user => {
-        if (user.display_name) {
-          this.display_name = user.display_name;
-          this.fullUser = true;
-        } else {
-          this.display_name = `Anonymous ${user.anon_display_name}`;
-          this.fullUser = false;
-        }
+        this.currentUser = user;
       });
   }
 

@@ -25,7 +25,7 @@
 <div id="sidebar" [class.sidebar-open]="sidebarOpen">
 	<div id="profile" *ngIf="profiledUser">
 		<h1>{{profiledUser | displayName}}'s Profile</h1>
-		<div id="profile-pic" style="background-image: url(https://picsum.photos/seed/{{profiledUser.id}}1/500);"></div>
+		<div id="profile-pic" [ngStyle]="{'background-image':'url(https://picsum.photos/seed/'+profiledUser.id+'1/500)'}"></div>
 		<p *ngIf="profiledUser.email">Contact: {{profiledUser.email}}</p>
 		<p>Location: Dallas, TX - USA</p>
 		<p>Local Time: {{time | date:'hh:mm a':'-0500'}}</p>
