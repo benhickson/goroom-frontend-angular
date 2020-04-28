@@ -1,11 +1,12 @@
 <div id="room" [class.sidebar-open]="sidebarOpen">
 	<div *ngIf="room" id="loaded-when-room-received" 
-		class="cameracount-{{ cameraCountClassNumber }}">
+		class="cameracount-{{ cameraCountClassNumber }}"
+		[class.gameboard-open]="gameboardOpen">
 		<!-- <p>Room Name: {{room.name}}</p> -->
 		<!-- <p>Room Id: {{room.id}}</p> -->
 		<!-- <p>Room Creator Id: {{room.creator_id}}</p> -->
 		
-		<div class="camera-container">
+		<div class="camera-container glow">
 			<div class="vertical-centering">
 				<div [id]="localCallId" class="camera local"></div>
 				<div class="info" (click)="loadProfile(user.id)">{{ user | displayName }}</div>
@@ -16,6 +17,9 @@
 				<div [id]="callId" class="camera remote"></div>
 				<div class="info" (click)="loadProfile(remoteCallUsers[callId].id)">{{ remoteCallUsers[callId] | displayName }}</div>
 			</div>
+		</div>
+		<div *ngIf="gameboardOpen" class="camera-container gameboard">
+			<app-gameboard></app-gameboard>
 		</div>
 	</div>
 	<div *ngIf="roomNotFound">
@@ -32,3 +36,5 @@
 		<p id="sidebar-close-button" (click)="closeSidebar()">close</p>
 	</div>
 </div>
+
+<button id="launch-game" [class.transparent]="gameboardOpen" (click)="newGame()">New Game</button>

@@ -27,6 +27,7 @@ export class RoomComponent implements OnInit {
   cameraCountClassNumber: number = 2;
 
   sidebarOpen: boolean = false;
+  gameboardOpen: boolean = false;
 
   private client: AgoraClient;
   private localStream: Stream;
@@ -47,6 +48,10 @@ export class RoomComponent implements OnInit {
     if (this.room) { 
       this.leave();
     }
+  }
+
+  newGame(): void {
+    this.gameboardOpen = true;
   }
 
   loadProfile(user_id) {
