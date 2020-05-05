@@ -2,6 +2,18 @@
 <div id="shared-cards">
 	<div *ngFor='let cardNumberSuit of sharedCards' class="card {{cardNumberSuit}}"></div>
 </div>
+<div id="pot-wrapper">
+	<div class="poker-chipcounter"><span>{{ 550 | currency }}</span></div>
+</div>
+<div id="action-buttons" *ngIf='myTurn()'>
+	<div *ngIf='turnOptions === "before-bets"'><button id="check">Check</button></div>
+	<div *ngIf='turnOptions === "after-bets"'><button id="call">Call: costs {{ 25 | currency }}</button></div>
+	<div *ngIf='turnOptions === "before-bets"'><button id="bet">Bet</button><input type="number" placeholder="Amount" /></div>
+	<div *ngIf='turnOptions === "after-bets"'><button id="raise">Raise</button><input type="number" placeholder="Amount" /><span id="total-bet-from-raise">Total: {{ 35 | currency}}</span></div>
+	<div><button id="fold">Fold</button></div>
+	<div *ngIf='turnOptions === "end-called"'><button id="show-cards">Show Cards</button></div>
+	<div *ngIf='turnOptions === "end-called"'><button id="muck-cards">Muck Cards (Don't show)</button></div>
+</div>
 
 <!-- <p>
 	details for socket init:

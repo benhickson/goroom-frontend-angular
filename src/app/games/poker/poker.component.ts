@@ -17,6 +17,10 @@ export class PokerComponent implements OnInit {
   currentPlayer: number;
   playerList: number[];
 
+  turnOptions: string = 'before-bets';
+  // turnOptions: string = 'after-bets';
+  // turnOptions: string = 'end-called';
+
   publicSocket;
   privateSocket;
 
@@ -66,6 +70,11 @@ export class PokerComponent implements OnInit {
 
   updateSharedCards(newCardArray: string[]): void {
     this.sharedCards = newCardArray
+  }
+
+  // check this against state
+  myTurn(): boolean {
+    return true;
   }
 
   // temp methods for modifying game state.

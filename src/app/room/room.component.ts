@@ -151,7 +151,7 @@ export class RoomComponent implements OnInit {
         if (this.sidebarOpen) {
           // clear/reset any content if necessary
         } else {
-          this.sidebarOpen = true;
+          this.openSidebar();
         }
       })
     
@@ -159,9 +159,13 @@ export class RoomComponent implements OnInit {
 
   openSidebar(): void {
     this.sidebarOpen = true;
+    // trigger the resize event for the fittext directive to run
+    window.setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
   }
   closeSidebar(): void {
     this.sidebarOpen = false;
+    // trigger the resize event for the fittext directive to run
+    window.setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
   }
 
   setUserAndJoinRoom(): void {
