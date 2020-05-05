@@ -29,7 +29,7 @@ export class RoomComponent implements OnInit {
 
   currentPlayer: number;
   playerList: number[];
-  playerCards: {playerId: number, cards: string[]}[];
+  playerCardsChips: {playerId: number, cards: string[], chips: number}[];
 
   gameNodeOrder = {
     count1: {
@@ -86,8 +86,8 @@ export class RoomComponent implements OnInit {
     // subscribe to data from the PlayerService
     this.playerService.currentPlayer.subscribe(playerId => this.currentPlayer = playerId);
     this.playerService.playerList.subscribe(listOfPlayerIds => this.playerList = listOfPlayerIds);
-    this.playerService.playerCards.subscribe(listOfPlayerCards => {
-      this.playerCards = listOfPlayerCards;
+    this.playerService.playerCardsChips.subscribe(listOfPlayerCardsChips => {
+      this.playerCardsChips = listOfPlayerCardsChips;
     });
   }
 

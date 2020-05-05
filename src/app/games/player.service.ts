@@ -12,8 +12,8 @@ export class PlayerService {
   private playerListSource = new BehaviorSubject([]);     // empty array as default
   playerList = this.playerListSource.asObservable();
 
-  private playerCardsSource = new BehaviorSubject([]);
-  playerCards = this.playerCardsSource.asObservable();
+  private playerCardsChipsSource = new BehaviorSubject([]);
+  playerCardsChips = this.playerCardsChipsSource.asObservable();
 
   constructor() { }
 
@@ -25,8 +25,8 @@ export class PlayerService {
     this.playerListSource.next(playerList);
   }
 
-  changePlayerCards(playerCards: {playerId: number, cards: string[]}[]): void {
-    this.playerCardsSource.next(playerCards);
+  changePlayerCardsChips(playerCardsChips: {playerId: number, cards: string[], chips: number}[]): void {
+    this.playerCardsChipsSource.next(playerCardsChips);
   }
 
 }

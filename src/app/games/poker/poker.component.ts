@@ -24,12 +24,12 @@ export class PokerComponent implements OnInit {
   turnCards: string[] = ['five clubs','seven hearts','four spades','nine clubs'];
   riverCards: string[] = ['five clubs','seven hearts','back','nine clubs','seven diamonds'];
   playerCardsVisible: string[][] = [['five spades','seven clubs'],['four clubs','ace spades'],['queen hearts','six diamonds'],['king diamonds','four diamonds']];
-  playerCardsTemp: {playerId: number, cards: string[]}[] = [
-    {playerId: 35, cards: ['four clubs','ace spades']},
-    {playerId: 1, cards: ['back','back']},
-    {playerId: 2, cards: ['back','back']},
-    {playerId: 3, cards: ['back','back']},
-    {playerId: 4, cards: ['back','back']},
+  playerCardsTemp: {playerId: number, cards: string[], chips: number}[] = [
+    {playerId: 35, cards: ['four clubs','ace spades'], chips: 140.50},
+    {playerId: 1, cards: ['back','back'], chips: 105},
+    {playerId: 2, cards: ['back','back'], chips: 200.01},
+    {playerId: 3, cards: ['back','back'], chips: 25.30},
+    {playerId: 4, cards: ['back','back'], chips: 15},
   ]
   sharedCards: string[];
 
@@ -71,7 +71,7 @@ export class PokerComponent implements OnInit {
   // temp methods for modifying game state.
   // state will actually be modified directly via sockets
   deal(): void {
-    this.playerService.changePlayerCards(this.playerCardsTemp);
+    this.playerService.changePlayerCardsChips(this.playerCardsTemp);
   }
   flop(): void {
     this.updateSharedCards(this.flopCards);
