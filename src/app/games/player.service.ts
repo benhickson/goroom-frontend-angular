@@ -21,7 +21,7 @@ export class PlayerService {
     this.currentPlayerSource.next(player);
   }
 
-  changePlayerList(playerList: number[]): void {
+  changePlayerList(playerList: {id: number, displayName: string}[]): void {
     this.playerListSource.next(playerList);
   }
 

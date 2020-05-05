@@ -15,7 +15,7 @@ export class PokerComponent implements OnInit {
   @Input() room: Room;
 
   currentPlayer: number;
-  playerList: number[];
+  playerList: {id: number, displayName: string}[];
 
   turnOptions: string = 'before-bets';
   // turnOptions: string = 'after-bets';
@@ -47,24 +47,44 @@ export class PokerComponent implements OnInit {
     this.playerService.playerList.subscribe(listOfPlayerIds => this.playerList = listOfPlayerIds);
 
     // make socket connections
-    // this.publicSocket = io('http://localhost:3000', {
-    //   path: '/public'
+    this.publicSocket = io('localhost:5000/test', {
+      query: {
+        room_id: this.room.id
+      },
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            'Authorization': `Bearer ${localStorage.getItem("auth_token")}`
+          }
+        }
+      }
+    });
+    // this.privateSocket = io('http://localhost:5000/test', {
     // });
-    // this.privateSocket = io('http://localhost:3000', {
-    //   path: '/private'
-    // });
+
+    // listen for messages
+    this.publicSocket.on('players_joined', this.handlePlayersJoined)
+    this.publicSocket.on('player_left', this.handlePlayerLeft)
   }
 
   ngOnDestroy(): void {
     // disconnect sockets
+    console.log(this.publicSocket.disconnect());
     // console.log(this.privateSocket.disconnect());
-    // console.log(this.publicSocket.disconnect());
+  }
+
+  handlePlayersJoined = (message): void => {
+    console.log(message);
+    this.playerService.changePlayerList(message.playerList);
+  }
+  handlePlayerLeft(message): void {
+    console.log('user left:', message.user_name, 'id:', message.user_id);
   }
 
   changeCurrentPlayer(playerId: number) {
     this.playerService.changeCurrentPlayer(playerId);
   }
-  changePlayerList(listOfPlayerIds: number[]) {
+  changePlayerList(listOfPlayerIds: {id: number, displayName: string}[]) {
     this.playerService.changePlayerList(listOfPlayerIds);
   }
 

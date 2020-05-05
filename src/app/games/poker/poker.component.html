@@ -38,11 +38,11 @@
 <p>
 	Load player list:
 </p>
-<button (click)="changePlayerList([user.id, 1, 2, 3, 4])">Load players, self + 4</button>
-<button (click)="changePlayerList([user.id, 1, 2, 3, 4, 5, 6, 7])">Load players, self + 7</button>
+<button (click)="changePlayerList([{id: user.id, displayName: null}, {id: 1, displayName: null}, {id: 2, displayName: null}, {id: 3, displayName: null}, {id: 4, displayName: null}])">Load players, self + 4</button>
+<button (click)="changePlayerList([{id: user.id, displayName: null}, {id: 1, displayName: null}, {id: 2, displayName: null}, {id: 3, displayName: null}, {id: 4, displayName: null}, {id: 5, displayName: null}, {id: 6, displayName: null}, {id: 7, displayName: null}])">Load players, self + 7</button>
 <p *ngIf="playerList.length > 0">Player List:</p>
 <ol>
-	<li *ngFor="let playerId of playerList">{{playerId}}</li>
+	<li *ngFor="let player of playerList">{{player.displayName}}(id: {{player.id}})</li>
 </ol>
 
 <p>
