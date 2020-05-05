@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { User } from '../user';
+import { Room } from '../room';
 
 @Component({
   selector: 'app-gameboard',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameboardComponent implements OnInit {
 
+  @Input() user: User;
+  @Input() room: Room;
+
+  poker: boolean;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.launchPoker();
+  }
+
+  launchPoker(): void {
+    this.poker = true;
   }
 
 }

@@ -5,6 +5,7 @@ import { RoomService } from '../room.service';
 import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from 'ngx-agora';
 import { UserService } from '../user.service';
 import { User } from '../user';
+import { PlayerService } from '../games/player.service';
 
 @Component({
   selector: 'app-room',
@@ -26,6 +27,45 @@ export class RoomComponent implements OnInit {
 
   cameraCountClassNumber: number = 2;
 
+  currentPlayer: number;
+  playerList: number[];
+  playerCards: {playerId: number, cards: string[]}[];
+
+  gameNodeOrder = {
+    count1: {
+      game: 2,
+      players: [1]
+    },
+    count2: {
+      game: 2,
+      players: [1,3]
+    },
+    count3: {
+      game: 2,
+      players: [1,4,3]
+    },
+    count4: {
+      game: 2,
+      players: [1,3,6,4]
+    },
+    count5: {
+      game: 2,
+      players: [1,3,6,5,4]
+    },
+    count6: {
+      game: 5,
+      players: [1,2,3,6,8,4]
+    },
+    count7: {
+      game: 5,
+      players: [1,2,3,6,9,7,4]
+    },
+    count8: {
+      game: 5,
+      players: [1,2,3,6,9,8,7,4]
+    }
+  }
+
   sidebarOpen: boolean = false;
   gameboardOpen: boolean = false;
 
@@ -37,11 +77,18 @@ export class RoomComponent implements OnInit {
     private route: ActivatedRoute,
     private roomService: RoomService,
     private ngxAgoraService: NgxAgoraService,
-    private userService: UserService
+    private userService: UserService,
+    private playerService: PlayerService,
   ) { }
 
   ngOnInit(): void {
     this.setUserAndJoinRoom();
+    // subscribe to data from the PlayerService
+    this.playerService.currentPlayer.subscribe(playerId => this.currentPlayer = playerId);
+    this.playerService.playerList.subscribe(listOfPlayerIds => this.playerList = listOfPlayerIds);
+    this.playerService.playerCards.subscribe(listOfPlayerCards => {
+      this.playerCards = listOfPlayerCards;
+    });
   }
 
   ngOnDestroy(): void {
@@ -50,8 +97,48 @@ export class RoomComponent implements OnInit {
     }
   }
 
+  addTempUser(): void {
+    console.log('added');
+    const nextTempUserId = this.remoteCalls.length + 1;
+    const remoteCallId = `temp_user-${nextTempUserId}`;
+    this.userService.getUser(nextTempUserId)
+      .subscribe(user => {
+        console.log(user);
+        this.remoteCallUsers[remoteCallId] = user;
+        this.remoteCalls.push(remoteCallId);
+        this.updateCameraCount();
+      })
+  }
+
+  order(userId: number): number {
+    if (this.playerList.length > 0) {
+
+      const key = `count${this.playerList.length}`;
+      const gameNodeOrder = this.gameNodeOrder[key];
+
+      if (userId === 0) { // handler for the gameboard
+
+        return gameNodeOrder.game;
+
+      } else {
+
+        const playerPositionIndex = this.playerList.indexOf(userId);
+        return gameNodeOrder.players[playerPositionIndex];
+      }
+
+    } else {
+      return 0; // default value of css 'order' property, when the player list hasn't been init'ed yet
+    }
+  }
+
+  currentPlayerIs(userId: number): boolean {
+    // console.log('checking if', userId, 'equals', this.currentPlayer, '...', userId === this.currentPlayer);
+    return userId === this.currentPlayer;
+  }
+
   newGame(): void {
     this.gameboardOpen = true;
+    this.updateCameraCount();
   }
 
   loadProfile(user_id) {
@@ -240,20 +327,27 @@ export class RoomComponent implements OnInit {
   }
 
   private updateCameraCount() {
-    console.log('new remote camera count:', this.remoteCalls.length);
-    if (this.remoteCalls.length < 2){
+    const nodeCount = this.remoteCalls.length + (this.gameboardOpen ? 1 : 0 ) + 1; // 1 is for the local call
+    console.log('node count:', nodeCount);
+
+    if (nodeCount <= 2){
       this.cameraCountClassNumber = 2;
-    } else if (this.remoteCalls.length < 4){
+    } else if (nodeCount <= 4){
       this.cameraCountClassNumber = 4;
-    } else if (this.remoteCalls.length < 6){
+    } else if (nodeCount <= 6){
       this.cameraCountClassNumber = 6;
-    } else if (this.remoteCalls.length < 9){
+    } else if (nodeCount <= 9){
       this.cameraCountClassNumber = 9;
-    } else if (this.remoteCalls.length < 12){
+    } else if (nodeCount <= 12){
       this.cameraCountClassNumber = 12;
-    } else if (this.remoteCalls.length < 16){
+    } else if (nodeCount <= 16){
       this.cameraCountClassNumber = 16;
+    } else if (nodeCount <= 20){
+      this.cameraCountClassNumber = 20;
     }
+
+    // trigger the resize event for the fittext directive to run
+    window.setTimeout(() => window.dispatchEvent(new Event('resize')), 500);
   }
   
 }

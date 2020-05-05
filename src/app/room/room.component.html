@@ -1,40 +1,76 @@
 <div id="room" [class.sidebar-open]="sidebarOpen">
-	<div *ngIf="room" id="loaded-when-room-received" 
-		class="cameracount-{{ cameraCountClassNumber }}"
-		[class.gameboard-open]="gameboardOpen">
-		<!-- <p>Room Name: {{room.name}}</p> -->
-		<!-- <p>Room Id: {{room.id}}</p> -->
-		<!-- <p>Room Creator Id: {{room.creator_id}}</p> -->
-		
-		<div class="camera-container glow">
-			<div class="vertical-centering">
-				<div [id]="localCallId" class="camera local"></div>
-				<div class="info" (click)="loadProfile(user.id)">{{ user | displayName }}</div>
-			</div>
-		</div>
-		<div *ngFor="let callId of remoteCalls" class="camera-container">
-			<div class="vertical-centering">
-				<div [id]="callId" class="camera remote"></div>
-				<div class="info" (click)="loadProfile(remoteCallUsers[callId].id)">{{ remoteCallUsers[callId] | displayName }}</div>
-			</div>
-		</div>
-		<div *ngIf="gameboardOpen" class="camera-container gameboard">
-			<app-gameboard></app-gameboard>
-		</div>
-	</div>
-	<div *ngIf="roomNotFound">
-		Room not found.
-	</div>
+  <div *ngIf="room" id="loaded-when-room-received" 
+    class="cameracount-{{ cameraCountClassNumber }}"
+    [class.gameboard-open]="gameboardOpen">
+    <!-- <p>Room Name: {{room.name}}</p> -->
+    <!-- <p>Room Id: {{room.id}}</p> -->
+    <!-- <p>Room Creator Id: {{room.creator_id}}</p> -->
+    
+    <div 
+      class="camera-container" 
+      [class.glow]="currentPlayerIs(user.id)" 
+      [ngStyle]="{order: order(user.id)}"
+      >
+      <div class="vertical-centering">
+        <div class="camera-square">
+          <div [id]="localCallId" class="camera local"></div>
+          <div class="card-holder">
+            <ng-container *ngFor='let playerCard of playerCards'>
+              <ng-container *ngIf='playerCard.playerId === user.id'>
+                <div *ngFor='let cardNumberSuit of playerCard.cards' class="card {{cardNumberSuit}}"></div>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="poker-chipcounter"><span fittext>{{ 84.7 | currency }}</span></div>
+        </div>
+        <div class="info" (click)="loadProfile(user.id)">{{ user | displayName }}</div>
+      </div>
+    </div>
+    <div 
+      *ngFor="let callId of remoteCalls" 
+      class="camera-container" 
+      [class.glow]="currentPlayerIs(remoteCallUsers[callId].id)"
+      [ngStyle]="{order: order(remoteCallUsers[callId].id)}"
+      >
+      <div class="vertical-centering">
+        <div class="camera-square">
+          <div [id]="callId" class="camera remote"></div>
+          <div class="card-holder">
+            <ng-container *ngFor='let playerCard of playerCards'>
+              <ng-container *ngIf='playerCard.playerId === remoteCallUsers[callId].id'>
+                <div *ngFor='let cardNumberSuit of playerCard.cards' class="card {{cardNumberSuit}}"></div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+        <div class="info" (click)="loadProfile(remoteCallUsers[callId].id)">{{ remoteCallUsers[callId] | displayName }}</div>
+      </div>
+    </div>
+    <div 
+      *ngIf="gameboardOpen" 
+      class="camera-container gameboard"
+      [ngStyle]="{order: order(0)}"
+      >
+      <app-gameboard [user]="user" [room]="room"></app-gameboard>
+      <div class="info">&nbsp;</div>
+    </div>
+  </div>
+  <div *ngIf="roomNotFound">
+    Room not found.
+  </div>
 </div>
 <div id="sidebar" [class.sidebar-open]="sidebarOpen">
-	<div id="profile" *ngIf="profiledUser">
-		<h1>{{profiledUser | displayName}}'s Profile</h1>
-		<div id="profile-pic" [ngStyle]="{'background-image':'url(https://picsum.photos/seed/'+profiledUser.id+'1/500)'}"></div>
-		<p *ngIf="profiledUser.email">Contact: {{profiledUser.email}}</p>
-		<p>Location: Dallas, TX - USA</p>
-		<p>Local Time: {{time | date:'hh:mm a':'-0500'}}</p>
-		<p id="sidebar-close-button" (click)="closeSidebar()">close</p>
-	</div>
+  <div id="profile" *ngIf="profiledUser">
+    <h1>{{profiledUser | displayName}}'s Profile</h1>
+    <div id="profile-pic" [ngStyle]="{'background-image':'url(https://picsum.photos/seed/'+profiledUser.id+'1/500)'}"></div>
+    <p *ngIf="profiledUser.email">Contact: {{profiledUser.email}}</p>
+    <p>Location: Dallas, TX - USA</p>
+    <p>Local Time: {{time | date:'hh:mm a':'-0500'}}</p>
+    <p id="sidebar-close-button" (click)="closeSidebar()">close</p>
+  </div>
 </div>
 
 <button id="launch-game" [class.transparent]="gameboardOpen" (click)="newGame()">New Game</button>
+<button id="add-user" (click)="addTempUser()">Add User</button>
+
+<script src="../../assets/games/poker/odometer.min.js"></script>

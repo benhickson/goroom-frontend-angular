@@ -1,3 +1,8 @@
 <div id="gameboard">
-	<p>gameboard works!</p>
+	<div *ngIf='!poker' id="game-choices">
+		<button (click)='launchPoker()'>Launch Poker</button>
+	</div>
+	<div *ngIf='poker'>
+		<app-poker [user]="user" [room]="room"></app-poker>
+	</div>
 </div>

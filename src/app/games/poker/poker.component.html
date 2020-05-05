@@ -1,0 +1,45 @@
+
+<div id="shared-cards">
+	<div *ngFor='let cardNumberSuit of sharedCards' class="card {{cardNumberSuit}}"></div>
+</div>
+
+<!-- <p>
+	details for socket init:
+</p>
+<ul>
+	<li>user id: {{user.id}}</li>
+	<li>user name: {{user | displayName}}</li>
+	<li>room id: {{room.id}}</li>
+	<li>room name: {{room.name}}</li>
+</ul>
+<br> -->
+
+<!-- <p>
+	Change current player (yellow highlighting):
+</p>
+<button (click)="changeCurrentPlayer(1)">Change to player 1</button>
+<button (click)="changeCurrentPlayer(2)">Change to player 2</button>
+<button (click)="changeCurrentPlayer(3)">Change to player 3</button>
+<button (click)="changeCurrentPlayer(user.id)">Change to me</button>
+<br><br> -->
+
+<p>
+	Load player list:
+</p>
+<button (click)="changePlayerList([user.id, 1, 2, 3, 4])">Load players, self + 4</button>
+<button (click)="changePlayerList([user.id, 1, 2, 3, 4, 5, 6, 7])">Load players, self + 7</button>
+<p *ngIf="playerList.length > 0">Player List:</p>
+<ol>
+	<li *ngFor="let playerId of playerList">{{playerId}}</li>
+</ol>
+
+<p>
+	Deal Cards (changing game state)
+</p>
+<button (click)='deal()'>Deal</button>
+<button (click)='flop()'>Flop</button>
+<button (click)='turn()'>Turn</button>
+<button (click)='river()'>River</button>
+
+<!-- Load image assets before needed -->
+<div id="preloader"></div>
