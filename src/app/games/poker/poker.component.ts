@@ -75,6 +75,7 @@ export class PokerComponent implements OnInit {
     this.publicSocket.on('players_joined', this.handlePlayersJoined)
     this.publicSocket.on('player_left', this.handlePlayerLeft)
     this.publicSocket.on('update_game_state', this.handleUpdateGameState)
+    this.publicSocket.on('private_state_available', this.handlePrivateStateAvailable)
   }
 
   ngOnDestroy(): void {
@@ -98,9 +99,12 @@ export class PokerComponent implements OnInit {
     console.log('game state:', message);
     this.gameActive = true;
     const newPlayerCardsChips = message.players.map(player => {
-      return {playerId: player.id, cards: ['back','back'], chips: player.stack}
+      return {playerId: player.id, cards: player.hand, chips: player.stack}
     })
     this.playerService.changePlayerCardsChips(newPlayerCardsChips);
+  }
+  handlePrivateStateAvailable = (): void => {
+    this.publicSocket.emit('private_game_state_request');
   }
 
   changeCurrentPlayer(playerId: number) {
@@ -124,9 +128,38 @@ export class PokerComponent implements OnInit {
     console.log('game started!');
     this.publicSocket.emit('start_game');
   }
+  // user moves
   fold(): void {
     console.log('folding...');
-    const move = {type: 'fold'};
+    this.emitUserMove({type: 'fold'});
+  }
+  check(): void {
+    console.log('checking...');
+    this.emitUserMove({type: 'check'});
+  }
+  call(): void {
+    console.log('calling...');
+    this.emitUserMove({type: 'call'});
+  }
+  bet(): void {
+    console.log('betting:', this.betAmount);
+    this.emitUserMove({type: 'bet', amount: this.betAmount});
+  }
+  raiseBet(): void {
+    console.log('raising with a bet of:', this.getTotalCostToRaise());
+    this.emitUserMove({type: 'raiseBet', amount: this.getTotalCostToRaise()});
+  }
+  // show and muck
+  showCards(): void {
+    console.log('showing cards...');
+    this.emitUserMove({type: 'showCards'});
+  }
+  muckCards(): void {
+    console.log('mucking cards...');
+    this.emitUserMove({type: 'muckCards'});
+  }
+  // emitter
+  emitUserMove(move: any): void {
     this.publicSocket.emit('user_move', move);
   }
 
