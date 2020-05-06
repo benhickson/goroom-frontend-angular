@@ -28,7 +28,7 @@ export class RoomComponent implements OnInit {
   cameraCountClassNumber: number = 2;
 
   currentPlayer: number;
-  playerList: number[];
+  playerList: {id: number, displayName: string}[] = [];
   playerCardsChips: {playerId: number, cards: string[], chips: number}[];
 
   gameNodeOrder = {
@@ -85,7 +85,7 @@ export class RoomComponent implements OnInit {
     this.setUserAndJoinRoom();
     // subscribe to data from the PlayerService
     this.playerService.currentPlayer.subscribe(playerId => this.currentPlayer = playerId);
-    this.playerService.playerList.subscribe(listOfPlayerIds => this.playerList = listOfPlayerIds);
+    this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
     this.playerService.playerCardsChips.subscribe(listOfPlayerCardsChips => {
       this.playerCardsChips = listOfPlayerCardsChips;
     });
@@ -122,7 +122,7 @@ export class RoomComponent implements OnInit {
 
       } else {
 
-        const playerPositionIndex = this.playerList.indexOf(userId);
+        const playerPositionIndex = this.playerList.findIndex(player => player.id === userId);
         return gameNodeOrder.players[playerPositionIndex];
       }
 

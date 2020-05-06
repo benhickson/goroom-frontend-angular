@@ -34,17 +34,18 @@ export class PokerComponent implements OnInit {
   publicSocket;
   privateSocket;
 
-  flopCards: string[] = ['five clubs','seven hearts','four spades'];
-  turnCards: string[] = ['five clubs','seven hearts','four spades','nine clubs'];
-  riverCards: string[] = ['five clubs','seven hearts','back','nine clubs','seven diamonds'];
-  playerCardsVisible: string[][] = [['five spades','seven clubs'],['four clubs','ace spades'],['queen hearts','six diamonds'],['king diamonds','four diamonds']];
-  playerCardsTemp: {playerId: number, cards: string[], chips: number}[] = [
-    {playerId: 35, cards: ['four clubs','ace spades'], chips: 140.50},
-    {playerId: 1, cards: ['back','back'], chips: 105},
-    {playerId: 2, cards: ['back','back'], chips: 200.01},
-    {playerId: 3, cards: ['back','back'], chips: 25.30},
-    {playerId: 4, cards: ['back','back'], chips: 15},
-  ]
+  // Temp date for the template
+  // flopCards: string[] = ['five clubs','seven hearts','four spades'];
+  // turnCards: string[] = ['five clubs','seven hearts','four spades','nine clubs'];
+  // riverCards: string[] = ['five clubs','seven hearts','back','nine clubs','seven diamonds'];
+  // playerCardsVisible: string[][] = [['five spades','seven clubs'],['four clubs','ace spades'],['queen hearts','six diamonds'],['king diamonds','four diamonds']];
+  // playerCardsTemp: {playerId: number, cards: string[], chips: number}[] = [
+  //   {playerId: 35, cards: ['four clubs','ace spades'], chips: 140.50},
+  //   {playerId: 1, cards: ['back','back'], chips: 105},
+  //   {playerId: 2, cards: ['back','back'], chips: 200.01},
+  //   {playerId: 3, cards: ['back','back'], chips: 25.30},
+  //   {playerId: 4, cards: ['back','back'], chips: 15},
+  // ]
 
   constructor(
     private playerService: PlayerService,
@@ -53,7 +54,7 @@ export class PokerComponent implements OnInit {
   ngOnInit(): void {
     // subscribe to data from the PlayerService
     this.playerService.currentPlayer.subscribe(playerId => this.currentPlayer = playerId);
-    this.playerService.playerList.subscribe(listOfPlayerIds => this.playerList = listOfPlayerIds);
+    this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
 
     // make socket connections
     this.publicSocket = io('localhost:5000/test', {
@@ -100,27 +101,26 @@ export class PokerComponent implements OnInit {
     this.gameActive = true;
     const newPlayerCardsChips = message.players.map(player => {
       return {playerId: player.id, cards: player.hand, chips: player.stack}
-    })
+    });
     this.playerService.changePlayerCardsChips(newPlayerCardsChips);
+    const newPlayerList = [...message.players]
+      .sort((a, b) => a.position - b.position)
+      .map(player => ({id: player.id, displayName: player.name}));
+    this.playerService.changePlayerList(newPlayerList);
+    this.playerService.changeCurrentDealer(message.button_player);
   }
   handlePrivateStateAvailable = (): void => {
     this.publicSocket.emit('private_game_state_request');
   }
 
-  changeCurrentPlayer(playerId: number) {
-    this.playerService.changeCurrentPlayer(playerId);
-  }
-  changePlayerList(listOfPlayerIds: {id: number, displayName: string}[]) {
-    this.playerService.changePlayerList(listOfPlayerIds);
-  }
-
-  updateSharedCards(newCardArray: string[]): void {
-    this.sharedCards = newCardArray
-  }
-
-  // check this against state
-  myTurn(): boolean {
-    return true;
+  // method for the template to know if it's my turn, and to show the action buttons
+  isMyTurn(): boolean {
+    // return true;
+    if (this.currentPlayer === this.user.id) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // action buttons
@@ -174,19 +174,31 @@ export class PokerComponent implements OnInit {
     this.raiseAmount = parseFloat(newAmount) || 0;
   }
 
+
+
   // temp methods for modifying game state.
   // state will actually be modified directly via sockets
-  deal(): void {
-    this.playerService.changePlayerCardsChips(this.playerCardsTemp);
-  }
-  flop(): void {
-    this.updateSharedCards(this.flopCards);
-  }
-  turn(): void {
-    this.updateSharedCards(this.turnCards);
-  }
-  river(): void {
-    this.updateSharedCards(this.riverCards);
-  }
+
+  // changeCurrentPlayer(playerId: number) {
+    //   this.playerService.changeCurrentPlayer(playerId);
+    // }
+    // changePlayerList(listOfPlayerIds: {id: number, displayName: string}[]) {
+  //   this.playerService.changePlayerList(listOfPlayerIds);
+  // }
+  // deal(): void {
+  //   this.playerService.changePlayerCardsChips(this.playerCardsTemp);
+  // }
+  // flop(): void {
+    //   this.updateSharedCards(this.flopCards);
+  // }
+  // turn(): void {
+    //   this.updateSharedCards(this.turnCards);
+  // }
+  // river(): void {
+  //   this.updateSharedCards(this.riverCards);
+  // }
+  // updateSharedCards(newCardArray: string[]): void {
+  //   this.sharedCards = newCardArray
+  // }
 
 }
