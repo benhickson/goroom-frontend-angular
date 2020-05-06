@@ -83,9 +83,6 @@ div, button{
       max-width: calc((((100vh - 40px) / 4) - (2.1vw)) - 2vw);
     }
   }
-  #loaded-when-room-received.gameboard-open{
-
-  }
 }
 #room.sidebar-open{
   width: 68vw;
@@ -229,7 +226,7 @@ div, button{
   animation-timing-function: ease;
 }
 
-#launch-game, #add-user{
+#launch-game, #add-user, #close-game{
   background-color: #a9221d;
   color: #ececec;
   position: absolute;
@@ -247,13 +244,19 @@ div, button{
   box-sizing: border-box;
   border-radius: 2px;
 }
+#close-game{
+  background-color: rgba(0,0,0,0.7);
+}
 #add-user{
   left: 30%;
 }
-#launch-game:hover, #add-user:hover{
+#launch-game:hover, #add-user:hover, #close-game:hover{
   background-color: #af100a;
   color: white;
   text-decoration: underline;
+}
+#close-game:hover{
+  background-color: darkblue;
 }
 .transparent{
   opacity: 0;

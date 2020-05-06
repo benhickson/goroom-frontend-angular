@@ -118,6 +118,9 @@
 		border-color: white;
 	}
 
+	#start-game{
+		background-color: #F44336;
+	}
 	#check{
 		background-color: #03A9F4;
 	}
@@ -127,6 +130,11 @@
 	#bet, #raise{
 		flex: 1 1 60%;
 		background-color: #F44336;
+	}
+	#bet.disabled, #raise.disabled{
+		background-color: #7d211a;
+    color: #ffffff78;
+		pointer-events: none;
 	}
 	#fold{
 		background-color: #355463;

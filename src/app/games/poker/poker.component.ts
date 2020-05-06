@@ -14,12 +14,22 @@ export class PokerComponent implements OnInit {
   @Input() user: User;
   @Input() room: Room;
 
+  playerList: {id: number, displayName: string}[] = [];
   currentPlayer: number;
-  playerList: {id: number, displayName: string}[];
+  currentDealer: number;
 
-  turnOptions: string = 'before-bets';
-  // turnOptions: string = 'after-bets';
+  gameActive: boolean;
+  potChips: number = 0;
+  sharedCards: string[];
+  
+  // turnOptions: string;
+  // turnOptions: string = 'before-bets';
+  turnOptions: string = 'after-bets';
   // turnOptions: string = 'end-called';
+  
+  costToCall: number = 50;
+  betAmount: number = 0;
+  raiseAmount: number = 0;
 
   publicSocket;
   privateSocket;
@@ -35,7 +45,6 @@ export class PokerComponent implements OnInit {
     {playerId: 3, cards: ['back','back'], chips: 25.30},
     {playerId: 4, cards: ['back','back'], chips: 15},
   ]
-  sharedCards: string[];
 
   constructor(
     private playerService: PlayerService,
@@ -65,20 +74,33 @@ export class PokerComponent implements OnInit {
     // listen for messages
     this.publicSocket.on('players_joined', this.handlePlayersJoined)
     this.publicSocket.on('player_left', this.handlePlayerLeft)
+    this.publicSocket.on('update_game_state', this.handleUpdateGameState)
   }
 
   ngOnDestroy(): void {
     // disconnect sockets
     console.log(this.publicSocket.disconnect());
     // console.log(this.privateSocket.disconnect());
+
+    // clear the player state via the service
+    this.playerService.changePlayerCardsChips([]);
   }
 
+  // socket.io message handlers
   handlePlayersJoined = (message): void => {
     console.log(message);
-    this.playerService.changePlayerList(message.playerList);
+    this.playerService.changePlayerList(message.pendingPlayerList);
   }
   handlePlayerLeft(message): void {
     console.log('user left:', message.user_name, 'id:', message.user_id);
+  }
+  handleUpdateGameState = (message): void => {
+    console.log('game state:', message);
+    this.gameActive = true;
+    const newPlayerCardsChips = message.players.map(player => {
+      return {playerId: player.id, cards: ['back','back'], chips: player.stack}
+    })
+    this.playerService.changePlayerCardsChips(newPlayerCardsChips);
   }
 
   changeCurrentPlayer(playerId: number) {
@@ -95,6 +117,28 @@ export class PokerComponent implements OnInit {
   // check this against state
   myTurn(): boolean {
     return true;
+  }
+
+  // action buttons
+  startGame(): void {
+    console.log('game started!');
+    this.publicSocket.emit('start_game');
+  }
+  fold(): void {
+    console.log('folding...');
+    const move = {type: 'fold'};
+    this.publicSocket.emit('user_move', move);
+  }
+
+  // bet amount methods
+  getTotalCostToRaise(): number {
+    return this.costToCall + this.raiseAmount;
+  }
+  changeBet(newAmount: string): void {
+    this.betAmount = parseFloat(newAmount) || 0;
+  }
+  changeRaise(newAmount: string): void {
+    this.raiseAmount = parseFloat(newAmount) || 0;
   }
 
   // temp methods for modifying game state.

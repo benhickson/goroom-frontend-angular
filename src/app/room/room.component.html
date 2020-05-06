@@ -14,12 +14,14 @@
       <div class="vertical-centering">
         <div class="camera-square">
           <div [id]="localCallId" class="camera local"></div>
-          <ng-container *ngFor='let playerCC of playerCardsChips'>
-            <ng-container *ngIf='playerCC.playerId === user.id'>
+          <ng-container *ngIf='gameboardOpen'>
+            <ng-container *ngFor='let playerCC of playerCardsChips'>
+              <ng-container *ngIf='playerCC.playerId === user.id'>
           <div class="card-holder">
             <div *ngFor='let cardNumberSuit of playerCC.cards' class="card {{cardNumberSuit}}"></div>
           </div>
           <div class="poker-chipcounter"><span fittext>{{ playerCC.chips | currency }}</span></div>
+              </ng-container>
             </ng-container>
           </ng-container>
         </div>
@@ -35,12 +37,14 @@
       <div class="vertical-centering">
         <div class="camera-square">
           <div [id]="callId" class="camera remote"></div>
-          <ng-container *ngFor='let playerCC of playerCardsChips'>
-            <ng-container *ngIf='playerCC.playerId === remoteCallUsers[callId].id'>
+          <ng-container *ngIf='gameboardOpen'>
+            <ng-container *ngFor='let playerCC of playerCardsChips'>
+              <ng-container *ngIf='playerCC.playerId === remoteCallUsers[callId].id'>
           <div class="card-holder">
             <div *ngFor='let cardNumberSuit of playerCC.cards' class="card {{cardNumberSuit}}"></div>
           </div>
           <div class="poker-chipcounter"><span fittext>{{ playerCC.chips | currency }}</span></div>
+              </ng-container>
             </ng-container>
           </ng-container>
         </div>
@@ -72,6 +76,7 @@
 </div>
 
 <button id="launch-game" [class.transparent]="gameboardOpen" (click)="newGame()">New Game</button>
+<button id="close-game" [class.transparent]="!gameboardOpen" (click)="closeGame()">Close Game</button>
 <button id="add-user" (click)="addTempUser()">Add User</button>
 
 <script src="../../assets/games/poker/odometer.min.js"></script>

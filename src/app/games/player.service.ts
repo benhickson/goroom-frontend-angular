@@ -27,6 +27,7 @@ export class PlayerService {
 
   changePlayerCardsChips(playerCardsChips: {playerId: number, cards: string[], chips: number}[]): void {
     this.playerCardsChipsSource.next(playerCardsChips);
+    console.log('new:', playerCardsChips);
   }
 
 }

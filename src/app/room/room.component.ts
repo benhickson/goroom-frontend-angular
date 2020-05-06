@@ -141,6 +141,11 @@ export class RoomComponent implements OnInit {
     this.updateCameraCount();
   }
 
+  closeGame(): void {
+    this.gameboardOpen = false;
+    this.updateCameraCount();    
+  }
+
   loadProfile(user_id) {
     console.log('loading profile of user_id:', user_id, '...');
     this.userService.getUser(user_id)
@@ -195,7 +200,8 @@ export class RoomComponent implements OnInit {
           // initialize local A/V stream
           this.localStream = this.ngxAgoraService.createStream({
             streamID: `user_id-${this.uid}`,
-            audio: true,
+            audio: false,
+            // audio: true,
             video: true,
             screen: false
           });

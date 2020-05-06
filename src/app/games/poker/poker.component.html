@@ -1,19 +1,39 @@
+<ng-container *ngIf='gameActive'>
+	<div id="shared-cards">
+		<div *ngFor='let cardNumberSuit of sharedCards' class="card {{cardNumberSuit}}"></div>
+	</div>
+	<div id="pot-wrapper">
+		<div class="poker-chipcounter"><span>{{ potChips | currency }}</span></div>
+	</div>
+	<div id="action-buttons" *ngIf='myTurn()'>
+		<div *ngIf='turnOptions === "before-bets"'><button id="check">Check</button></div>
+		<div *ngIf='turnOptions === "after-bets"'><button id="call">Call: costs {{ costToCall | currency }}</button></div>
+		<div *ngIf='turnOptions === "before-bets"'><button id="bet" [class.disabled]='!(betAmount > 0)'>Bet</button><input type="number" #bet (keyup)="changeBet(bet.value)" placeholder="Amount" /></div>
+		<div *ngIf='turnOptions === "after-bets"'><button id="raise" [class.disabled]='!(raiseAmount > 0)'>Raise</button><input type="number" #raise (keyup)="changeRaise(raise.value)" placeholder="Amount" /><span id="total-bet-from-raise">Total: {{ getTotalCostToRaise() | currency}}</span></div>
+		<div><button id="fold">Fold</button></div>
+		<div *ngIf='turnOptions === "end-called"'><button id="show-cards">Show Cards</button></div>
+		<div *ngIf='turnOptions === "end-called"'><button id="muck-cards">Muck Cards (Don't show)</button></div>
+	</div>
+</ng-container>
+<ng-container *ngIf='!gameActive'>
+	<p *ngIf="playerList.length > 0">Player List:</p>
+	<ol>
+		<li *ngFor="let player of playerList">{{player.displayName}} (id: {{player.id}})</li>
+	</ol>
+	<div id="action-buttons" *ngIf='playerList.length > 1'>
+		<div><button id="start-game" (click)='startGame()'>Start Game!</button></div>
+	</div>
+</ng-container>
+<!-- Load image assets before needed -->
+<div id="preloader"></div>
 
-<div id="shared-cards">
-	<div *ngFor='let cardNumberSuit of sharedCards' class="card {{cardNumberSuit}}"></div>
-</div>
-<div id="pot-wrapper">
-	<div class="poker-chipcounter"><span>{{ 550 | currency }}</span></div>
-</div>
-<div id="action-buttons" *ngIf='myTurn()'>
-	<div *ngIf='turnOptions === "before-bets"'><button id="check">Check</button></div>
-	<div *ngIf='turnOptions === "after-bets"'><button id="call">Call: costs {{ 25 | currency }}</button></div>
-	<div *ngIf='turnOptions === "before-bets"'><button id="bet">Bet</button><input type="number" placeholder="Amount" /></div>
-	<div *ngIf='turnOptions === "after-bets"'><button id="raise">Raise</button><input type="number" placeholder="Amount" /><span id="total-bet-from-raise">Total: {{ 35 | currency}}</span></div>
-	<div><button id="fold">Fold</button></div>
-	<div *ngIf='turnOptions === "end-called"'><button id="show-cards">Show Cards</button></div>
-	<div *ngIf='turnOptions === "end-called"'><button id="muck-cards">Muck Cards (Don't show)</button></div>
-</div>
+<ng-container *ngIf='false'>
+	<div id="action-buttons">
+		<div><button id="fold" (click)='fold()'>Fold</button></div>
+	</div>
+</ng-container>
+
+<!-- Buttons for faking state -->
 
 <!-- <p>
 	details for socket init:
@@ -35,23 +55,19 @@
 <button (click)="changeCurrentPlayer(user.id)">Change to me</button>
 <br><br> -->
 
-<p>
-	Load player list:
+<!-- <p>
+	Load temp player list:
 </p>
 <button (click)="changePlayerList([{id: user.id, displayName: null}, {id: 1, displayName: null}, {id: 2, displayName: null}, {id: 3, displayName: null}, {id: 4, displayName: null}])">Load players, self + 4</button>
-<button (click)="changePlayerList([{id: user.id, displayName: null}, {id: 1, displayName: null}, {id: 2, displayName: null}, {id: 3, displayName: null}, {id: 4, displayName: null}, {id: 5, displayName: null}, {id: 6, displayName: null}, {id: 7, displayName: null}])">Load players, self + 7</button>
-<p *ngIf="playerList.length > 0">Player List:</p>
-<ol>
-	<li *ngFor="let player of playerList">{{player.displayName}}(id: {{player.id}})</li>
-</ol>
+<button (click)="changePlayerList([{id: user.id, displayName: null}, {id: 1, displayName: null}, {id: 2, displayName: null}, {id: 3, displayName: null}, {id: 4, displayName: null}, {id: 5, displayName: null}, {id: 6, displayName: null}, {id: 7, displayName: null}])">Load players, self + 7</button> -->
 
+<!-- 
 <p>
 	Deal Cards (changing game state)
 </p>
 <button (click)='deal()'>Deal</button>
 <button (click)='flop()'>Flop</button>
 <button (click)='turn()'>Turn</button>
-<button (click)='river()'>River</button>
+<button (click)='river()'>River</button> -->
 
-<!-- Load image assets before needed -->
-<div id="preloader"></div>
+
