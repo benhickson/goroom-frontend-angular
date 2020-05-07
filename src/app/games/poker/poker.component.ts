@@ -22,6 +22,7 @@ export class PokerComponent implements OnInit {
   potChips: number = 0;
   sharedCards: string[];
   
+  gameStage: number;
   turnOptions: string;
   // turnOptions: string = 'before-bets';
   // turnOptions: string = 'after-bets';
@@ -132,11 +133,18 @@ export class PokerComponent implements OnInit {
         this.costToCall = message.cost_to_call;
       }
 
+      // game stage zero is used to show the "Deal Cards" button
+      this.gameStage = message.stage
+
     } else {
       // if my id is in the list of pending players
       if (message.pending_players.map(player => player.id).includes(this.user.id)) {
         // go ahead and update state
-        this.playerService.changePlayerList(message.pending_players);
+        this.playerService.changePlayerList(
+          message.pending_players.map(player => (
+            {id: player.id, displayName: player.display_name}
+          ))
+        );
       } else {
         // request to be added to the list
         this.publicSocket.emit('join_game');
@@ -161,6 +169,10 @@ export class PokerComponent implements OnInit {
   startGame(): void {
     console.log('game started!');
     this.publicSocket.emit('start_game');
+  }
+  dealCards(): void {
+    console.log('dealing...');
+    this.publicSocket.emit('deal_cards');
   }
   // user moves
   fold(): void {

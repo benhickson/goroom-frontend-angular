@@ -14,6 +14,9 @@
 		<div *ngIf='turnOptions === "end-called"'><button (click)="showCards()" id="show-cards">Show Cards</button></div>
 		<div *ngIf='turnOptions === "end-called"'><button (click)="muckCards()" id="muck-cards">Muck Cards (Don't show)</button></div>
 	</div>
+	<div id="action-buttons" *ngIf='gameStage === 0'>
+		<div><button id="deal-cards" (click)='dealCards()'>Deal Cards</button></div>
+	</div>
 </ng-container>
 <ng-container *ngIf='!gameActive'>
 	<p *ngIf="playerList.length > 0">Player List:</p>
