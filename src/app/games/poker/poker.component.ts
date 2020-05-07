@@ -22,12 +22,12 @@ export class PokerComponent implements OnInit {
   potChips: number = 0;
   sharedCards: string[];
   
-  // turnOptions: string;
+  turnOptions: string;
   // turnOptions: string = 'before-bets';
-  turnOptions: string = 'after-bets';
+  // turnOptions: string = 'after-bets';
   // turnOptions: string = 'end-called';
   
-  costToCall: number = 50;
+  costToCall: number = 0;
   betAmount: number = 0;
   raiseAmount: number = 0;
 
@@ -52,12 +52,14 @@ export class PokerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.clear();    // clear some jank during dev
+
     // subscribe to data from the PlayerService
     this.playerService.currentPlayer.subscribe(playerId => this.currentPlayer = playerId);
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
 
     // make socket connections
-    this.publicSocket = io('localhost:5000/test', {
+    this.publicSocket = io('localhost:5000', {
       query: {
         room_id: this.room.id
       },
@@ -75,8 +77,13 @@ export class PokerComponent implements OnInit {
     // listen for messages
     this.publicSocket.on('players_joined', this.handlePlayersJoined)
     this.publicSocket.on('player_left', this.handlePlayerLeft)
-    this.publicSocket.on('update_game_state', this.handleUpdateGameState)
+    this.publicSocket.on('game_state', this.handleGameStateMessage)
     this.publicSocket.on('private_state_available', this.handlePrivateStateAvailable)
+    this.publicSocket.on('test_messages', this.handleTestMessages)
+  }
+
+  handleTestMessages = (message): void => {
+    console.log(message);
   }
 
   ngOnDestroy(): void {
@@ -90,24 +97,45 @@ export class PokerComponent implements OnInit {
 
   // socket.io message handlers
   handlePlayersJoined = (message): void => {
-    console.log(message);
     this.playerService.changePlayerList(message.pendingPlayerList);
   }
   handlePlayerLeft(message): void {
     console.log('user left:', message.user_name, 'id:', message.user_id);
   }
-  handleUpdateGameState = (message): void => {
+  handleGameStateMessage = (message): void => {
     console.log('game state:', message);
-    this.gameActive = true;
-    const newPlayerCardsChips = message.players.map(player => {
-      return {playerId: player.id, cards: player.hand, chips: player.stack}
-    });
-    this.playerService.changePlayerCardsChips(newPlayerCardsChips);
-    const newPlayerList = [...message.players]
-      .sort((a, b) => a.position - b.position)
-      .map(player => ({id: player.id, displayName: player.name}));
-    this.playerService.changePlayerList(newPlayerList);
-    this.playerService.changeCurrentDealer(message.button_player);
+    this.gameActive = message.started;
+
+    if (this.gameActive) {
+
+      this.playerService.changePlayerList(
+        [...message.players]
+          .sort((a, b) => a.position - b.position)
+          .map(player => ({id: player.id, displayName: player.display_name}))
+      );
+      this.playerService.changePlayerCardsChips(message.players.map(player => {
+        return {playerId: player.id, cards: player.cards, chips: player.chips}
+      }));
+      this.playerService.changeCurrentDealer(message.dealer);
+      this.potChips = message.pot;
+      this.sharedCards = message.board;
+      this.currentDealer = message.dealer;
+      this.playerService.changeCurrentPlayer(message.next_player);
+      
+      // only load this stuff if it's my turn
+      if (message.next_player === this.user.id) {
+        this.turnOptions = message.turn_options;
+        this.costToCall = message.cost_to_call;
+      }
+
+    } else {
+
+      this.playerService.changePlayerList(
+        [...message.pending_players]
+          .sort((a, b) => a.position - b.position)
+          .map(player => ({id: player.id, displayName: player.display_name}))
+      );
+    }
   }
   handlePrivateStateAvailable = (): void => {
     this.publicSocket.emit('private_game_state_request');

@@ -92,7 +92,7 @@ export class RoomComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.room) { 
+    if (this.room) {
       this.leave();
     }
   }
@@ -111,7 +111,8 @@ export class RoomComponent implements OnInit {
   }
 
   order(userId: number): number {
-    if (this.playerList.length > 0) {
+    // disabled for now with 'false'
+    if (false && this.playerList.length > 0) {
 
       const key = `count${this.playerList.length}`;
       const gameNodeOrder = this.gameNodeOrder[key];
