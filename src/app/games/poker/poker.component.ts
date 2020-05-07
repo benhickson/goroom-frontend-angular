@@ -80,10 +80,14 @@ export class PokerComponent implements OnInit {
     this.publicSocket.on('game_state', this.handleGameStateMessage)
     this.publicSocket.on('private_state_available', this.handlePrivateStateAvailable)
     this.publicSocket.on('test_messages', this.handleTestMessages)
+    this.publicSocket.on('illegal_move_message', this.handleIllegalMoveMessage)
   }
 
   handleTestMessages = (message): void => {
     console.log(message);
+  }
+  handleIllegalMoveMessage = (message): void => {
+    console.log('illegal move:', message);
   }
 
   ngOnDestroy(): void {
@@ -118,7 +122,7 @@ export class PokerComponent implements OnInit {
       }));
       this.playerService.changeCurrentDealer(message.dealer);
       this.potChips = message.pot;
-      this.sharedCards = message.board;
+      this.sharedCards = message.board_cards;
       this.currentDealer = message.dealer;
       this.playerService.changeCurrentPlayer(message.next_player);
       
@@ -129,12 +133,14 @@ export class PokerComponent implements OnInit {
       }
 
     } else {
-
-      this.playerService.changePlayerList(
-        [...message.pending_players]
-          .sort((a, b) => a.position - b.position)
-          .map(player => ({id: player.id, displayName: player.display_name}))
-      );
+      // if my id is in the list of pending players
+      if (message.pending_players.map(player => player.id).includes(this.user.id)) {
+        // go ahead and update state
+        this.playerService.changePlayerList(message.pending_players);
+      } else {
+        // request to be added to the list
+        this.publicSocket.emit('join_game');
+      }
     }
   }
   handlePrivateStateAvailable = (): void => {
