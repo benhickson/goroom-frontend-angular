@@ -96,6 +96,8 @@ export class PokerComponent implements OnInit {
     console.log(this.publicSocket.disconnect());
     // console.log(this.privateSocket.disconnect());
 
+    this.playerService.changeCurrentPlayer(null);
+
     // clear the player state via the service
     this.playerService.changePlayerCardsChips([]);
   }
