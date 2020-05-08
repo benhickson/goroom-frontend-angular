@@ -26,7 +26,11 @@ export class RoomComponent implements OnInit {
 
   cameraCountClassNumber: number = 2;
 
-  sidebarOpen: boolean = false;
+  sidebarOpen: boolean = true;
+
+  audioInputDevices: MediaDeviceInfo[] = [];
+  audioOutputDevices: MediaDeviceInfo[] = [];
+  videoDevices: MediaDeviceInfo[] = [];
 
   private client: AgoraClient;
   private localStream: Stream;
@@ -110,6 +114,9 @@ export class RoomComponent implements OnInit {
               error => console.error(error)
             )
           );
+          this.ngxAgoraService.AgoraRTC.getDevices((devices) => {
+            this.getDevices(devices)
+          });
         } else {
           console.log('room not found');
           this.roomNotFound = true;
@@ -250,5 +257,21 @@ export class RoomComponent implements OnInit {
       this.cameraCountClassNumber = 16;
     }
   }
+
+  private getDevices(devices: MediaDeviceInfo[]) {
+    devices.forEach(device => {
+      if (device.kind == 'audioinput') {
+        this.audioInputDevices.push(device);
+      } else if (device.kind == 'videoinput') {
+        this.videoDevices.push(device);
+      } else if (device.kind == 'audiooutput') {
+        this.audioOutputDevices.push(device);
+      }
+    });
+  }
   
+  switchDevice(device) {
+    console.log(device);
+    this.localStream.switchDevice("video", device);
+  }
 }

@@ -29,6 +29,10 @@
 		<p *ngIf="profiledUser.email">Contact: {{profiledUser.email}}</p>
 		<p>Location: Dallas, TX - USA</p>
 		<p>Local Time: {{time | date:'hh:mm a':'-0500'}}</p>
+		<label>Video Output Select</label>
+		<select (change)="switchDevice($event.target.value)" >
+			<option *ngFor="let videoDevice of videoDevices" [value]="videoDevice.deviceId">{{ videoDevice.label }}</option>
+		</select>
 		<p id="sidebar-close-button" (click)="closeSidebar()">close</p>
 	</div>
 </div>
