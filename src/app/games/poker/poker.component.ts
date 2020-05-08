@@ -21,6 +21,8 @@ export class PokerComponent implements OnInit {
   gameActive: boolean;
   potChips: number = 0;
   sharedCards: string[];
+
+  winners: [];
   
   gameStage: number;
   turnOptions: string;
@@ -128,6 +130,8 @@ export class PokerComponent implements OnInit {
       this.potChips = message.pot;
       this.sharedCards = message.board_cards;
       this.playerService.changeCurrentPlayer(message.next_player);
+
+      this.winners = message.hand_winners
       
       // only load this stuff if it's my turn
       if (message.next_player === this.user.id) {

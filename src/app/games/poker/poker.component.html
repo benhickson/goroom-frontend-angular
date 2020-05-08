@@ -14,6 +14,12 @@
 		<div *ngIf='turnOptions === "end-not-called"'><button (click)="showCards()" id="show-cards">Show Cards</button></div>
 		<div *ngIf='turnOptions === "end-not-called"'><button (click)="muckCards()" id="muck-cards">Muck Cards (Don't show)</button></div>
 	</div>
+	<div id="hand-over" *ngIf='winners.length > 0'>
+		The winner is:
+		{{winners[0].display_name}}
+		with a:
+		{{winners[0].hand_name}}!
+	</div>
 	<div id="action-buttons" *ngIf='gameStage === 0'>
 		<div><button id="deal-cards" (click)='dealCards()'>Deal Cards</button></div>
 	</div>
