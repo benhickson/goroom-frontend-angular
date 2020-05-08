@@ -25,7 +25,11 @@
             </ng-container>
           </ng-container>
         </div>
-        <div class="info" (click)="loadProfile(user.id)">{{ user | displayName }}</div>
+        <div class="info" (click)="loadProfile(user.id)">
+          {{ user | displayName }}
+          <span *ngIf="currentDealerIs(user.id)">[dealer]</span>
+          <span *ngIf="currentPlayerIs(user.id)">[active]</span>
+        </div>
       </div>
     </div>
     <div 
@@ -48,7 +52,11 @@
             </ng-container>
           </ng-container>
         </div>
-        <div class="info" (click)="loadProfile(remoteCallUsers[callId].id)">{{ remoteCallUsers[callId] | displayName }}</div>
+        <div class="info" (click)="loadProfile(remoteCallUsers[callId].id)">
+          {{ remoteCallUsers[callId] | displayName }}
+          <span *ngIf="currentDealerIs(remoteCallUsers[callId].id)">[dealer]</span>
+          <span *ngIf="currentPlayerIs(remoteCallUsers[callId].id)">[active]</span>
+        </div>
       </div>
     </div>
     <div 

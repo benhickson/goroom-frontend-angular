@@ -57,6 +57,7 @@ export class PokerComponent implements OnInit {
 
     // subscribe to data from the PlayerService
     this.playerService.currentPlayer.subscribe(playerId => this.currentPlayer = playerId);
+    this.playerService.currentDealer.subscribe(dealerId => this.currentDealer = dealerId);
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
 
     // make socket connections
@@ -126,7 +127,6 @@ export class PokerComponent implements OnInit {
       this.playerService.changeCurrentDealer(message.dealer);
       this.potChips = message.pot;
       this.sharedCards = message.board_cards;
-      this.currentDealer = message.dealer;
       this.playerService.changeCurrentPlayer(message.next_player);
       
       // only load this stuff if it's my turn

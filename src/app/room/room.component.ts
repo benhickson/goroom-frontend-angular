@@ -27,8 +27,9 @@ export class RoomComponent implements OnInit {
 
   cameraCountClassNumber: number = 2;
 
-  currentPlayer: number;
   playerList: {id: number, displayName: string}[] = [];
+  currentPlayer: number;
+  currentDealer: number;
   playerCardsChips: {playerId: number, cards: string[], chips: number}[];
 
   gameNodeOrder = {
@@ -85,6 +86,7 @@ export class RoomComponent implements OnInit {
     this.setUserAndJoinRoom();
     // subscribe to data from the PlayerService
     this.playerService.currentPlayer.subscribe(playerId => this.currentPlayer = playerId);
+    this.playerService.currentDealer.subscribe(dealerId => this.currentDealer = dealerId);
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
     this.playerService.playerCardsChips.subscribe(listOfPlayerCardsChips => {
       this.playerCardsChips = listOfPlayerCardsChips;
@@ -132,9 +134,12 @@ export class RoomComponent implements OnInit {
     }
   }
 
+  // booleans for conditionals in template
   currentPlayerIs(userId: number): boolean {
-    // console.log('checking if', userId, 'equals', this.currentPlayer, '...', userId === this.currentPlayer);
     return userId === this.currentPlayer;
+  }
+  currentDealerIs(userId: number): boolean {
+    return userId === this.currentDealer;
   }
 
   newGame(): void {

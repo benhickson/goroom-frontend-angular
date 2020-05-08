@@ -11,8 +11,8 @@
 		<div *ngIf='turnOptions === "before-bets"'><button (click)="bet()" id="bet" [class.disabled]='!(betAmount > 0)'>Bet</button><input type="number" #bet (keyup)="changeBet(bet.value)" placeholder="Amount" /></div>
 		<div *ngIf='turnOptions === "after-bets"'><button (click)="raiseBet()" id="raise" [class.disabled]='!(raiseAmount > 0)'>Raise</button><input type="number" #raise (keyup)="changeRaise(raise.value)" placeholder="Amount" /><span id="total-bet-from-raise">Total: {{ getTotalCostToRaise() | currency}}</span></div>
 		<div><button (click)="fold()" id="fold">Fold</button></div>
-		<div *ngIf='turnOptions === "end-called"'><button (click)="showCards()" id="show-cards">Show Cards</button></div>
-		<div *ngIf='turnOptions === "end-called"'><button (click)="muckCards()" id="muck-cards">Muck Cards (Don't show)</button></div>
+		<div *ngIf='turnOptions === "end-not-called"'><button (click)="showCards()" id="show-cards">Show Cards</button></div>
+		<div *ngIf='turnOptions === "end-not-called"'><button (click)="muckCards()" id="muck-cards">Muck Cards (Don't show)</button></div>
 	</div>
 	<div id="action-buttons" *ngIf='gameStage === 0'>
 		<div><button id="deal-cards" (click)='dealCards()'>Deal Cards</button></div>

@@ -22,6 +22,7 @@ export class PlayerService {
 
   changeCurrentPlayer(player: number): void {
     this.currentPlayerSource.next(player);
+    console.log('current player id:', player);
   }
 
   changeCurrentDealer(dealer: number): void {
