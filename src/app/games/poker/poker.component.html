@@ -8,7 +8,7 @@
 	<div id="action-buttons" *ngIf='isMyTurn()'>
 		<div *ngIf='turnOptions === "before-bets"'><button (click)="check()" id="check">Check</button></div>
 		<div *ngIf='turnOptions === "after-bets"'><button (click)="call()" id="call">Call: costs {{ costToCall | currency }}</button></div>
-		<div *ngIf='turnOptions === "before-bets"'><button (click)="bet()" id="bet" [class.disabled]='!(betAmount > 0)'>Bet</button><input type="number" #bet (keyup)="changeBet(bet.value)" placeholder="Amount" /></div>
+		<div *ngIf='turnOptions === "before-bets"'><button (click)="placeBet()" id="bet" [class.disabled]='!(betAmount > 0)'>Bet</button><input type="number" #bet (keyup)="changeBet(bet.value)" placeholder="Amount" /></div>
 		<div *ngIf='turnOptions === "after-bets"'><button (click)="raiseBet()" id="raise" [class.disabled]='!(raiseAmount > 0)'>Raise</button><input type="number" #raise (keyup)="changeRaise(raise.value)" placeholder="Amount" /><span id="total-bet-from-raise">Total: {{ getTotalCostToRaise() | currency}}</span></div>
 		<div><button (click)="fold()" id="fold">Fold</button></div>
 		<div *ngIf='turnOptions === "end-not-called"'><button (click)="showCards()" id="show-cards">Show Cards</button></div>

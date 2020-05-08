@@ -189,13 +189,15 @@ export class PokerComponent implements OnInit {
     console.log('calling...');
     this.emitUserMove({type: 'call'});
   }
-  bet(): void {
+  placeBet(): void {
     console.log('betting:', this.betAmount);
     this.emitUserMove({type: 'bet', amount: this.betAmount});
+    this.betAmount = 0;
   }
   raiseBet(): void {
     console.log('raising with a bet of:', this.getTotalCostToRaise());
     this.emitUserMove({type: 'raiseBet', amount: this.getTotalCostToRaise()});
+    this.raiseAmount = 0;
   }
   // show and muck
   showCards(): void {
