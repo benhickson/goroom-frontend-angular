@@ -5,28 +5,78 @@
 	</user-config-modal>
 </ng-template>
 <div id="room" [class.sidebar-open]="sidebarOpen">
-	<div *ngIf="room" id="loaded-when-room-received" 
-		class="cameracount-{{ cameraCountClassNumber }}">
-		<!-- <p>Room Name: {{room.name}}</p> -->
-		<!-- <p>Room Id: {{room.id}}</p> -->
-		<!-- <p>Room Creator Id: {{room.creator_id}}</p> -->
-		
-		<div class="camera-container">
-			<div class="vertical-centering">
-				<div [id]="localCallId" class="camera local"></div>
-				<div class="info" (click)="loadProfile(user.id)">{{ user | displayName }}</div>
-			</div>
-		</div>
-		<div *ngFor="let callId of remoteCalls" class="camera-container">
-			<div class="vertical-centering">
-				<div [id]="callId" class="camera remote"></div>
-				<div class="info" (click)="loadProfile(remoteCallUsers[callId].id)">{{ remoteCallUsers[callId] | displayName }}</div>
-			</div>
-		</div>
-	</div>
-	<div *ngIf="roomNotFound">
-		Room not found.
-	</div>
+  <div *ngIf="room" id="loaded-when-room-received" 
+    class="cameracount-{{ cameraCountClassNumber }}"
+    [class.gameboard-open]="gameboardOpen">
+    <!-- <p>Room Name: {{room.name}}</p> -->
+    <!-- <p>Room Id: {{room.id}}</p> -->
+    <!-- <p>Room Creator Id: {{room.creator_id}}</p> -->
+    
+    <div 
+      class="camera-container" 
+      [class.glow]="currentPlayerIs(user.id)" 
+      [ngStyle]="{order: order(user.id)}"
+      >
+      <div class="vertical-centering">
+        <div class="camera-square">
+          <div [id]="localCallId" class="camera local"></div>
+          <ng-container *ngIf='gameboardOpen'>
+            <ng-container *ngFor='let playerCC of playerCardsChips'>
+              <ng-container *ngIf='playerCC.playerId === user.id'>
+          <div class="card-holder">
+            <div *ngFor='let cardNumberSuit of playerCC.cards' class="card {{cardNumberSuit}}"></div>
+          </div>
+          <div class="poker-chipcounter"><span fittext>{{ playerCC.chips | currency }}</span></div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+        <div class="info" (click)="loadProfile(user.id)">
+          {{ user | displayName }}
+          <span *ngIf="currentDealerIs(user.id)">[dealer]</span>
+          <span *ngIf="currentPlayerIs(user.id)">[active]</span>
+        </div>
+      </div>
+    </div>
+    <div 
+      *ngFor="let callId of remoteCalls" 
+      class="camera-container" 
+      [class.glow]="currentPlayerIs(remoteCallUsers[callId].id)"
+      [ngStyle]="{order: order(remoteCallUsers[callId].id)}"
+      >
+      <div class="vertical-centering">
+        <div class="camera-square">
+          <div [id]="callId" class="camera remote"></div>
+          <ng-container *ngIf='gameboardOpen'>
+            <ng-container *ngFor='let playerCC of playerCardsChips'>
+              <ng-container *ngIf='playerCC.playerId === remoteCallUsers[callId].id'>
+          <div class="card-holder">
+            <div *ngFor='let cardNumberSuit of playerCC.cards' class="card {{cardNumberSuit}}"></div>
+          </div>
+          <div class="poker-chipcounter"><span fittext>{{ playerCC.chips | currency }}</span></div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </div>
+        <div class="info" (click)="loadProfile(remoteCallUsers[callId].id)">
+          {{ remoteCallUsers[callId] | displayName }}
+          <span *ngIf="currentDealerIs(remoteCallUsers[callId].id)">[dealer]</span>
+          <span *ngIf="currentPlayerIs(remoteCallUsers[callId].id)">[active]</span>
+        </div>
+      </div>
+    </div>
+    <div 
+      *ngIf="gameboardOpen" 
+      class="camera-container gameboard"
+      [ngStyle]="{order: order(0)}"
+      >
+      <app-gameboard [user]="user" [room]="room"></app-gameboard>
+      <div class="info">&nbsp;</div>
+    </div>
+  </div>
+  <div *ngIf="roomNotFound">
+    Room not found.
+  </div>
 </div>
 <div id="sidebar" [class.sidebar-open]="sidebarOpen">
 	<div id="profile" *ngIf="profiledUser">
@@ -39,3 +89,9 @@
 		<p id="sidebar-close-button" (click)="closeSidebar()">close</p>
 	</div>
 </div>
+
+<button id="launch-game" [class.transparent]="gameboardOpen" (click)="newGame()">Play Poker</button>
+<button id="close-game" [class.transparent]="!gameboardOpen" (click)="closeGame()">Close Game</button>
+<!-- <button id="add-user" (click)="addTempUser()">Add User</button> -->
+
+<script src="../../assets/games/poker/odometer.min.js"></script>

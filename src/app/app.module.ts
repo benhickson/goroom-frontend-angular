@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
 import { NgxAgoraModule } from 'ngx-agora';
+import { AngularFittextModule } from 'angular-fittext';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,8 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
 import { AuthAnonComponent } from './auth-anon/auth-anon.component';
 import { HomeComponent } from './home/home.component';
 import { DisplayNamePipe } from './display-name.pipe';
+import { GameboardComponent } from './gameboard/gameboard.component';
+import { PokerComponent } from './games/poker/poker.component';
 import { UserConfigModalComponent } from './user-config-modal/user-config-modal.component';
 
 @NgModule({
@@ -31,6 +34,8 @@ import { UserConfigModalComponent } from './user-config-modal/user-config-modal.
     RoomComponent,
     HomeComponent,
     DisplayNamePipe,
+    GameboardComponent,
+    PokerComponent,
     UserConfigModalComponent
   ],
   imports: [
@@ -47,7 +52,8 @@ import { UserConfigModalComponent } from './user-config-modal/user-config-modal.
         whitelistedDomains: environment.whitelistedDomains
       }
     }),
-    NgxAgoraModule.forRoot({ AppID: environment.agora.appId })
+    NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
+    AngularFittextModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

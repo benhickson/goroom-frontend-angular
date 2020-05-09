@@ -1,0 +1,203 @@
+#preloader{
+	background-image: url('../../../assets/games/poker/deck-1.png');
+	width: 0.1px;
+	height: 0.1px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+#shared-cards{
+	width: 100%;
+	padding-left: 2.5%;
+}
+.card{
+	width: 17%;
+	padding-top: 25%;
+	background-color: white;
+	background-image: url('../../../assets/games/poker/deck-1.png');
+	background-size: 1300% 400%;
+	box-shadow: 0.1vw 0.1vw 0.3vw -0.1vw black;
+	border-radius: 0.5vw;
+	border-width: 0.2vw;
+	border-style: solid;
+	border-color: white;
+	margin: 1%;
+	display: inline-block;
+	transition: all 450ms ease;
+	box-sizing: border-box;
+	backface-visibility: hidden; // fix to aliased jaggies when transform-rotate is applied
+}
+.back{
+	background-image: url('../../../assets/games/poker/card-back-1.svg');
+	background-size: 100% 100%;
+}
+.clubs{
+	background-position-y: 0%;
+}
+.diamonds{
+	background-position-y: 300%;
+}
+.hearts{
+	background-position-y: 200%;
+}
+.spades{
+	background-position-y: 100%;
+}
+.ace{
+	background-position-x: 0%;
+}
+.two{
+	background-position-x: 1200%;
+}
+.three{
+	background-position-x: 1100%;	
+}
+.four{
+	background-position-x: 1000%;
+}
+.five{
+	background-position-x: 900%;
+}
+.six{
+	background-position-x: 800%;	
+}
+.seven{
+	background-position-x: 700%;
+}
+.eight{
+	background-position-x: 600%;
+}
+.nine{
+	background-position-x: 500%;	
+}
+.ten{
+	background-position-x: 400%;
+}
+.jack{
+	background-position-x: 300%;
+}
+.queen{
+	background-position-x: 200%;	
+}
+.king{
+	background-position-x: 100%;	
+}
+
+#action-buttons{
+	text-align: center;
+
+	& > * {
+		display: inline-flex;
+		text-align: left;
+		width: 80%;
+		margin: 5px 0;
+
+		& > * {
+			margin: 0 5px;
+		}
+	}
+
+	button, input{
+		border-radius: 0.3vw;
+	}
+
+	button{
+		flex: 1 1 100%;
+		font-family: Muli;
+    border-width: 1px;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 28px;
+    background-color: white;
+    border-color: rgba(255,255,255,0.75);
+		cursor: pointer;
+		color: white;
+	}
+	button:hover{
+		text-decoration: underline;
+		border-color: white;
+	}
+
+	#start-game{
+		background-color: #F44336;
+	}
+	#deal-cards{
+		background-color: rgb(54, 73, 244);
+	}
+	#check{
+		background-color: #03A9F4;
+	}
+	#call{
+		background-color: #9C27B0;
+	}
+	#bet, #raise{
+		flex: 1 1 60%;
+		background-color: #F44336;
+	}
+	#bet.disabled, #raise.disabled{
+		background-color: #7d211a;
+    color: #ffffff78;
+		pointer-events: none;
+	}
+	#fold{
+		background-color: #355463;
+	}
+	#show-cards{
+		background-color: #03A9F4;
+	}
+	#muck-cards{
+		background-color: #383f42;
+	}
+
+	input{
+		flex: 0 1 120px;
+    font-size: 14px;
+    border: none;
+    text-align: center;
+    width: 0;
+	}
+
+	#total-bet-from-raise{
+		flex: 0 1 120px;
+		font-size: 14px;
+		padding: 7px 0;
+		text-align: center;
+	}
+}
+
+// Rmove arrows from number inputs
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+#pot-wrapper{
+	width: 100%;
+	text-align: center;
+
+	.poker-chipcounter{
+		border-radius: 0.5vw;
+		background-color: rgba(0, 0, 0, 0.7);
+		color: #00ff09;
+		padding: 0.7% 2% 1% 2%;
+		text-align: center;
+		font-family: monospace;
+		border-color: rgba(0, 255, 0, 0.5);
+		border-width: 1px;
+		border-style: solid;
+		display: inline-block;
+		font-size: 24px;
+		margin: 5px;
+	}
+}
+#hand-over{
+	font-size: 120%;
+	display: inline-block;
+	padding: 10%;
+}

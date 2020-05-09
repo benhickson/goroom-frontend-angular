@@ -1,0 +1,10 @@
+#gameboard{
+	background-color: #164126;
+    width: 100%;
+    height: calc(100% - 27px);
+    border-radius: 2vw;
+    color: white;
+    padding: 1vw;
+    box-sizing: border-box;
+    overflow: scroll;
+}
