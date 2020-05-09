@@ -17,6 +17,7 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
 import { AuthAnonComponent } from './auth-anon/auth-anon.component';
 import { HomeComponent } from './home/home.component';
 import { DisplayNamePipe } from './display-name.pipe';
+import { UserConfigModalComponent } from './user-config-modal/user-config-modal.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { DisplayNamePipe } from './display-name.pipe';
     AuthAnonComponent,
     RoomComponent,
     HomeComponent,
-    DisplayNamePipe
+    DisplayNamePipe,
+    UserConfigModalComponent
   ],
   imports: [
     BrowserModule,

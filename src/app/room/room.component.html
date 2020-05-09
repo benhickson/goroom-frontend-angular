@@ -1,3 +1,9 @@
+<ng-container #vc></ng-container>
+<ng-template #modal_1>
+	<user-config-modal id="modal_1" class="hhidden">
+		<button (click)="closeDialog()">Close</button>
+	</user-config-modal>
+</ng-template>
 <div id="room" [class.sidebar-open]="sidebarOpen">
 	<div *ngIf="room" id="loaded-when-room-received" 
 		class="cameracount-{{ cameraCountClassNumber }}">
@@ -29,10 +35,7 @@
 		<p *ngIf="profiledUser.email">Contact: {{profiledUser.email}}</p>
 		<p>Location: Dallas, TX - USA</p>
 		<p>Local Time: {{time | date:'hh:mm a':'-0500'}}</p>
-		<label>Video Output Select</label>
-		<select (change)="switchDevice($event.target.value)" >
-			<option *ngFor="let videoDevice of videoDevices" [value]="videoDevice.deviceId">{{ videoDevice.label }}</option>
-		</select>
+		<button (click)="showDialog()">Open Dialog</button>		
 		<p id="sidebar-close-button" (click)="closeSidebar()">close</p>
 	</div>
 </div>

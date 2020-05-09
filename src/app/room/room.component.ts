@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Room } from '../room';
 import { ActivatedRoute } from '@angular/router';
 import { RoomService } from '../room.service';
@@ -12,6 +12,8 @@ import { User } from '../user';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
+  @ViewChild('modal_1') modal_1: TemplateRef<any>;
+  @ViewChild('vc', {read:ViewContainerRef}) vc: ViewContainerRef;
 
   room: Room;
   roomNotFound: boolean = false;
@@ -27,10 +29,6 @@ export class RoomComponent implements OnInit {
   cameraCountClassNumber: number = 2;
 
   sidebarOpen: boolean = true;
-
-  audioInputDevices: MediaDeviceInfo[] = [];
-  audioOutputDevices: MediaDeviceInfo[] = [];
-  videoDevices: MediaDeviceInfo[] = [];
 
   private client: AgoraClient;
   private localStream: Stream;
@@ -114,9 +112,6 @@ export class RoomComponent implements OnInit {
               error => console.error(error)
             )
           );
-          this.ngxAgoraService.AgoraRTC.getDevices((devices) => {
-            this.getDevices(devices)
-          });
         } else {
           console.log('room not found');
           this.roomNotFound = true;
@@ -258,20 +253,14 @@ export class RoomComponent implements OnInit {
     }
   }
 
-  private getDevices(devices: MediaDeviceInfo[]) {
-    devices.forEach(device => {
-      if (device.kind == 'audioinput') {
-        this.audioInputDevices.push(device);
-      } else if (device.kind == 'videoinput') {
-        this.videoDevices.push(device);
-      } else if (device.kind == 'audiooutput') {
-        this.audioOutputDevices.push(device);
-      }
-    });
+  showDialog(){
+    let view = this.modal_1.createEmbeddedView(null);
+    this.vc.insert(view);
+    this.modal_1.elementRef.nativeElement.previousElementSibling.classList.remove('hhidden');
+    this.modal_1.elementRef.nativeElement.previousElementSibling.classList.add('sshow');
   }
   
-  switchDevice(device) {
-    console.log(device);
-    this.localStream.switchDevice("video", device);
+  closeDialog() {
+    this.vc.clear()
   }
 }

@@ -1,0 +1,30 @@
+<div class="mmodal">
+    <div class="mmodal-body">
+        <div id="devices">
+            <div class="div">
+                <label>Video Output Select</label>
+                <select (change)="switchDevice('video', $event.target.value)" >
+                    <option *ngFor="let videoDevice of videoDevices" [value]="videoDevice.deviceId">{{ videoDevice.label }}</option>
+                </select>
+                <div id="video-preview" style="width: 100%; height: 300px;"></div>
+            </div>
+            <div>
+                <label>Audio Input Select</label>
+                <select (change)="switchDevice('audio', $event.target.value)" >
+                    <option *ngFor="let audioInputDevice of audioInputDevices" [value]="audioInputDevice.deviceId">{{ audioInputDevice.label }}</option>
+                </select>
+                <div class="level">
+                    <span [style.width]="audioInputLevel"></span>
+                </div>
+            </div>
+            <div>
+                <label>Audio Output Select</label>
+                <select (change)="setAudioOutput($event.target.value)" >
+                    <option *ngFor="let audioOutputDevice of audioOutputDevices" [value]="audioOutputDevice.deviceId">{{ audioOutputDevice.label }}</option>
+                </select>
+            </div>
+        </div>
+        <ng-content></ng-content>
+    </div>
+</div>
+<div class="mmodal-background"></div>
