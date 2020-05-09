@@ -22,7 +22,7 @@ export class PokerComponent implements OnInit {
   potChips: number = 0;
   sharedCards: string[];
 
-  winners: [];
+  winners: any[] = [];
   
   gameStage: number;
   turnOptions: string;
@@ -168,6 +168,15 @@ export class PokerComponent implements OnInit {
       return true;
     } else {
       return false;
+    }
+  }
+
+  displayWinnerOutputText(): string {
+    if (this.winners.length > 0) {
+      return `The winner is: ${this.winners[0].display_name}
+              with a: ${this.winners[0].hand_name}!`;
+    } else {
+      return 'No winner yet.';
     }
   }
 
