@@ -63,7 +63,7 @@ export class PokerComponent implements OnInit {
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
 
     // make socket connections
-    this.publicSocket = io('localhost:5000', {
+    this.publicSocket = io('https://goroom-poker.herokuapp.com', {      // TODO: use environment variables.
       query: {
         room_id: this.room.id
       },
@@ -75,8 +75,6 @@ export class PokerComponent implements OnInit {
         }
       }
     });
-    // this.privateSocket = io('http://localhost:5000/test', {
-    // });
 
     // listen for messages
     this.publicSocket.on('players_joined', this.handlePlayersJoined)
