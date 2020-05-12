@@ -2,7 +2,7 @@
 	<div id="shared-cards">
 		<div *ngFor='let cardNumberSuit of sharedCards' class="card {{cardNumberSuit}}"></div>
 	</div>
-	<div id="pot-wrapper">
+	<div id="pot-wrapper" *ngIf="gameStage > 0 && gameStage < 5">
 		<div class="poker-chipcounter"><span>{{ potChips | currency }}</span></div>
 	</div>
 	<div id="action-buttons" *ngIf='isMyTurn()'>
@@ -15,10 +15,16 @@
 		<div *ngIf='turnOptions === "end-not-called"'><button (click)="muckCards()" id="muck-cards">Muck Cards (Don't show)</button></div>
 	</div>
 	<div id="hand-over" *ngIf='winners.length > 0'>
-		{{ displayWinnerOutputText() }}
+		Winner(s):
+		<p *ngFor="let winner of winners">
+			{{winner.display_name}} with {{winner.hand_name}}
+		</p>
 	</div>
 	<div id="action-buttons" *ngIf='gameStage === 0'>
 		<div><button id="deal-cards" (click)='dealCards()'>Deal Cards</button></div>
+	</div>
+	<div id="action-buttons" *ngIf='gameStage === 5'>
+		<div><button id="deal-cards" (click)='dealCards()'>Deal Next Hand</button></div>
 	</div>
 </ng-container>
 <ng-container *ngIf='!gameActive'>

@@ -30,6 +30,7 @@ export class JwtService {
     return this.httpClient.post<{auth_token: string}>(this.loginUrl, {email, password}).pipe(
       tap(response => {
         localStorage.setItem('auth_token', response.auth_token);
+        console.log('token rxd:', response.auth_token);
       })
     );
   }

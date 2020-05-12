@@ -173,8 +173,11 @@ export class PokerComponent implements OnInit {
 
   displayWinnerOutputText(): string {
     if (this.winners.length > 0) {
-      return `The winner is: ${this.winners[0].display_name}
-              with a: ${this.winners[0].hand_name}!`;
+      return `The winner is:
+              ${this.winners[0].display_name}
+              with: 
+              ${this.winners[0].hand_name}
+              !`;
     } else {
       return 'No winner yet.';
     }
