@@ -3,6 +3,7 @@ import { PlayerService } from '../player.service';
 import { User } from 'src/app/user';
 import { Room } from 'src/app/room';
 import io from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-poker',
@@ -63,7 +64,7 @@ export class PokerComponent implements OnInit {
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
 
     // make socket connections
-    this.publicSocket = io('https://goroom-poker.herokuapp.com', {      // TODO: use environment variables.
+    this.publicSocket = io(environment.pokerApi, {
       query: {
         room_id: this.room.id
       },
