@@ -164,9 +164,16 @@ div, button{
       padding: 0.3vw 1vw 0.4vw 1vw;
       font-size: 1.4vw;
       cursor: pointer;
+      float: left;
     }
     .info:hover{
       text-decoration: underline;
+    }
+    .settings-button {
+      @extend .info;
+      color: #000;
+      text-decoration: none;
+      float: right;
     }
   }
   app-gameboard{
