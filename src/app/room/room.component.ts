@@ -208,8 +208,7 @@ export class RoomComponent implements OnInit {
           // initialize local A/V stream
           this.localStream = this.ngxAgoraService.createStream({
             streamID: `user_id-${this.uid}`,
-            audio: false,
-            // audio: true,
+            audio: true,
             video: true,
             screen: false
           });

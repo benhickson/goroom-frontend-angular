@@ -3,6 +3,7 @@ import { PlayerService } from '../player.service';
 import { User } from 'src/app/user';
 import { Room } from 'src/app/room';
 import io from 'socket.io-client';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-poker',
@@ -63,7 +64,7 @@ export class PokerComponent implements OnInit {
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
 
     // make socket connections
-    this.publicSocket = io('localhost:5000', {
+    this.publicSocket = io(environment.pokerApi, {
       query: {
         room_id: this.room.id
       },
@@ -75,8 +76,6 @@ export class PokerComponent implements OnInit {
         }
       }
     });
-    // this.privateSocket = io('http://localhost:5000/test', {
-    // });
 
     // listen for messages
     this.publicSocket.on('players_joined', this.handlePlayersJoined)
@@ -173,8 +172,11 @@ export class PokerComponent implements OnInit {
 
   displayWinnerOutputText(): string {
     if (this.winners.length > 0) {
-      return `The winner is: ${this.winners[0].display_name}
-              with a: ${this.winners[0].hand_name}!`;
+      return `The winner is:
+              ${this.winners[0].display_name}
+              with: 
+              ${this.winners[0].hand_name}
+              !`;
     } else {
       return 'No winner yet.';
     }

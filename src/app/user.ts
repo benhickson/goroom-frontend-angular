@@ -3,6 +3,6 @@ export interface User {
 	email: string;
 	display_name: string;
 	anon_display_name: string;
-    created_at: Date;
-    updated_at: Date;
+  created_at: Date;
+  updated_at: Date;
 }
