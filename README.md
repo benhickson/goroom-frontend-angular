@@ -18,7 +18,7 @@ Production Build:<br>
 In development mode, the app will automatically reload if you change any of the source files.
 
 ## Production/Deployment Setup
-4. Built with `ng build --prod`, manually (no CI currently). Currently running in an Apache environment, hence the existence of an .htaccess file. Apache config files point the domain to the `dist/` directory.
+4. Merge a Pull Request into branch `netlify-production`. This will trigger a build and publish the site.
 
 <br><br>
 
