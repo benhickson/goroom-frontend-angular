@@ -1,4 +1,6 @@
 # Go Room - Frontend (Angular)
+Production Build Status:
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a021c279-e49e-406e-84cf-48c5fc25f804/deploy-status)](https://app.netlify.com/sites/goroom-frontend/deploys)
 
 ## Setup
 1. Clone/Pull Repo
