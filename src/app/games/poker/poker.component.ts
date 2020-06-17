@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
 import { PlayerService } from '../player.service';
 import { User } from 'src/app/user';
 import { Room } from 'src/app/room';
@@ -27,32 +28,17 @@ export class PokerComponent implements OnInit {
   
   gameStage: number;
   turnOptions: string;
-  // turnOptions: string = 'before-bets';
-  // turnOptions: string = 'after-bets';
-  // turnOptions: string = 'end-called';
   
   costToCall: number = 0;
   betAmount: number = 0;
   raiseAmount: number = 0;
+  maximumBet: number;
 
-  publicSocket;
-  privateSocket;
-
-  // Temp date for the template
-  // flopCards: string[] = ['five clubs','seven hearts','four spades'];
-  // turnCards: string[] = ['five clubs','seven hearts','four spades','nine clubs'];
-  // riverCards: string[] = ['five clubs','seven hearts','back','nine clubs','seven diamonds'];
-  // playerCardsVisible: string[][] = [['five spades','seven clubs'],['four clubs','ace spades'],['queen hearts','six diamonds'],['king diamonds','four diamonds']];
-  // playerCardsTemp: {playerId: number, cards: string[], chips: number}[] = [
-  //   {playerId: 35, cards: ['four clubs','ace spades'], chips: 140.50},
-  //   {playerId: 1, cards: ['back','back'], chips: 105},
-  //   {playerId: 2, cards: ['back','back'], chips: 200.01},
-  //   {playerId: 3, cards: ['back','back'], chips: 25.30},
-  //   {playerId: 4, cards: ['back','back'], chips: 15},
-  // ]
+  pokerSocket;
 
   constructor(
     private playerService: PlayerService,
+    private currencyPipe: CurrencyPipe,
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +50,7 @@ export class PokerComponent implements OnInit {
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
 
     // make socket connections
-    this.publicSocket = io(environment.pokerApi, {
+    this.pokerSocket = io(environment.pokerApi, {
       query: {
         room_id: this.room.id
       },
@@ -78,12 +64,12 @@ export class PokerComponent implements OnInit {
     });
 
     // listen for messages
-    this.publicSocket.on('players_joined', this.handlePlayersJoined)
-    this.publicSocket.on('player_left', this.handlePlayerLeft)
-    this.publicSocket.on('game_state', this.handleGameStateMessage)
-    this.publicSocket.on('private_state_available', this.handlePrivateStateAvailable)
-    this.publicSocket.on('test_messages', this.handleTestMessages)
-    this.publicSocket.on('illegal_move_message', this.handleIllegalMoveMessage)
+    this.pokerSocket.on('players_joined', this.handlePlayersJoined)
+    this.pokerSocket.on('player_left', this.handlePlayerLeft)
+    this.pokerSocket.on('game_state', this.handleGameStateMessage)
+    this.pokerSocket.on('private_state_available', this.handlePrivateStateAvailable)
+    this.pokerSocket.on('test_messages', this.handleTestMessages)
+    this.pokerSocket.on('illegal_move_message', this.handleIllegalMoveMessage)
   }
 
   handleTestMessages = (message): void => {
@@ -94,9 +80,8 @@ export class PokerComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // disconnect sockets
-    console.log(this.publicSocket.disconnect());
-    // console.log(this.privateSocket.disconnect());
+    // disconnect socket
+    console.log(this.pokerSocket.disconnect());
 
     this.playerService.changeCurrentPlayer(null);
 
@@ -136,6 +121,7 @@ export class PokerComponent implements OnInit {
       if (message.next_player === this.user.id) {
         this.turnOptions = message.turn_options;
         this.costToCall = message.cost_to_call;
+        this.maximumBet = message.maximum_bet;
       }
 
       // game stage zero is used to show the "Deal Cards" button
@@ -152,12 +138,12 @@ export class PokerComponent implements OnInit {
         );
       } else {
         // request to be added to the list
-        this.publicSocket.emit('join_game');
+        this.pokerSocket.emit('join_game');
       }
     }
   }
   handlePrivateStateAvailable = (): void => {
-    this.publicSocket.emit('private_game_state_request');
+    this.pokerSocket.emit('private_game_state_request');
   }
 
   // method for the template to know if it's my turn, and to show the action buttons
@@ -182,14 +168,24 @@ export class PokerComponent implements OnInit {
     }
   }
 
+  getBetButtonString(): string {
+    if (this.betAmount > this.maximumBet) {
+      return `Max Bet: ${this.currencyPipe.transform(this.maximumBet)}`
+    } else if (this.betAmount <= 0) {
+      return 'Enter an amount to Bet ➡';
+    } else {
+      return 'Bet'
+    }
+  }
+
   // action buttons
   startGame(): void {
     console.log('game started!');
-    this.publicSocket.emit('start_game');
+    this.pokerSocket.emit('start_game');
   }
   dealCards(): void {
     console.log('dealing...');
-    this.publicSocket.emit('deal_cards');
+    this.pokerSocket.emit('deal_cards');
   }
   // user moves
   fold(): void {
@@ -225,7 +221,7 @@ export class PokerComponent implements OnInit {
   }
   // emitter
   emitUserMove(move: any): void {
-    this.publicSocket.emit('user_move', move);
+    this.pokerSocket.emit('user_move', move);
   }
 
   // bet amount methods
