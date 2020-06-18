@@ -1,4 +1,6 @@
 # Go Room - Frontend (Angular)
+Production Build:<br>
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a021c279-e49e-406e-84cf-48c5fc25f804/deploy-status)](https://app.netlify.com/sites/goroom-frontend/deploys)
 
 ## Setup
 1. Clone/Pull Repo
@@ -16,7 +18,7 @@
 In development mode, the app will automatically reload if you change any of the source files.
 
 ## Production/Deployment Setup
-4. Built with `ng build --prod`, manually (no CI currently). Currently running in an Apache environment, hence the existence of an .htaccess file. Apache config files point the domain to the `dist/` directory.
+4. Merge a Pull Request into branch `netlify-production`. This will trigger a build and publish the site.
 
 <br><br>
 
