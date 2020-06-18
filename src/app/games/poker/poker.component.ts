@@ -121,7 +121,8 @@ export class PokerComponent implements OnInit {
       if (message.next_player === this.user.id) {
         this.turnOptions = message.turn_options;
         this.costToCall = message.cost_to_call;
-        this.maximumBet = message.maximum_bet;
+        this.maximumBet = message.max_bet_next_player;
+        console.log('max bet', this.maximumBet);
       }
 
       // game stage zero is used to show the "Deal Cards" button
@@ -170,11 +171,21 @@ export class PokerComponent implements OnInit {
 
   getBetButtonString(): string {
     if (this.betAmount > this.maximumBet) {
-      return `Max Bet: ${this.currencyPipe.transform(this.maximumBet)}`
+      return `Max Bet: ${this.currencyPipe.transform(this.maximumBet)}`;
     } else if (this.betAmount <= 0) {
       return 'Enter an amount to Bet ➡';
     } else {
-      return 'Bet'
+      return 'Bet';
+    }
+  }
+
+  getRaiseButtonString(): string {
+    if (this.getTotalCostToRaise() > this.maximumBet) {
+      return `Max Total Bet: ${this.currencyPipe.transform(this.maximumBet)}`;
+    } else if (this.raiseAmount <= 0) {
+      return 'Enter an amount to Raise ➡';
+    } else {
+      return 'Raise';
     }
   }
 
