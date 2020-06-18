@@ -25,6 +25,7 @@ export class PokerComponent implements OnInit {
   sharedCards: string[];
 
   winners: any[] = [];
+  gameWinner: {id: number, display_name: string};
   
   gameStage: number;
   turnOptions: string;
@@ -115,7 +116,8 @@ export class PokerComponent implements OnInit {
       this.sharedCards = message.board_cards;
       this.playerService.changeCurrentPlayer(message.next_player);
 
-      this.winners = message.hand_winners
+      this.winners = message.hand_winners;
+      this.gameWinner = message.game_winner;
       
       // only load this stuff if it's my turn
       if (message.next_player === this.user.id) {
@@ -197,6 +199,10 @@ export class PokerComponent implements OnInit {
   dealCards(): void {
     console.log('dealing...');
     this.pokerSocket.emit('deal_cards');
+  }
+  resetGame(): void {
+    console.log('resetting game...');
+    this.pokerSocket.emit('reset_game');
   }
   // user moves
   fold(): void {

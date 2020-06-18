@@ -14,8 +14,14 @@
 		<div *ngIf='turnOptions === "end-not-called"'><button (click)="showCards()" id="show-cards">Show Cards</button></div>
 		<div *ngIf='turnOptions === "end-not-called"'><button (click)="muckCards()" id="muck-cards">Muck Cards (Don't show)</button></div>
 	</div>
+	<div id="game-over" *ngIf='gameWinner'>
+		Game won by {{gameWinner.display_name}}!
+	</div>
+	<div id="action-buttons" *ngIf='gameWinner'>
+		<div><button id="reset-game" (click)='resetGame()'>Reset - Start New Game!</button></div>
+	</div>	
 	<div id="hand-over" *ngIf='winners.length > 0'>
-		Winner(s):
+		Hand Winner(s):
 		<p *ngFor="let winner of winners">
 			{{winner.display_name}} with {{winner.hand_name}}
 		</p>
@@ -23,7 +29,7 @@
 	<div id="action-buttons" *ngIf='gameStage === 0'>
 		<div><button id="deal-cards" (click)='dealCards()'>Deal Cards</button></div>
 	</div>
-	<div id="action-buttons" *ngIf='gameStage === 5'>
+	<div id="action-buttons" *ngIf='gameStage === 5 && !gameWinner'>
 		<div><button id="deal-cards" (click)='dealCards()'>Deal Next Hand</button></div>
 	</div>
 </ng-container>
