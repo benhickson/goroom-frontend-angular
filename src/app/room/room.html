@@ -1,0 +1,15 @@
+<div id="room" [class.sidebar-open]="sidebarOpen">
+  <app-gameboard [user]="user" [room]="room"></app-gameboard>
+  <div *ngIf="room" id="loaded-when-room-received"
+    class="cameracount-{{ cameraCountClassNumber }}"
+    [class.gameboard-open]="gameboardOpen">
+    <div
+      class="camera-container"
+      [class.glow]="currentPlayerIs(user.id)"
+      [ngStyle]="{order: order(user.id)}">
+    
+    </div>
+
+  </div>
+
+</div>

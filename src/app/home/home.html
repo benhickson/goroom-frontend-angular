@@ -1,0 +1,24 @@
+<div id="video-pic-block" *ngIf='currentUser'>
+	<div id="video-or-pic" (click)="videoOrPicClick()" [ngStyle]="{'background-image':'url(https://picsum.photos/seed/'+currentUser.id+'1/500)'}"></div>
+	<div class="quick-details">
+		<p>{{ currentUser | displayName }}</p>
+		<!-- <p>(Location)</p> -->
+		<!-- <p>(etc)</p> -->
+	</div>
+</div>
+<div id="start-join-block">
+	<div id="start-a-room" (click)="openStartClick()" [class.open]="openStart" [class.closed]="closeStart">
+		Start a Room
+		<div class="display-when-open">
+			<div><input #startRoomNameInput [(ngModel)]="startRoomName" type="text" placeholder="Enter a Room Name" (keydown.enter)="startRoom()" /></div>
+			<div><button (click)='startRoom()'>Go</button></div>
+		</div>
+	</div>
+	<div id="join-a-room" (click)="openJoinClick()" [class.open]="openJoin" [class.closed]="closeJoin">
+		Join a Room
+		<div class="display-when-open">
+			<div><input #joinRoomNameInput [(ngModel)]="joinRoomName" type="text" placeholder="Enter a Room Name" (keydown.enter)="joinRoom()" /></div>
+			<div><button (click)='joinRoom()'>Go</button></div>
+		</div>
+	</div>
+</div>

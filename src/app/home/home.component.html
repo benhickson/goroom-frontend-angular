@@ -1,24 +1,25 @@
-<div id="video-pic-block" *ngIf='currentUser'>
-	<div id="video-or-pic" (click)="videoOrPicClick()" [ngStyle]="{'background-image':'url(https://picsum.photos/seed/'+currentUser.id+'1/500)'}"></div>
-	<div class="quick-details">
-		<p>{{ currentUser | displayName }}</p>
-		<!-- <p>(Location)</p> -->
-		<!-- <p>(etc)</p> -->
+<div id="goroom-loader">
+	<div id="goroom-row" [ngClass]="{'openRoomInput' : openStart}" [ngClass]="{'openRoomInput' : openJoin}">
+		
+		<div class="goroom-list">
+			<div id="goroom-start" [class.closed]="closeStart" [class.open]="openStart" (click)="openStartClick()"><h1>START</h1></div>
+
+			<div id="goroom-go" [class.fade]="fade"><h1>G</h1><h1>O</h1></div>
+			
+			<div id="goroom-join" [class.closed]="closeJoin" [class.open]="openJoin" (click)="openJoinClick()"><h1>JOIN</h1></div>
+
+		</div>
+
+		<div id="goroom-caret" [ngClass]="{'flipCaret' : openStart}" [ngClass]="{'flipCaret' : openJoin}" (click)="resetBooleans()"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" class="svg-inline--fa fa-caret-right fa-w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg></div>
+
+		<div class="goroom-room">
+			<h1>R</h1><h1>O</h1><h1>O</h1><h1>M</h1>
+		</div>
+
+		<div id="startInput" [class.open]="openStart" [class.closed]="closeStart" *ngIf="openStart"><input #startRoomNameInput [(ngModel)]="startRoomName" type="text" placeholder="Create Name" (keydown.enter)="startRoom()" /></div>
+		<div id="joinInput" [class.open]="openJoin" [class.closed]="closeJoin" *ngIf="openJoin"><input #joinRoomNameInput [(ngModel)]="joinRoomName" type="text" placeholder="Join Name" (keydown.enter)="joinRoom()" /></div>
+
 	</div>
 </div>
-<div id="start-join-block">
-	<div id="start-a-room" (click)="openStartClick()" [class.open]="openStart" [class.closed]="closeStart">
-		Start a Room
-		<div class="display-when-open">
-			<div><input #startRoomNameInput [(ngModel)]="startRoomName" type="text" placeholder="Enter a Room Name" (keydown.enter)="startRoom()" /></div>
-			<div><button (click)='startRoom()'>Go</button></div>
-		</div>
-	</div>
-	<div id="join-a-room" (click)="openJoinClick()" [class.open]="openJoin" [class.closed]="closeJoin">
-		Join a Room
-		<div class="display-when-open">
-			<div><input #joinRoomNameInput [(ngModel)]="joinRoomName" type="text" placeholder="Enter a Room Name" (keydown.enter)="joinRoom()" /></div>
-			<div><button (click)='joinRoom()'>Go</button></div>
-		</div>
-	</div>
-</div>
+
+<!-- <h1 id="goroom-front-header">GOROOM</h1> -->

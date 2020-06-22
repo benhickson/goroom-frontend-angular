@@ -1,3 +1,242 @@
+
+#goroom-loader {
+	overflow: hidden;
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	background: linear-gradient(90deg, #93edc7 0%, rgba(28,216,210,1) 52%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	// justify-content: space-evenly;
+	h1 {
+		margin: 1rem 1rem;
+		font-family: 'Lexend Tera', sans-serif;
+		font-size: 5rem;
+		// display: inline-block;
+		bottom: 2vh;
+	}
+	#goroom-row {
+		position: relative;
+    display: flex;
+		align-items: center;
+		justify-content: flex-start;
+    height: 60vh;
+		width: 100vw;
+		bottom: 5vh;
+		transition: 300ms ease-in 300ms;
+	}
+	#goroom-row.openRoomInput {
+		transform: translateX(-40vw);
+		transition: 300ms ease-in 300ms;
+		width: 140vw;
+	}
+	#goroom-caret {
+		opacity: 0;
+		animation-name: fade;
+		animation-duration: 1s;
+		animation-delay: 4.5s;
+		animation-fill-mode: forwards;
+		height: 10rem;
+		margin: 0 4vw;
+		svg {
+			height: 10rem;
+		}
+	}
+	#goroom-caret.flipCaret {
+		transition: 300ms ease-in-out;
+		transform: rotate(180deg);
+		cursor: pointer;
+	}
+	.goroom-list {
+		width: 40vw;
+		height: 26rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+		justify-content: flex-end;
+		cursor: pointer;
+		h1:first-child {
+			opacity: 0;
+			transition: 600ms;
+		}
+		h1:last-child {
+			opacity: 0;
+			transition: 600ms;
+		}
+	}
+	.goroom-list:hover h1 {
+		opacity: 1;
+	}
+	#goroom-start {
+		right: 0;
+		height: 9rem;
+	}
+	#goroom-start.open {
+		transform: translateY(8.5rem);
+		transition: 300ms;
+	}
+	#goroom-start.closed {
+		opacity: 0;
+		transition: 300ms;
+		visibility: hidden;
+	}
+
+	#goroom-join {
+		right: 0;
+		height: 9rem;
+	}
+	#goroom-join.open {
+		transform: translateY(-8.5rem);
+		transition: 300ms;
+	}
+	#goroom-join.closed {
+		opacity: 0;
+		transition: 300ms;
+		visibility: hidden;
+	}
+
+	#goroom-go {
+		right: 0;
+		height: 9rem;
+		display: flex;
+		position: relative;
+		
+		h1:first-child {
+			position: absolute;
+			right: 10vw;
+			animation-delay: 250ms;
+			animation-name: loader;
+			animation-duration: 4s;
+			animation-fill-mode: forwards;
+			opacity: 0;
+			font-size: 15rem;
+		}
+		h1:nth-child(2) {
+			position: absolute;
+			right: 0;
+			animation-delay: 500ms;
+			animation-name: loader;
+			animation-duration: 4s;
+			animation-fill-mode: forwards;
+			opacity: 0;
+			font-size: 15rem;
+		}
+	}
+	.fade {
+		opacity: 0;
+		transition: 300ms ease-in-out;
+	}
+
+	.goroom-room {
+		height: 9rem;
+		width: 40vw;
+		display: flex;
+		position: relative;
+		right: 0;
+		h1:first-child {
+			position: absolute;
+			right: 30vw;
+			animation-delay: 750ms;
+			animation-name: loader;
+			animation-duration: 4s;
+			animation-fill-mode: forwards;
+			opacity: 0;
+			font-size: 15rem;
+		}
+		h1:nth-child(2) {
+			position: absolute;
+			right: 20vw;
+			animation-delay: 1000ms;
+			animation-name: loader;
+			animation-duration: 4s;
+			animation-fill-mode: forwards;
+			opacity: 0;
+			font-size: 15rem;
+		}
+		h1:nth-child(3) {
+			position: absolute;
+			right: 10vw;
+			animation-delay: 1250ms;
+			animation-name: loader;
+			animation-duration: 4s;
+			animation-fill-mode: forwards;
+			opacity: 0;
+			font-size: 15rem;
+		}
+		h1:last-child {
+			position: absolute;
+			right: 0;
+			animation-delay: 1500ms;
+			animation-name: loader;
+			animation-duration: 4s;
+			animation-fill-mode: forwards;
+			opacity: 0;
+			font-size: 15rem;
+		}
+	}
+}
+
+@keyframes loader {
+	0% {opacity: 0;}
+	10% {opacity: 1;}
+	100%{font-size: 5rem; opacity: 1;}
+}
+@keyframes fade {
+	100%{opacity: 1;}
+}
+
+#goroom-header {
+	margin: 1rem 1rem;
+	font-family: 'Lexend Tera', sans-serif;
+	font-size: 2rem;
+}
+
+#startInput {
+	position: absolute;
+	width: 1rem;
+	right: 0;
+		input {
+		height: 4rem;
+		font-size: 1.5rem;
+		border-radius: 8px;
+		background-color: rgba(0,0,0,.25);
+		font-family: 'Lexend Tera', sans-serif;
+	}
+}
+#startInput.closed {
+	opacity: 0;
+}
+#startInput.open {
+	transition: 300ms ease 300ms;
+	opacity: 1;
+}
+
+#joinInput {
+	position: absolute;
+	width: 1rem;
+	right: 0;
+	input {
+		height: 4rem;
+		font-size: 1.5rem;
+		border-radius: 8px;
+		background-color: rgba(0,0,0,.25);
+		font-family: 'Lexend Tera', sans-serif;
+	}
+}
+#joinInput.closed {
+	opacity: 0;
+}
+#joinInput.open {
+	transition: 300ms ease 300ms;
+	opacity: 1;
+}
+	
+
+
+
 #video-pic-block, #start-join-block{
 	display: inline-block;
 	position: absolute;
@@ -30,7 +269,7 @@
 .quick-details{
 	padding: 0 1vw;	
 	width: 22vw;
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #start-join-block{
@@ -110,9 +349,15 @@
 	}
 }
 #start-a-room{
-	background-color: #2184FF;
+	background-color: linear-gradient(90deg, rgba(201,214,255,1) 0%, rgba(226,226,226,1) 100%);
 	margin-bottom: 3vw;	
+	box-shadow: 
+		12px 12px 16px 0 rgba(0, 0, 0, 0.25),
+		-8px -8px 12px 0 rgba(255, 255, 255, 0.3);
 }
 #join-a-room{
-	background-color: #da3b36;
+	background-color: linear-gradient(90deg, rgba(201,214,255,1) 0%, rgba(226,226,226,1) 100%);
+	box-shadow: 
+		12px 12px 16px 0 rgba(0, 0, 0, 0.25),
+		-8px -8px 12px 0 rgba(255, 255, 255, 0.3);
 }
