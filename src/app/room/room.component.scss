@@ -166,8 +166,7 @@ div, button{
   }
 }
 .local {
-  box-shadow: none;
-  // placeholder for more styles
+  transform: rotateY(180deg);
 }
 .remote {
   box-shadow: none;
@@ -269,6 +268,7 @@ div, button{
   top: 0;
 }
 .card{
+  -webkit-backface-visibility: hidden;
   width: 38%;
   padding-top: 53%;
   background-color: white;
