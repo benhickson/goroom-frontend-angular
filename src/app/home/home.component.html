@@ -1,5 +1,5 @@
 <div id="video-pic-block" *ngIf='currentUser'>
-	<div id="video-or-pic" (click)="videoOrPicClick()" [ngStyle]="{'background-image':'url(https://picsum.photos/seed/'+currentUser.id+'1/500)'}"></div>
+	<app-image [domId]="'video-or-pic'" [imageUrl]="'https://picsum.photos/seed/'+currentUser.id+'1/500'"></app-image>
 	<div class="quick-details">
 		<p>{{ currentUser | displayName }}</p>
 		<!-- <p>(Location)</p> -->
