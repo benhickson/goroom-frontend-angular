@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Room } from './room';
 import { Observable, of } from 'rxjs';
-import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -20,7 +19,6 @@ export class RoomService {
 
   constructor(
     private httpClient: HttpClient,
-    private messageService: MessageService
   ) { }
 
   getRooms(): Observable<Room[]> {
@@ -80,6 +78,6 @@ export class RoomService {
   }
 
   private log(message: string) {
-    this.messageService.add(`RoomService: ${message}`);
+    console.log(`RoomService: ${message}`);
   }
 }

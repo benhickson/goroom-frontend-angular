@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,10 +11,6 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { RoomComponent } from './room/room.component';
-import { RoomsComponent } from './rooms/rooms.component';
-import { RoomDetailComponent } from './room-detail/room-detail.component';
-import { MessagesComponent } from './messages/messages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { AuthAnonComponent } from './auth-anon/auth-anon.component';
 import { HomeComponent } from './home/home.component';
@@ -21,14 +18,11 @@ import { DisplayNamePipe } from './display-name.pipe';
 import { GameboardComponent } from './gameboard/gameboard.component';
 import { PokerComponent } from './games/poker/poker.component';
 import { UserConfigModalComponent } from './user-config-modal/user-config-modal.component';
+import { ImageComponent } from './components/image/image.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RoomsComponent,
-    RoomDetailComponent,
-    MessagesComponent,
-    DashboardComponent,
     LoginRegisterComponent,
     AuthAnonComponent,
     RoomComponent,
@@ -36,7 +30,8 @@ import { UserConfigModalComponent } from './user-config-modal/user-config-modal.
     DisplayNamePipe,
     GameboardComponent,
     PokerComponent,
-    UserConfigModalComponent
+    UserConfigModalComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +50,7 @@ import { UserConfigModalComponent } from './user-config-modal/user-config-modal.
     NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
     AngularFittextModule,
   ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
