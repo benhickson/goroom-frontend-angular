@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from 'ngx-agora';
+import { DeviceService } from '../device.service';
 
 @Component({
   selector: 'user-config-modal',
@@ -13,11 +14,15 @@ export class UserConfigModalComponent implements OnInit {
   localStream: Stream
   micCheckID: any
   audioInputLevel: string
+  selectedAudioInputDeviceId: string
+  selectedAudioOutputDeviceId: string
+  selectedVideoDeviceId: string
 
 
   constructor(
     private el: ElementRef,
     private agoraService: NgxAgoraService,
+    private deviceService: DeviceService,
   ) { }
 
   ngOnInit(): void {
@@ -57,27 +62,41 @@ export class UserConfigModalComponent implements OnInit {
     });
   }
 
-  switchDevice(type, device) {
-    console.log(type, device);
-    this.localStream.switchDevice(type, device, () => {
-      console.log(`Successfully changed the device to ${device}`);
-      clearInterval(this.micCheckID)
-      this.micCheckID = setInterval(() => {
-        console.log(this.localStream.getAudioLevel());
-        this.audioInputLevel = (this.localStream.getAudioLevel() * 100).toString() + "%"
-      }, 100);
-      console.log(this.micCheckID)
+  switchVideoDevice(device: string) {
+    this.localStream.switchDevice('video', device, () => {
+      this.selectedVideoDeviceId = device
+      console.log(`Successfully change the video device to ${device}`);
     }, () => {
       console.log("An error occurred while attempting to change the device");
+    })
+  }
+
+  switchAudioInputDevice(device: string) {
+    this.localStream.switchDevice('audio', device, () => {
+      console.log(`Successfully changed the audio output device to ${device}`);
+      this.selectedAudioInputDeviceId = device
+      clearInterval(this.micCheckID)
+      this.micCheckID = setInterval(() => {
+        this.audioInputLevel = (this.localStream.getAudioLevel() * 100).toString() + "%"
+      }, 100);
+    }, () => {
+      console.log("An error occurred while attempting to change the audio output device");
     });
   }
 
-  setAudioOutput(device) {
+  switchAudioOutputDevice(device: string) {
     this.localStream.setAudioOutput(device, () => {
       console.log('Successfully changed audio output device.');
     }, () => {
       console.log("An error occurred while attempting to change the audio output device")
     });
+  }
+
+  applySettings() {
+    console.log("applied new settings")
+    this.deviceService.setAudioInputDeviceId(this.selectedAudioInputDeviceId)
+    this.deviceService.setAudioOutputDeviceId(this.selectedAudioOutputDeviceId)
+    this.deviceService.setVideoDeviceId(this.selectedVideoDeviceId)
   }
 
   ngOnDestroy() {

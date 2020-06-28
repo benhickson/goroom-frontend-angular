@@ -6,6 +6,7 @@ import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from '
 import { UserService } from '../user.service';
 import { User } from '../user';
 import { PlayerService } from '../games/player.service';
+import { DeviceService } from '../device.service';
 
 @Component({
   selector: 'app-room',
@@ -82,6 +83,7 @@ export class RoomComponent implements OnInit {
     private ngxAgoraService: NgxAgoraService,
     private userService: UserService,
     private playerService: PlayerService,
+    private deviceService: DeviceService,
   ) { }
 
   ngOnInit(): void {
@@ -92,7 +94,7 @@ export class RoomComponent implements OnInit {
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
     this.playerService.playerCardsChips.subscribe(listOfPlayerCardsChips => {
       this.playerCardsChips = listOfPlayerCardsChips;
-    });
+    });    
   }
 
   ngOnDestroy(): void {
@@ -219,6 +221,7 @@ export class RoomComponent implements OnInit {
               error => console.error(error)
             )
           );
+          this.subscribeDevices();
         } else {
           console.log('room not found');
           this.roomNotFound = true;
@@ -365,6 +368,36 @@ export class RoomComponent implements OnInit {
 
     // trigger the resize event for the fittext directive to run
     window.setTimeout(() => window.dispatchEvent(new Event('resize')), 500);
+  }
+
+  private subscribeDevices() {
+    this.deviceService.getAudioInputDeviceId().subscribe((deviceId) => {
+      if (deviceId) {
+        this.localStream.switchDevice("audio", deviceId, () => {
+          console.log(`successfully changed audio input device {deviceId}`)
+        }, () => {
+          console.log(`failed to change audio input device to {deviceId}`)
+        })
+      }
+    });
+    this.deviceService.getAudioOutputDeviceId().subscribe((deviceId) => {
+      if (deviceId) {
+        this.localStream.switchDevice("audio", deviceId, () => {
+          console.log(`successfully changed audio output device to {deviceId}`)
+        }, () => {
+          console.log(`failed to change audio output device to {deviceId}`)
+        })
+      }
+    });
+    this.deviceService.getVideoDeviceId().subscribe((deviceId) => {
+      if (deviceId) {
+        this.localStream.switchDevice("video", deviceId, () => {
+          console.log(`successfully change video device to {deviceId}`)
+        }, () => {
+          console.log(`failed to change audio output device to {deviceId}`)
+        })
+      }
+    })
   }
 
   showDialog(){
