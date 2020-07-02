@@ -2,8 +2,8 @@
     <div class="mmodal-body">
         <div id="devices">
             <div class="div">
-                <label>Video Output Select</label>
-                <select (change)="switchAudioOutputDevice($event.target.value)" >
+                <label>Video Input Select</label>
+                <select (change)="switchVideoDevice($event.target.value)" >
                     <option *ngFor="let videoDevice of videoDevices" [value]="videoDevice.deviceId">{{ videoDevice.label }}</option>
                 </select>
                 <div id="video-preview" style="width: 100%; height: 300px;"></div>
