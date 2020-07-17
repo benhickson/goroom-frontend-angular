@@ -271,6 +271,7 @@ div, button{
 }
 .card{
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   width: 38%;
   padding-top: 53%;
   background-color: white;
