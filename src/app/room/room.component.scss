@@ -139,6 +139,7 @@ div, button{
       border-radius: 1vw;
       overflow: hidden;
       background-color: rgb(163, 163, 163);
+      background-color: #111;
 
       // for designing without videos
       // background-color: darkslategrey;
@@ -166,8 +167,7 @@ div, button{
   }
 }
 .local {
-  box-shadow: none;
-  // placeholder for more styles
+  transform: rotateY(180deg);
 }
 .remote {
   box-shadow: none;
@@ -209,6 +209,7 @@ div, button{
 .local:before {
   content: "";
   background-image: url('../../assets/camera-prompt-1.svg');
+  transform: rotateY(180deg);
   background-size: 80%;
   background-position: center;
   background-repeat: no-repeat;
@@ -269,6 +270,8 @@ div, button{
   top: 0;
 }
 .card{
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   width: 38%;
   padding-top: 53%;
   background-color: white;
