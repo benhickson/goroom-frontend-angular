@@ -208,6 +208,7 @@ div, button{
 .local:before {
   content: "";
   background-image: url('../../assets/camera-prompt-1.svg');
+  transform: rotateY(180deg);
   background-size: 80%;
   background-position: center;
   background-repeat: no-repeat;
