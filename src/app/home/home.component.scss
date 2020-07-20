@@ -71,10 +71,10 @@
 	}
 	#goroom-start {
 		right: 0;
-		height: 9rem;
+		height: 9.5rem;
 	}
 	#goroom-start.open {
-		transform: translateY(9rem);
+		transform: translateY(9.5rem);
 		transition: 300ms;
 	}
 	#goroom-start.closed {
@@ -85,10 +85,10 @@
 
 	#goroom-join {
 		right: 0;
-		height: 9rem;
+		height: 9.5rem;
 	}
 	#goroom-join.open {
-		transform: translateY(-9rem);
+		transform: translateY(-9.5rem);
 		transition: 300ms;
 	}
 	#goroom-join.closed {
@@ -99,7 +99,7 @@
 
 	#goroom-go {
 		right: 0;
-		height: 9rem;
+		height: 9.5rem;
 		display: flex;
 		position: relative;
 		
@@ -130,7 +130,7 @@
 	}
 
 	.goroom-room {
-		height: 9rem;
+		height: 9.5rem;
 		width: 40vw;
 		display: flex;
 		position: relative;
@@ -240,30 +240,35 @@
 	display: inline-block;
 	position: absolute;
 	top: calc((100vh - (15vw + 15vw + 3vw))/2 * 0.9);
+}
+// 	& > *{
+// 		border-radius: 1vw;
+// 	}
+// }
+
+// #video-pic-block{
+// 	left: 22.4vw;
+	
+// 	p{
+// 		font-size: 2.1vw;
+//     	margin-top: 0.45vw;
+// 	}
+// }
+// .quick-details{
+// 	padding: 0 1vw;	
+// 	width: 22vw;
+//     box-sizing: border-box;
+// }
+
+#start-join-block{
+	display: inline-block;
+	position: absolute;
+	top: calc((100vh - (15vw + 15vw + 3vw))/2 * 0.9);
+	right: 50%;
+	transform: translateX(50%);
 
 	& > *{
 		border-radius: 1vw;
-	}
-}
-
-#video-pic-block{
-	left: 22.4vw;
-	
-	p{
-		font-size: 2.1vw;
-    	margin-top: 0.45vw;
-	}
-}
-.quick-details{
-	padding: 0 1vw;	
-	width: 22vw;
-  box-sizing: border-box;
-}
-
-#start-join-block{
-	right: 22.3vw;
-
-	& > *{
 		width: 30vw;
 		height: 13vw;
 		line-height: 13vw;
