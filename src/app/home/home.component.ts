@@ -12,6 +12,7 @@ import { User } from '../user';
 })
 export class HomeComponent implements OnInit {
 
+  fade: boolean = false;
   openStart: boolean = false;
   openJoin: boolean = false;
   closeStart: boolean = false;
@@ -43,24 +44,39 @@ export class HomeComponent implements OnInit {
   videoOrPicClick(): void {
     console.log('vidpic clicked');
   }
-
-  openStartClick(): void {
-    console.log('start a room clicked');
-    this.openJoin = false;
-    this.closeStart = false;
-    this.openStart = true;
-    this.closeJoin = true;
-    setTimeout(() => this.startRoomNameField.nativeElement.focus(), 100);
-  }
   
+  openStartClick(): void {
+    this.openStart = true;
+    this.openJoin = false;
+    this.closeJoin = true;
+    this.fade = true;
+  }
+
   openJoinClick(): void {
-    console.log('join a room clicked');
     this.openStart = false;
-    this.closeJoin = false;
     this.openJoin = true;
     this.closeStart = true;
-    setTimeout(() => this.joinRoomNameField.nativeElement.focus(), 100);
+    this.fade = true;
   }
+
+  resetBooleans(): void {
+    this.fade = false;
+    this.openStart = false;
+    this.openJoin = false;
+    this.closeStart = false;
+    this.closeJoin = false;
+  }
+
+
+  // openStartClick(): void {
+  //   console.log('start a room clicked');
+  //   this.openJoin = false;
+  //   this.closeJoin = !this.closeJoin;
+  //   this.closeStart = false;
+  //   this.openStart = !this.openStart;
+  //   setTimeout(() => this.startRoomNameField.nativeElement.focus(), 100);
+  // }
+
 
   startRoom(){
     console.log('starting and joining room:', this.startRoomName);
