@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   joinRoomName: string;
   newRoom: Room;
   currentUser: User;
+  errorMessage: string = '';
   
   constructor(
     private userService: UserService,
@@ -74,6 +75,8 @@ export class HomeComponent implements OnInit {
           console.log('new room created:', this.newRoom);
           this.router.navigate([this.newRoom.name]);
         }
+      }, error => {
+        this.errorMessage = "This room already exists. Enter a different room name or use the Join button below to enter this room."
       })
   }
 

@@ -47,8 +47,7 @@ export class RoomService {
 
   addRoom(room: Room): Observable<Room> {
     return this.httpClient.post<Room>(this.roomsUrl, room, this.httpOptions).pipe(
-      tap((newRoom: Room) => this.log(`added Room, id: ${newRoom.id}`)),
-      catchError(this.handleError<Room>('addRoom'))
+      tap((newRoom: Room) => this.log(`added Room, id: ${newRoom.id}`))
     )
   }
 
