@@ -51,6 +51,7 @@ export class HomeComponent implements OnInit {
     this.closeStart = false;
     this.openStart = true;
     this.closeJoin = true;
+    this.errorMessage = '';
     setTimeout(() => this.startRoomNameField.nativeElement.focus(), 100);
   }
   
@@ -60,6 +61,7 @@ export class HomeComponent implements OnInit {
     this.closeJoin = false;
     this.openJoin = true;
     this.closeStart = true;
+    this.errorMessage = '';
     setTimeout(() => this.joinRoomNameField.nativeElement.focus(), 100);
   }
 
