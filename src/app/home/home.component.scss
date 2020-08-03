@@ -110,3 +110,14 @@
 #join-a-room{
 	background-color: #da3b36;
 }
+
+#room-error {
+	line-height: 12px;
+	float: left;
+	margin-top: -60px;
+	padding: 0 20px;
+	span {
+		font-size: 12px;
+		color: black;
+	}
+}

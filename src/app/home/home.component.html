@@ -1,6 +1,7 @@
 <div id="start-join-block">
 	<div id="start-a-room" (click)="openStartClick()" [class.open]="openStart" [class.closed]="closeStart">
 		Start a Room
+		<div id='room-error' *ngIf='errorMessage != ""'><span>{{ errorMessage }}</span></div>
 		<div class="display-when-open">
 			<div><input #startRoomNameInput [(ngModel)]="startRoomName" type="text" placeholder="Enter a Room Name" (keydown.enter)="startRoom()" /></div>
 			<div><button (click)='startRoom()'>Go</button></div>
