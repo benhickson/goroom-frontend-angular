@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { DisplayNamePipe } from './display-name.pipe';
 import { GameboardComponent } from './gameboard/gameboard.component';
 import { PokerComponent } from './games/poker/poker.component';
+import { UserConfigModalComponent } from './user-config-modal/user-config-modal.component';
 import { ImageComponent } from './components/image/image.component';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { ImageComponent } from './components/image/image.component';
     DisplayNamePipe,
     GameboardComponent,
     PokerComponent,
+    UserConfigModalComponent,
     ImageComponent
   ],
   imports: [

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Room } from '../room';
 import { ActivatedRoute } from '@angular/router';
 import { RoomService } from '../room.service';
@@ -6,6 +6,7 @@ import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from '
 import { UserService } from '../user.service';
 import { User } from '../user';
 import { PlayerService } from '../games/player.service';
+import { DeviceService } from '../device.service';
 
 @Component({
   selector: 'app-room',
@@ -13,6 +14,8 @@ import { PlayerService } from '../games/player.service';
   styleUrls: ['./room.component.scss']
 })
 export class RoomComponent implements OnInit {
+  @ViewChild('modal_1') modal_1: TemplateRef<any>;
+  @ViewChild('vc', {read:ViewContainerRef}) vc: ViewContainerRef;
 
   room: Room;
   roomNotFound: boolean = false;
@@ -80,6 +83,7 @@ export class RoomComponent implements OnInit {
     private ngxAgoraService: NgxAgoraService,
     private userService: UserService,
     private playerService: PlayerService,
+    private deviceService: DeviceService,
   ) { }
 
   ngOnInit(): void {
@@ -90,7 +94,7 @@ export class RoomComponent implements OnInit {
     this.playerService.playerList.subscribe(listOfPlayers => this.playerList = listOfPlayers);
     this.playerService.playerCardsChips.subscribe(listOfPlayerCardsChips => {
       this.playerCardsChips = listOfPlayerCardsChips;
-    });
+    });    
   }
 
   ngOnDestroy(): void {
@@ -217,6 +221,7 @@ export class RoomComponent implements OnInit {
               error => console.error(error)
             )
           );
+          this.subscribeDevices();
         } else {
           console.log('room not found');
           this.roomNotFound = true;
@@ -364,5 +369,45 @@ export class RoomComponent implements OnInit {
     // trigger the resize event for the fittext directive to run
     window.setTimeout(() => window.dispatchEvent(new Event('resize')), 500);
   }
+
+  private subscribeDevices() {
+    this.deviceService.getAudioInputDeviceId().subscribe((deviceId) => {
+      if (deviceId) {
+        this.localStream.switchDevice("audio", deviceId, () => {
+          console.log(`successfully changed audio input device {deviceId}`)
+        }, () => {
+          console.log(`failed to change audio input device to {deviceId}`)
+        })
+      }
+    });
+    this.deviceService.getAudioOutputDeviceId().subscribe((deviceId) => {
+      if (deviceId) {
+        this.localStream.switchDevice("audio", deviceId, () => {
+          console.log(`successfully changed audio output device to {deviceId}`)
+        }, () => {
+          console.log(`failed to change audio output device to {deviceId}`)
+        })
+      }
+    });
+    this.deviceService.getVideoDeviceId().subscribe((deviceId) => {
+      if (deviceId) {
+        this.localStream.switchDevice("video", deviceId, () => {
+          console.log(`successfully change video device to {deviceId}`)
+        }, () => {
+          console.log(`failed to change audio output device to {deviceId}`)
+        })
+      }
+    })
+  }
+
+  showDialog(){
+    let view = this.modal_1.createEmbeddedView(null);
+    this.vc.insert(view);
+    this.modal_1.elementRef.nativeElement.previousElementSibling.classList.remove('hhidden');
+    this.modal_1.elementRef.nativeElement.previousElementSibling.classList.add('sshow');
+  }
   
+  closeDialog() {
+    this.vc.clear()
+  }
 }

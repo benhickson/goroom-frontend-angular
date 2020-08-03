@@ -1,3 +1,9 @@
+<ng-container #vc></ng-container>
+<ng-template #modal_1>
+	<user-config-modal id="modal_1" class="hhidden">
+		<button (click)="closeDialog()">Close</button>
+	</user-config-modal>
+</ng-template>
 <div id="room" [class.sidebar-open]="sidebarOpen">
   <div *ngIf="room" id="loaded-when-room-received" 
     class="cameracount-{{ cameraCountClassNumber }}"
@@ -30,6 +36,7 @@
           <span *ngIf="currentDealerIs(user.id)">[dealer]</span>
           <span *ngIf="currentPlayerIs(user.id)">[active]</span>
         </div>
+        <span class="settings-button" (click)="showDialog()">Settings</span>
       </div>
     </div>
     <div 
