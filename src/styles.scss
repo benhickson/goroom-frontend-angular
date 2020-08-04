@@ -2,7 +2,7 @@
 body{
 	margin: 0;
 	padding: 0;
-	color: #222;
+	color: #DDD;
 	font-family: 'Muli', sans-serif;
 	font-size: 16px;
 	background-color: #fdfffc;
@@ -15,4 +15,9 @@ body{
 }
 *:focus{
 	outline: 0;
+}
+
+// overriding agora's inline styles
+#video-preview > div {
+	position: absolute !important; 
 }

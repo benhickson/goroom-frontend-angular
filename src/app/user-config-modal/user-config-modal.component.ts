@@ -1,13 +1,14 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from 'ngx-agora';
 import { DeviceService } from '../device.service';
 
 @Component({
   selector: 'user-config-modal',
   templateUrl: './user-config-modal.component.html',
-  styleUrls: ['./user-config-modal.component.scss']
+  styleUrls: ['./user-config-modal.component.scss'],
 })
 export class UserConfigModalComponent implements OnInit {
+
   audioInputDevices: MediaDeviceInfo[]
   audioOutputDevices: MediaDeviceInfo[]
   videoDevices: MediaDeviceInfo[]
@@ -18,7 +19,6 @@ export class UserConfigModalComponent implements OnInit {
   selectedAudioOutputDeviceId: string
   selectedVideoDeviceId: string
 
-
   constructor(
     private el: ElementRef,
     private agoraService: NgxAgoraService,
@@ -28,6 +28,8 @@ export class UserConfigModalComponent implements OnInit {
   ngOnInit(): void {
     this.getDevices();
   }
+
+  @Output() closeDialog = new EventEmitter<boolean>();
 
   getDevices() {
     this.agoraService.AgoraRTC.getDevices(devices => {
@@ -44,20 +46,18 @@ export class UserConfigModalComponent implements OnInit {
       let uid = Math.floor(Math.random()*10000);
       this.localStream = this.agoraService.AgoraRTC.createStream({
           streamID: uid,
-          // Set audio to true if testing microphone
           audio: true,
-          // Set video to true if testing camera
           video: true,
-          screen: false
+          screen: false,
       });
       // Initialize the stream
       this.localStream.init(() => {
-        this.localStream.play("video-preview", {fit: "contain"});
-        // Print the audio level every 1000 ms
+        this.localStream.play("video-preview", {fit: "cover"});
+        // Print the audio level every 100 ms
         this.micCheckID = setInterval(() => {
           this.audioInputLevel = (this.localStream.getAudioLevel() * 100).toString() + "%";
+          // console.log(this.audioInputLevel);
         }, 100);
-        console.log(this.micCheckID)
       });
     });
   }
@@ -93,16 +93,23 @@ export class UserConfigModalComponent implements OnInit {
   }
 
   applySettings() {
-    console.log("applied new settings")
-    this.deviceService.setAudioInputDeviceId(this.selectedAudioInputDeviceId)
-    this.deviceService.setAudioOutputDeviceId(this.selectedAudioOutputDeviceId)
-    this.deviceService.setVideoDeviceId(this.selectedVideoDeviceId)
+    console.log("applied new settings");
+    this.deviceService.setAudioInputDeviceId(this.selectedAudioInputDeviceId);
+    this.deviceService.setAudioOutputDeviceId(this.selectedAudioOutputDeviceId);
+    this.deviceService.setVideoDeviceId(this.selectedVideoDeviceId);
+    this.closeDialog.emit(true);
+  }
+
+  cancelSettings() {
+    console.log("canceled");
+    this.closeDialog.emit(true);
   }
 
   ngOnDestroy() {
-    this.localStream.close()
-    clearInterval(this.micCheckID)
-    this.el.nativeElement.classList.remove('sshow')
-    this.el.nativeElement.classList.add('hhidden')
+    this.localStream.close();
+    clearInterval(this.micCheckID);
+    this.el.nativeElement.classList.remove('show');
+    this.el.nativeElement.classList.add('hidden');
   }
+
 }

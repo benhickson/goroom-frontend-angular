@@ -88,7 +88,7 @@ div, button{
   width: 68vw;
 }
 #sidebar{
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.3);
   right: 0;
   z-index: -1;
   box-sizing: border-box;
@@ -101,7 +101,7 @@ div, button{
 #sidebar-close-button{
   cursor: pointer;
   padding: 1vw 2vw;
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255,255,255,0.1);
   border-radius: 0.7vw;
   width: fit-content;
   margin-top: 4vw;
@@ -163,7 +163,6 @@ div, button{
     }
     .settings-button {
       @extend .info;
-      color: #000;
       text-decoration: none;
       float: right;
     }
@@ -229,6 +228,7 @@ div, button{
   animation-duration: 2s;
   animation-fill-mode: forwards;
   animation-timing-function: ease;
+  filter: invert(0.9);
 }
 
 #launch-game, #add-user, #close-game{
@@ -381,15 +381,15 @@ div, button{
 
 
 // this makes the .modal visible
-.sshow {
+.show {
     display: block;
 }
 // this makes the element hidden/invisible
-.hhidden {
+.hidden {
     display: none;
 }
 // this holds the CSS display of the modal
-.mmodal {
+.modal {
     // makes it hover above all elements
     z-index: 1000;
     position: fixed;
@@ -398,13 +398,13 @@ div, button{
     left: 300px;
     width: 500px;
 }
-.mmodal-body {
+.modal-body {
     background: #fff;
     margin: 40px;
     padding: 20px;
 }
 // backdrop color
-.mmodal-background {
+.modal-background {
     // should be below the .modal but above all other elements
     z-index: 900;
     position: fixed;
