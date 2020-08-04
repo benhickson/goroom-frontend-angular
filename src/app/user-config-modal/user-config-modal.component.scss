@@ -1,0 +1,103 @@
+// this makes the .modal visible
+.show {
+    display: block;
+}
+// this makes the element hidden/invisible
+.hidden {
+    display: none;
+}
+// this holds the CSS display of the modal
+.modal {
+    z-index: 10;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+}
+.modal-body {
+    background: #222;
+    padding: 3.5vw;
+    border-radius: 1vw;
+}
+// backdrop color
+.modal-background {
+    z-index: 9; // should be below the .modal but above all other elements
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.75);
+}
+
+.level {
+	display: block;
+	margin-top: 20px;
+	width: 75%;
+	height: 20px;
+	background: #7dbbe4;
+	span {
+		display: block;
+		height: 100%;
+		width: 50%;
+		background-color: #000000;
+	}
+}
+
+#video-preview{
+    width: 100%;
+    border-radius: 1vw;
+    overflow: hidden;
+    margin: 20px 0px;
+    transform: rotateY(180deg);
+}
+
+#video-preview:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+select, button{
+    font-size: inherit;
+    color: inherit;
+    font-family: inherit;
+    margin: 5px 0;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+select {
+    background-color: #333;
+    padding: 7px;
+    border: none;
+    border-right: 8px solid #333;
+    
+    
+    display: block;
+}
+
+button {
+    background: none;
+    border: none;
+    display: block;
+    color: #eee;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover{
+    text-decoration: underline;
+}
+#button-row{
+    height: 35px;
+    margin-top: 20px;
+
+    #save{
+        background-color: #0b8a31;
+        float: right;
+    }
+    #cancel{
+        background-color: #8a130b;
+        float: left;
+    }
+}

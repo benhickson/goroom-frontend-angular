@@ -36,7 +36,7 @@
 <ng-container *ngIf='!gameActive'>
 	<p *ngIf="playerList.length > 0">Player List:</p>
 	<ol>
-		<li *ngFor="let player of playerList">{{player.displayName}} (id: {{player.id}})</li>
+		<li *ngFor="let player of playerList">{{player.displayName}}</li>
 	</ol>
 	<div id="action-buttons" *ngIf='playerList.length > 1'>
 		<div><button id="start-game" (click)='startGame()'>Start Game!</button></div>

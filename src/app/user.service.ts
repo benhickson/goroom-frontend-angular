@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from './user';
 import { Observable, of } from 'rxjs';
-import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
@@ -19,7 +18,6 @@ export class UserService {
 
   constructor(
     private httpClient: HttpClient,
-    private messageService: MessageService
   ) { }
 
   getCurrentUser(): Observable<User> {
@@ -47,6 +45,6 @@ export class UserService {
   }
 
   private log(message: string) {
-    this.messageService.add(`UserService: ${message}`);
+    console.log(`UserService: ${message}`);
   }
 }

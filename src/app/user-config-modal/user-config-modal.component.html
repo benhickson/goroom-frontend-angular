@@ -1,0 +1,33 @@
+<div class="modal">
+    <div class="modal-body">
+        <div id="devices">
+            <div class="div">
+                <label>Video Input:</label>
+                <select (change)="switchVideoDevice($event.target.value)" >
+                    <option *ngFor="let videoDevice of videoDevices" [value]="videoDevice.deviceId">{{ videoDevice.label }}</option>
+                </select>
+                <div id="video-preview"></div>
+            </div>
+            <div>
+                <label>Audio Input (Microphone):</label>
+                <select (change)="switchAudioInputDevice($event.target.value)" >
+                    <option *ngFor="let audioInputDevice of audioInputDevices" [value]="audioInputDevice.deviceId">{{ audioInputDevice.label }}</option>
+                </select>
+                <!-- <div class="level">
+                    <span [style.width]="audioInputLevel"></span>
+                </div> -->
+            </div>
+            <div>
+                <label>Audio Output:</label>
+                <select (change)="switchAudioOutputDevice($event.target.value)" >
+                    <option *ngFor="let audioOutputDevice of audioOutputDevices" [value]="audioOutputDevice.deviceId">{{ audioOutputDevice.label }}</option>
+                </select>
+            </div>
+            <div id="button-row">
+                <button id="cancel" (click)="cancelSettings()">Cancel</button>
+                <button id="save" (click)="applySettings()">Save Settings</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-background" (click)="cancelSettings()"></div>
